@@ -1,4 +1,4 @@
-<%- include('partials/header', { title: 'Notice Board', activePage: 'notice' }) %>
+<%- include('partials/header', { title: 'নোটিশ বোর্ড (Notice Board)', activePage: 'notice' }) %>
 
 <section class="content my-4">
     <div class="container-fluid px-lg-5">
@@ -7,39 +7,39 @@
                 <div class="card shadow-sm border-0">
                     <div class="card-body p-4 p-md-5">
 
-                        <div class="page-title-banner">
-                            NOTICE BOARD
+                        <div class="page-title-banner" style="background: linear-gradient(135deg, var(--navy-blue) 0%, #0284c7 100%);">
+                            <i class="fas fa-bullhorn mr-2"></i> অফিসিয়াল নোটিশ বোর্ড - চাঁপাইনবাবগঞ্জ জেলা সমিতি, পাবিপ্রবি
                         </div>
 
                         <div class="table-responsive mt-4">
-                            <table class="table table-striped table-bordered datatable" style="width: 100%;">
-                                <thead>
-                                    <tr style="background-color: #5D7B9D; color: white;">
-                                        <th class="align-middle">Notice Title</th>
-                                        <th class="text-center align-middle" style="width: 150px;">Date</th>
-                                        <th class="text-center align-middle" style="width: 180px;">Notice Document</th>
+                            <table class="table table-hover table-bordered datatable" style="width: 100%;">
+                                <thead style="background-color: var(--navy-blue); color: white;">
+                                    <tr>
+                                        <th class="align-middle">নোটিশের শিরোনাম</th>
+                                        <th class="text-center align-middle" style="width: 160px;">প্রকাশের তারিখ</th>
+                                        <th class="text-center align-middle" style="width: 180px;">নোটিশ ফাইল</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <% if (notices && notices.length > 0) { %>
                                         <% notices.forEach(function(item) { %>
                                             <tr>
-                                                <td class="align-middle font-weight-bold">
-                                                    <i class="fas fa-bullhorn text-danger mr-2"></i> <%= item.title %>
+                                                <td class="align-middle font-weight-bold text-dark">
+                                                    <i class="fas fa-bell text-warning mr-2"></i> <%= item.title %>
                                                 </td>
                                                 <td class="text-center align-middle text-muted">
                                                     <%= item.date || 'N/A' %>
                                                 </td>
                                                 <td class="text-center align-middle">
-                                                    <a href="/<%= item.file_url %>" class="btn btn-outline-danger btn-sm px-3 shadow-sm" target="_blank" download>
-                                                        <i class="fas fa-file-download mr-1"></i> View and Download
+                                                    <a href="/<%= item.file_url %>" class="btn btn-outline-danger btn-sm px-3 shadow-sm font-weight-bold" target="_blank" download>
+                                                        <i class="fas fa-file-pdf mr-1"></i> নোটিশ দেখুন
                                                     </a>
                                                 </td>
                                             </tr>
                                         <% }); %>
                                     <% } else { %>
                                         <tr>
-                                            <td colspan="3" class="text-center py-4 text-muted">No notices posted yet.</td>
+                                            <td colspan="3" class="text-center py-4 text-muted">বর্তমানে কোনো নোটিশ নেই।</td>
                                         </tr>
                                     <% } %>
                                 </tbody>
@@ -48,7 +48,7 @@
 
                     </div>
                     <div class="card-footer bg-white border-0 pb-4 pl-4">
-                        <a href="/home.aspx" class="text-primary font-weight-bold">&lt;&lt; Back to Home</a>
+                        <a href="/home.aspx" class="text-primary font-weight-bold">&lt;&lt; হোমে ফিরে যান</a>
                     </div>
                 </div>
             </div>

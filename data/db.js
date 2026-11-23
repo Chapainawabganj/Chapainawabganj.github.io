@@ -9,410 +9,268 @@ const defaultData = {
     {
       id: 1,
       username: 'admin',
-      email: 'admin@pusteeealumni.org',
+      email: 'admin@pust.chapai.org',
       passwordHash: bcrypt.hashSync('admin123', 10),
-      name: 'System Administrator',
+      name: 'Central Administrator',
       role: 'admin'
     }
   ],
   members: [
     {
-      id: 'mem_1',
-      full_name: 'Md. Amirul Islam Rony',
-      gender: 'Male',
-      email: 'amirul.090201@s.pust.ac.bd',
-      contact_number: '+8801722302779',
-      blood_group: 'A-',
-      facebook: 'https://facebook.com/amirulrony',
-      linkedin: 'https://linkedin.com/in/amirulrony',
-      degree: 'B.Sc in EEE',
-      roll_no: '090201',
-      department: 'Electrical and Electronic Engineering (EEE)',
-      batch_no: '1st',
-      hall: 'Bangabandhu Sheikh Mujibur Rahman hall',
-      passing_year: '2014',
-      grade_cgpa: '3.75',
-      organization: 'SQUARE InformatiX Ltd.',
-      designation: 'Senior Network Engineer',
-      contact_address: 'Dhaka, Bangladesh',
-      work_country: 'Bangladesh',
-      membership_type: 'Fellow',
-      membership_no: 'MEM-090201',
-      permanent_country: 'Bangladesh',
-      permanent_district: 'Pabna',
-      permanent_address: 'Pabna Sadar, Pabna',
-      present_country: 'Bangladesh',
-      present_district: 'Dhaka',
-      present_address: 'Mohakhali DOHS, Dhaka',
-      cert_serial_no: 'PUST-EEE-090201',
-      cert_photo: 'CertPhoto/11.jpg',
-      profile_photo: 'ProfilePhoto/Amir.jpg',
-      payment_method: 'Online Payment',
-      payment_photo: 'PaymentPhoto/11.jpg',
-      passwordHash: bcrypt.hashSync('password123', 10),
-      status: 'Active',
-      created_at: new Date().toISOString()
-    },
-    {
-      id: 'mem_2',
-      full_name: 'Md Zahidul Islam',
-      gender: 'Male',
-      email: 'zahidul090202@gmail.com',
-      contact_number: '+8801700000002',
+      id: 'std_1',
+      full_name: 'Md. Al-Emran',
+      profile_photo: 'Photo/fahim.png',
+      department: 'Computer Science and Engineering (CSE)',
+      session: '2020-21',
+      student_id: '200101',
+      roll_no: '200101',
+      contact_number: '+8801712345678',
+      email: 'emran.cse@s.pust.ac.bd',
+      home_district: 'Chapainawabganj',
+      upazila: 'Shibganj',
+      profession: 'Current Student',
+      present_address: 'Bangabandhu Sheikh Mujibur Rahman Hall, Room 412, PUST',
+      hall: 'Bangabandhu Sheikh Mujibur Rahman Hall',
       blood_group: 'B+',
-      facebook: '',
-      linkedin: '',
-      degree: 'B.Sc in EEE',
-      roll_no: '090202',
-      department: 'Electrical and Electronic Engineering (EEE)',
-      batch_no: '1st',
-      hall: 'Bangabandhu Sheikh Mujibur Rahman hall',
-      passing_year: '2014',
-      grade_cgpa: '3.60',
-      organization: 'Banglalink Telecom',
-      designation: 'Radio Planning Specialist',
-      contact_address: 'Dhaka, Bangladesh',
-      work_country: 'Bangladesh',
-      membership_type: 'Member',
-      membership_no: 'MEM-090202',
-      permanent_country: 'Bangladesh',
-      permanent_district: 'Rajshahi',
-      permanent_address: 'Rajshahi',
-      present_country: 'Bangladesh',
-      present_district: 'Dhaka',
-      present_address: 'Gulshan, Dhaka',
-      cert_serial_no: 'PUST-EEE-090202',
-      cert_photo: '',
-      profile_photo: 'Photo/fahim.png',
-      payment_method: 'Online Payment',
-      payment_photo: '',
-      passwordHash: bcrypt.hashSync('password123', 10),
+      is_blood_donor: true,
+      membership_id: 'CP-PUST-200101',
       status: 'Active',
-      created_at: new Date().toISOString()
+      passwordHash: bcrypt.hashSync('password123', 10),
+      created_at: '2024-01-15T10:00:00.000Z'
     },
     {
-      id: 'mem_3',
-      full_name: 'Md Anisur Rhaman Khan',
-      gender: 'Male',
-      email: 'anisur090203@gmail.com',
-      contact_number: '+8801700000003',
-      blood_group: 'O+',
-      facebook: '',
-      linkedin: '',
-      degree: 'B.Sc in EEE',
-      roll_no: '090203',
-      department: 'Electrical and Electronic Engineering (EEE)',
-      batch_no: '1st',
-      hall: 'Bangabandhu Sheikh Mujibur Rahman hall',
-      passing_year: '2014',
-      grade_cgpa: '3.70',
-      organization: 'DESCO Ltd.',
-      designation: 'Assistant Engineer',
-      contact_address: 'Dhaka, Bangladesh',
-      work_country: 'Bangladesh',
-      membership_type: 'Member',
-      membership_no: 'MEM-090203',
-      permanent_country: 'Bangladesh',
-      permanent_district: 'Bogura',
-      permanent_address: 'Bogura Sadar',
-      present_country: 'Bangladesh',
-      present_district: 'Dhaka',
-      present_address: 'Mirpur, Dhaka',
-      cert_serial_no: '',
-      cert_photo: '',
-      profile_photo: 'Photo/fahim.png',
-      payment_method: 'Online Payment',
-      payment_photo: '',
-      passwordHash: bcrypt.hashSync('password123', 10),
-      status: 'Active',
-      created_at: new Date().toISOString()
-    },
-    {
-      id: 'mem_4',
-      full_name: 'Md. Shariful Islam',
-      gender: 'Male',
-      email: 'shariful090204@gmail.com',
-      contact_number: '+8801700000004',
-      blood_group: 'AB+',
-      facebook: '',
-      linkedin: '',
-      degree: 'B.Sc in EEE',
-      roll_no: '090204',
-      department: 'Electrical and Electronic Engineering (EEE)',
-      batch_no: '1st',
-      hall: 'Bangabandhu Sheikh Mujibur Rahman hall',
-      passing_year: '2014',
-      grade_cgpa: '3.65',
-      organization: 'Power Grid Company of Bangladesh (PGCB)',
-      designation: 'Sub-Divisional Engineer',
-      contact_address: 'Aftabnagar, Dhaka',
-      work_country: 'Bangladesh',
-      membership_type: 'Member',
-      membership_no: 'MEM-090204',
-      permanent_country: 'Bangladesh',
-      permanent_district: 'Natore',
-      permanent_address: 'Natore Sadar',
-      present_country: 'Bangladesh',
-      present_district: 'Dhaka',
-      present_address: 'Badda, Dhaka',
-      cert_serial_no: '',
-      cert_photo: '',
-      profile_photo: 'Photo/fahim.png',
-      payment_method: 'Online Payment',
-      payment_photo: '',
-      passwordHash: bcrypt.hashSync('password123', 10),
-      status: 'Active',
-      created_at: new Date().toISOString()
-    },
-    {
-      id: 'mem_5',
-      full_name: 'Moynul Islam Navil',
-      gender: 'Male',
-      email: 'navil090205@gmail.com',
-      contact_number: '+8801700000005',
-      blood_group: 'B+',
-      facebook: '',
-      linkedin: '',
-      degree: 'B.Sc in EEE',
-      roll_no: '090205',
-      department: 'Electrical and Electronic Engineering (EEE)',
-      batch_no: '1st',
-      hall: 'Bangabandhu Sheikh Mujibur Rahman hall',
-      passing_year: '2014',
-      grade_cgpa: '3.80',
-      organization: 'Huawei Technologies',
-      designation: 'Solution Architect',
-      contact_address: 'Dhaka',
-      work_country: 'Bangladesh',
-      membership_type: 'Fellow',
-      membership_no: 'MEM-090205',
-      permanent_country: 'Bangladesh',
-      permanent_district: 'Kushtia',
-      permanent_address: 'Kushtia',
-      present_country: 'Bangladesh',
-      present_district: 'Dhaka',
-      present_address: 'Banani, Dhaka',
-      cert_serial_no: '',
-      cert_photo: '',
+      id: 'std_2',
+      full_name: 'Tanzim Ahmed Shiblu',
       profile_photo: 'ProfilePhoto/Navil090205.png',
-      payment_method: 'Online Payment',
-      payment_photo: '',
-      passwordHash: bcrypt.hashSync('password123', 10),
-      status: 'Active',
-      created_at: new Date().toISOString()
-    },
-    {
-      id: 'mem_6',
-      full_name: 'Md.Khosru Siddique',
-      gender: 'Male',
-      email: 'khosru090206@gmail.com',
-      contact_number: '+8801700000006',
+      department: 'Electrical and Electronic Engineering (EEE)',
+      session: '2019-20',
+      student_id: '190215',
+      roll_no: '190215',
+      contact_number: '+8801723456789',
+      email: 'tanzim.eee@s.pust.ac.bd',
+      home_district: 'Chapainawabganj',
+      upazila: 'Chapainawabganj Sadar',
+      profession: 'Current Student',
+      present_address: 'Sheikh Rasel Hall, Room 205, PUST',
+      hall: 'Sheikh Rasel Hall',
       blood_group: 'O+',
-      facebook: '',
-      linkedin: '',
-      degree: 'B.Sc in EEE',
-      roll_no: '090206',
-      department: 'Electrical and Electronic Engineering (EEE)',
-      batch_no: '1st',
-      hall: 'Bangabandhu Sheikh Mujibur Rahman hall',
-      passing_year: '2014',
-      grade_cgpa: '3.55',
-      organization: 'Walton Hi-Tech Industries PLC',
-      designation: 'R&D Engineer',
-      contact_address: 'Gazipur, Bangladesh',
-      work_country: 'Bangladesh',
-      membership_type: 'Member',
-      membership_no: 'MEM-090206',
-      permanent_country: 'Bangladesh',
-      permanent_district: 'Pabna',
-      permanent_address: 'Pabna',
-      present_country: 'Bangladesh',
-      present_district: 'Gazipur',
-      present_address: 'Chandra, Gazipur',
-      cert_serial_no: '',
-      cert_photo: '',
-      profile_photo: 'Photo/fahim.png',
-      payment_method: 'Online Payment',
-      payment_photo: '',
-      passwordHash: bcrypt.hashSync('password123', 10),
+      is_blood_donor: true,
+      membership_id: 'CP-PUST-190215',
       status: 'Active',
-      created_at: new Date().toISOString()
+      passwordHash: bcrypt.hashSync('password123', 10),
+      created_at: '2024-01-16T11:30:00.000Z'
     },
     {
-      id: 'mem_7',
-      full_name: 'Shafiul Azam Hero',
-      gender: 'Male',
-      email: 'shafiul090207@gmail.com',
-      contact_number: '+8801700000007',
+      id: 'std_3',
+      full_name: 'Nusrat Jahan Mim',
+      profile_photo: 'Photo/fahim.png',
+      department: 'Pharmacy',
+      session: '2021-22',
+      student_id: '210512',
+      roll_no: '210512',
+      contact_number: '+8801734567890',
+      email: 'mim.pharmacy@s.pust.ac.bd',
+      home_district: 'Chapainawabganj',
+      upazila: 'Gomostapur',
+      profession: 'Current Student',
+      present_address: 'Sheikh Hasina Hall, Room 310, PUST',
+      hall: 'Sheikh Hasina Hall',
       blood_group: 'A+',
-      facebook: '',
-      linkedin: '',
-      degree: 'B.Sc in EEE',
-      roll_no: '090207',
-      department: 'Electrical and Electronic Engineering (EEE)',
-      batch_no: '1st',
-      hall: 'Bangabandhu Sheikh Mujibur Rahman hall',
-      passing_year: '2014',
-      grade_cgpa: '3.72',
-      organization: 'Bangladesh Rural Electrification Board (BREB)',
-      designation: 'Deputy General Manager',
-      contact_address: 'Dhaka',
-      work_country: 'Bangladesh',
-      membership_type: 'Member',
-      membership_no: 'MEM-090207',
-      permanent_country: 'Bangladesh',
-      permanent_district: 'Sirajganj',
-      permanent_address: 'Sirajganj',
-      present_country: 'Bangladesh',
-      present_district: 'Dhaka',
-      present_address: 'Nikunja, Dhaka',
-      cert_serial_no: '',
-      cert_photo: '',
-      profile_photo: 'Photo/fahim.png',
-      payment_method: 'Online Payment',
-      payment_photo: '',
-      passwordHash: bcrypt.hashSync('password123', 10),
+      is_blood_donor: true,
+      membership_id: 'CP-PUST-210512',
       status: 'Active',
-      created_at: new Date().toISOString()
+      passwordHash: bcrypt.hashSync('password123', 10),
+      created_at: '2024-02-10T09:15:00.000Z'
     },
     {
-      id: 'mem_8',
-      full_name: 'Mohd. Abdus Salam',
-      gender: 'Male',
-      email: 'salam090209@gmail.com',
-      contact_number: '+8801700000008',
-      blood_group: 'B+',
-      facebook: '',
-      linkedin: '',
-      degree: 'B.Sc in EEE',
-      roll_no: '090209',
-      department: 'Electrical and Electronic Engineering (EEE)',
-      batch_no: '1st',
-      hall: 'Bangabandhu Sheikh Mujibur Rahman hall',
-      passing_year: '2014',
-      grade_cgpa: '3.68',
-      organization: 'Energypac Engineering Ltd.',
-      designation: 'Project Lead',
-      contact_address: 'Tejgaon, Dhaka',
-      work_country: 'Bangladesh',
-      membership_type: 'Member',
-      membership_no: 'MEM-090209',
-      permanent_country: 'Bangladesh',
-      permanent_district: 'Tangail',
-      permanent_address: 'Tangail',
-      present_country: 'Bangladesh',
-      present_district: 'Dhaka',
-      present_address: 'Mohammadpur, Dhaka',
-      cert_serial_no: '',
-      cert_photo: '',
-      profile_photo: 'Photo/fahim.png',
-      payment_method: 'Online Payment',
-      payment_photo: '',
-      passwordHash: bcrypt.hashSync('password123', 10),
+      id: 'std_4',
+      full_name: 'Md. Tariqul Islam',
+      profile_photo: 'ProfilePhoto/Amir.jpg',
+      department: 'Civil Engineering (CE)',
+      session: '2016-17',
+      student_id: '160308',
+      roll_no: '160308',
+      contact_number: '+8801745678901',
+      email: 'tariqul.ce@alumni.pust.ac.bd',
+      home_district: 'Chapainawabganj',
+      upazila: 'Nachole',
+      profession: 'Assistant Engineer (RHD)',
+      present_address: 'Tejgaon, Dhaka',
+      hall: 'Bangabandhu Sheikh Mujibur Rahman Hall',
+      blood_group: 'AB+',
+      is_blood_donor: false,
+      membership_id: 'CP-PUST-160308',
       status: 'Active',
-      created_at: new Date().toISOString()
+      passwordHash: bcrypt.hashSync('password123', 10),
+      created_at: '2023-11-20T14:45:00.000Z'
     },
     {
-      id: 'mem_9',
-      full_name: 'Md. Saydur Rahman',
-      gender: 'Male',
-      email: 'saydur090210@gmail.com',
-      contact_number: '+8801700000009',
-      blood_group: 'O+',
-      facebook: '',
-      linkedin: '',
-      degree: 'B.Sc in EEE',
-      roll_no: '090210',
-      department: 'Electrical and Electronic Engineering (EEE)',
-      batch_no: '1st',
-      hall: 'Bangabandhu Sheikh Mujibur Rahman hall',
-      passing_year: '2014',
-      grade_cgpa: '3.62',
-      organization: 'Grameenphone Ltd.',
-      designation: 'System Automation Specialist',
-      contact_address: 'GP House, Bashundhara, Dhaka',
-      work_country: 'Bangladesh',
-      membership_type: 'Member',
-      membership_no: 'MEM-090210',
-      permanent_country: 'Bangladesh',
-      permanent_district: 'Pabna',
-      permanent_address: 'Pabna',
-      present_country: 'Bangladesh',
-      present_district: 'Dhaka',
-      present_address: 'Bashundhara R/A, Dhaka',
-      cert_serial_no: '',
-      cert_photo: '',
+      id: 'std_5',
+      full_name: 'Mahmudul Hasan Shanto',
       profile_photo: 'Photo/fahim.png',
-      payment_method: 'Online Payment',
-      payment_photo: '',
-      passwordHash: bcrypt.hashSync('password123', 10),
+      department: 'Business Administration (BBA)',
+      session: '2022-23',
+      student_id: '220914',
+      roll_no: '220914',
+      contact_number: '+8801756789012',
+      email: 'shanto.bba@s.pust.ac.bd',
+      home_district: 'Chapainawabganj',
+      upazila: 'Bholahat',
+      profession: 'Current Student',
+      present_address: 'Radhanagar Student Mess, Pabna',
+      hall: 'Off-Campus Mess',
+      blood_group: 'O-',
+      is_blood_donor: true,
+      membership_id: 'CP-PUST-220914',
       status: 'Active',
-      created_at: new Date().toISOString()
+      passwordHash: bcrypt.hashSync('password123', 10),
+      created_at: '2024-03-01T12:00:00.000Z'
     },
     {
-      id: 'mem_10',
-      full_name: 'Mohammad Golam Rabbani',
-      gender: 'Male',
-      email: 'rabbani090211@gmail.com',
-      contact_number: '+8801700000010',
+      id: 'std_6',
+      full_name: 'Sabrina Sultana Ritu',
+      profile_photo: 'Photo/fahim.png',
+      department: 'Information and Communication Engineering (ICE)',
+      session: '2023-24',
+      student_id: '230405',
+      roll_no: '230405',
+      contact_number: '+8801767890123',
+      email: 'ritu.ice@s.pust.ac.bd',
+      home_district: 'Chapainawabganj',
+      upazila: 'Shibganj',
+      profession: 'Current Student',
+      present_address: 'Pritilata Hall, PUST',
+      hall: 'Pritilata Hall',
+      blood_group: 'B-',
+      is_blood_donor: true,
+      membership_id: 'CP-PUST-230405',
+      status: 'Pending',
+      passwordHash: bcrypt.hashSync('password123', 10),
+      created_at: '2024-04-12T16:20:00.000Z'
+    },
+    {
+      id: 'std_7',
+      full_name: 'Engr. Md. Faruk Hossain',
+      profile_photo: 'Photo/adminuser.png',
+      department: 'Computer Science and Engineering (CSE)',
+      session: '2014-15',
+      student_id: '140102',
+      roll_no: '140102',
+      contact_number: '+8801778901234',
+      email: 'faruk.cse@alumni.pust.ac.bd',
+      home_district: 'Chapainawabganj',
+      upazila: 'Chapainawabganj Sadar',
+      profession: 'Senior Software Engineer, Brain Station 23',
+      present_address: 'Mirpur DOHS, Dhaka',
+      hall: 'Bangabandhu Sheikh Mujibur Rahman Hall',
       blood_group: 'A+',
-      facebook: '',
-      linkedin: '',
-      degree: 'B.Sc in EEE',
-      roll_no: '090211',
-      department: 'Electrical and Electronic Engineering (EEE)',
-      batch_no: '1st',
-      hall: 'Bangabandhu Sheikh Mujibur Rahman hall',
-      passing_year: '2014',
-      grade_cgpa: '3.88',
-      organization: 'Pabna University of Science & Technology',
-      designation: 'Assistant Professor (EEE)',
-      contact_address: 'PUST Campus, Pabna',
-      work_country: 'Bangladesh',
-      membership_type: 'Fellow',
-      membership_no: 'MEM-090211',
-      permanent_country: 'Bangladesh',
-      permanent_district: 'Pabna',
-      permanent_address: 'Pabna Sadar',
-      present_country: 'Bangladesh',
-      present_district: 'Pabna',
-      present_address: 'PUST Campus, Pabna',
-      cert_serial_no: '',
-      cert_photo: '',
-      profile_photo: 'Photo/fahim.png',
-      payment_method: 'Online Payment',
-      payment_photo: '',
-      passwordHash: bcrypt.hashSync('password123', 10),
+      is_blood_donor: true,
+      membership_id: 'CP-PUST-140102',
       status: 'Active',
-      created_at: new Date().toISOString()
+      passwordHash: bcrypt.hashSync('password123', 10),
+      created_at: '2023-10-05T08:30:00.000Z'
+    }
+  ],
+  support_services: [
+    {
+      id: 1,
+      title: 'নতুন ভর্তিচ্ছু শিক্ষার্থীদের সহায়তা (Admission Helper)',
+      icon: 'fa-user-graduate',
+      description: 'চাঁপাইনবাবগঞ্জ থেকে পাবিপ্রবিতে নতুন ভর্তি পরীক্ষা ও ভর্তি সংক্রান্ত যে কোনো তথ্য, ক্যাম্পাস পরিদর্শন, সিট খোঁজা এবং বাস কাউন্টার থেকে রিসিভ করার পূর্ণাঙ্গ সহায়তা।'
+    },
+    {
+      id: 2,
+      title: 'মেস ও আবাসন সহায়তা (Mess & Accommodation)',
+      icon: 'fa-home',
+      description: 'পাবনা শহর ও ক্যাম্পাস সংলগ্ন এলাকায় নিরাপদ মেস ও ছাত্রাবাস খুঁজে পেতে নতুন শিক্ষার্থীদের সার্বিক সহযোগিতা ও পরামর্শ।'
+    },
+    {
+      id: 3,
+      title: 'জরুরি রক্তদান নেটওয়ার্ক (Emergency Blood Network)',
+      icon: 'fa-tint',
+      description: 'পাবনা ও চাঁপাইনবাবগঞ্জে জেলা সমিতির সদস্যদের মাধ্যমে জরুরি প্রয়োজনে দ্রুত রক্তদাতা সংগ্রহের সক্রিয় নেটওয়ার্ক।'
+    },
+    {
+      id: 4,
+      title: 'ক্যারিয়ার ও বিসিএস গাইডলাইন (Mentorship & Career)',
+      icon: 'fa-briefcase',
+      description: 'পাবিপ্রবির চাঁপাইনবাবগঞ্জের সফল অ্যালামনাই ও সিনিয়রদের তত্ত্বাবধানে নিয়মিত স্টাডি সেশন, বিসিএস ও জব প্রিপারেশন গাইডলাইন।'
+    },
+    {
+      id: 5,
+      title: 'শিক্ষা সহায়তা ও কল্যাণ তহবিল (Student Welfare Fund)',
+      icon: 'fa-hands-helping',
+      description: 'অসহায় ও মেধাবী শিক্ষার্থীদের এককালীন শিক্ষা সহায়তা, সেমিস্টার ফি এবং জরুরি চিকিৎসা সহায়তায় আর্থিক ফান্ড।'
     }
   ],
   notices: [
     {
       id: 1,
-      title: 'Read Before Apply for Membership',
+      title: 'পাবিপ্রবি চাঁপাইনবাবগঞ্জ জেলা সমিতি - বার্ষিক মিলনমেলা ও নবীনবরণ ২০২৬',
       file_url: 'NoticeDoc/Instruction.png',
-      date: '2023-08-15'
+      date: '2026-11-20'
+    },
+    {
+      id: 2,
+      title: 'সদস্য তালিকাভুক্তি ও ডিজিটাল আইডি কার্ড সংক্রান্ত জরুরি নোটিশ',
+      file_url: 'NoticeDoc/Instruction.png',
+      date: '2026-11-15'
     }
   ],
   downloads: [
     {
       id: 1,
-      title: 'Convener Committee',
+      title: 'পাবিপ্রবি চাঁপাইনবাবগঞ্জ জেলা সমিতি গঠনতন্ত্র ও নীতিমালা',
       file_url: 'DownloadDoc/EEE_PUST_ALUMNI _CONVENER_COMMITTEE_APPROVED.pdf',
-      date: '2023-08-15'
+      date: '2026-10-01'
     },
     {
       id: 2,
-      title: 'Read Before Apply for Membership',
+      title: 'সদস্য নিবন্ধন নির্দেশিকা ও তথ্য ফরম',
       file_url: 'DownloadDoc/Instruction.png',
-      date: '2023-08-15'
+      date: '2026-10-01'
+    }
+  ],
+  committee: [
+    {
+      role: 'সভাপতি (President)',
+      name: 'মো: হাসিবুল হাসান',
+      department: 'CSE',
+      session: '2019-20',
+      upazila: 'Shibganj',
+      phone: '+8801700000001'
     },
     {
-      id: 3,
-      title: 'Convener Committee Picture',
-      file_url: 'DownloadDoc/Convener committee.jpg',
-      date: '2023-08-15'
+      role: 'সাধারণ সম্পাদক (General Secretary)',
+      name: 'মো: আব্দুল্লাহ আল মামুন',
+      department: 'EEE',
+      session: '2020-21',
+      upazila: 'Chapainawabganj Sadar',
+      phone: '+8801700000002'
+    },
+    {
+      role: 'সাংগঠনিক সম্পাদক (Organizing Secretary)',
+      name: 'মো: আরিফুল ইসলাম',
+      department: 'Pharmacy',
+      session: '2021-22',
+      upazila: 'Gomostapur',
+      phone: '+8801700000003'
+    },
+    {
+      role: 'দপ্তর সম্পাদক (Office Secretary)',
+      name: 'মো: ফাহিম ফয়সাল',
+      department: 'CE',
+      session: '2021-22',
+      upazila: 'Nachole',
+      phone: '+8801700000004'
+    },
+    {
+      role: 'ছাত্রকল্যাণ ও রক্তদান বিষয়ক সম্পাদক',
+      name: 'মো: রাকিবুল ইসলাম',
+      department: 'BBA',
+      session: '2022-23',
+      upazila: 'Bholahat',
+      phone: '+8801700000005'
     }
   ]
 };
@@ -445,21 +303,35 @@ module.exports = {
   // Members
   getMembers: () => readDb().members,
   getActiveMembers: () => readDb().members.filter(m => m.status === 'Active'),
+  getPendingMembers: () => readDb().members.filter(m => m.status === 'Pending'),
+  getBloodDonors: () => readDb().members.filter(m => m.is_blood_donor && m.blood_group && m.blood_group !== 'Unknown'),
   getMemberById: (id) => readDb().members.find(m => String(m.id) === String(id)),
   getMemberByEmail: (email) => {
     if (!email) return null;
-    return readDb().members.find(m => m.email.toLowerCase() === email.trim().toLowerCase());
+    return readDb().members.find(m => m.email && m.email.toLowerCase() === email.trim().toLowerCase());
+  },
+  getMemberByStudentId: (sid) => {
+    if (!sid) return null;
+    return readDb().members.find(m => 
+      (m.student_id && String(m.student_id).trim() === String(sid).trim()) ||
+      (m.roll_no && String(m.roll_no).trim() === String(sid).trim())
+    );
   },
   getMemberByRoll: (roll) => {
     if (!roll) return null;
-    return readDb().members.find(m => String(m.roll_no).trim() === String(roll).trim());
+    return readDb().members.find(m => 
+      (m.roll_no && String(m.roll_no).trim() === String(roll).trim()) ||
+      (m.student_id && String(m.student_id).trim() === String(roll).trim())
+    );
   },
   addMember: (memberData) => {
     const db = readDb();
-    const id = 'mem_' + Date.now();
+    const id = 'std_' + Date.now();
     const newMember = {
       id,
       ...memberData,
+      home_district: 'Chapainawabganj',
+      membership_id: memberData.membership_id || 'CP-PUST-' + (memberData.student_id || memberData.roll_no || Date.now().toString().slice(-4)),
       created_at: new Date().toISOString()
     };
     db.members.unshift(newMember);
@@ -474,9 +346,12 @@ module.exports = {
     writeDb(db);
     return db.members[idx];
   },
-  updateMemberByRoll: (roll, updates) => {
+  updateMemberByStudentId: (sid, updates) => {
     const db = readDb();
-    const idx = db.members.findIndex(m => String(m.roll_no).trim() === String(roll).trim());
+    const idx = db.members.findIndex(m => 
+      (m.student_id && String(m.student_id).trim() === String(sid).trim()) ||
+      (m.roll_no && String(m.roll_no).trim() === String(sid).trim())
+    );
     if (idx === -1) return null;
     db.members[idx] = { ...db.members[idx], ...updates, updated_at: new Date().toISOString() };
     writeDb(db);
@@ -484,7 +359,7 @@ module.exports = {
   },
   deleteMember: (id) => {
     const db = readDb();
-    db.members = db.members.filter(m => String(m.id) !== String(id) && String(m.roll_no) !== String(id));
+    db.members = db.members.filter(m => String(m.id) !== String(id) && String(m.student_id) !== String(id) && String(m.roll_no) !== String(id));
     writeDb(db);
     return true;
   },
@@ -494,19 +369,9 @@ module.exports = {
     if (!username) return null;
     return readDb().admins.find(a => a.username.toLowerCase() === username.trim().toLowerCase());
   },
-  updateAdminPassword: (username, newHash) => {
-    const db = readDb();
-    const admin = db.admins.find(a => a.username.toLowerCase() === username.trim().toLowerCase());
-    if (admin) {
-      admin.passwordHash = newHash;
-      writeDb(db);
-      return true;
-    }
-    return false;
-  },
 
   // Notices
-  getNotices: () => readDb().notices,
+  getNotices: () => readDb().notices || [],
   addNotice: (notice) => {
     const db = readDb();
     const newNotice = {
@@ -526,7 +391,7 @@ module.exports = {
   },
 
   // Downloads
-  getDownloads: () => readDb().downloads,
+  getDownloads: () => readDb().downloads || [],
   addDownload: (download) => {
     const db = readDb();
     const newDownload = {
@@ -543,5 +408,9 @@ module.exports = {
     db.downloads = db.downloads.filter(d => String(d.id) !== String(id));
     writeDb(db);
     return true;
-  }
+  },
+
+  // Support & Committee
+  getSupportServices: () => readDb().support_services || defaultData.support_services,
+  getCommittee: () => readDb().committee || defaultData.committee
 };

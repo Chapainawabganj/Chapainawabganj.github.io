@@ -1,0 +1,113 @@
+<%- include('partials/header', { title: 'রক্তদান নেটওয়ার্ক (Emergency Blood Network)', activePage: 'blood' }) %>
+
+<section class="content my-4">
+    <div class="container-fluid px-lg-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4 p-md-5">
+
+                        <div class="page-title-banner" style="background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);">
+                            <i class="fas fa-heartbeat mr-2"></i> জরুরি রক্তদান নেটওয়ার্ক - চাঁপাইনবাবগঞ্জ জেলা সমিতি, পাবিপ্রবি
+                        </div>
+
+                        <div class="row align-items-center mb-4">
+                            <div class="col-lg-8">
+                                <h4 class="font-weight-bold text-dark">
+                                    <span class="text-danger">রক্ত দিন, জীবন বাঁচান!</span> পাবনা ও চাঁপাইনবাবগঞ্জে জরুরি রক্তদাতা খুঁজুন
+                                </h4>
+                                <p class="text-muted mb-0">
+                                    পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়স্থ চাঁপাইনবাবগঞ্জ জেলা সমিতির রক্তদানে আগ্রহী শিক্ষার্থীদের তালিকা নিচে দেওয়া হলো। রক্তের গ্রুপ ও উপজেলা অনুযায়ী ফিল্টার করে সরাসরি কল বা হোয়াটসঅ্যাপে যোগাযোগ করুন।
+                                </p>
+                            </div>
+                            <div class="col-lg-4 text-lg-right mt-3 mt-lg-0">
+                                <a href="/registration.aspx" class="btn btn-danger font-weight-bold shadow-sm px-4">
+                                    <i class="fas fa-hand-holding-heart mr-1"></i> রক্তদাতা হিসেবে নাম নিবন্ধন করুন
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Blood Group Filter Pills -->
+                        <div class="p-3 bg-light rounded border mb-4 text-center">
+                            <span class="font-weight-bold mr-2 text-dark">গ্রুপ অনুযায়ী ফিল্টার:</span>
+                            <% const bloodGroups = ['All', 'A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']; %>
+                            <% bloodGroups.forEach(function(bg) { %>
+                                <a href="/blood_donation.aspx<%= bg === 'All' ? '' : '?group=' + encodeURIComponent(bg) %>" 
+                                   class="btn btn-sm m-1 font-weight-bold <%= (typeof selectedGroup !== 'undefined' && selectedGroup === bg) || (bg === 'All' && (!selectedGroup || selectedGroup === 'All')) ? 'btn-danger' : 'btn-outline-danger' %>">
+                                    <%= bg === 'All' ? 'সকল গ্রুপ' : bg %>
+                                </a>
+                            <% }); %>
+                        </div>
+
+                        <!-- Donors Table -->
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered datatable" style="width: 100%;">
+                                <thead style="background-color: var(--navy-blue); color: white;">
+                                    <tr>
+                                        <th class="text-center align-middle" style="width: 80px;">ছবি</th>
+                                        <th class="align-middle">রক্তদাতার নাম</th>
+                                        <th class="text-center align-middle" style="width: 120px;">রক্তের গ্রুপ</th>
+                                        <th class="align-middle">বিভাগ ও সেশন</th>
+                                        <th class="text-center align-middle">নিজ উপজেলা</th>
+                                        <th class="align-middle">বর্তমান অবস্থান / হল</th>
+                                        <th class="text-center align-middle" style="width: 150px;">জরুরি যোগাযোগ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if (donors && donors.length > 0) { %>
+                                        <% donors.forEach(function(donor) { %>
+                                            <tr>
+                                                <td class="text-center align-middle">
+                                                    <img src="/<%= donor.profile_photo || 'Photo/fahim.png' %>" alt="<%= donor.full_name %>" class="rounded-circle border" style="width: 48px; height: 48px; object-fit: cover;" onerror="this.src='/Photo/fahim.png'" />
+                                                </td>
+                                                <td class="align-middle font-weight-bold text-dark">
+                                                    <%= donor.full_name %>
+                                                    <br><small class="text-muted"><%= donor.profession %></small>
+                                                </td>
+                                                <td class="text-center align-middle">
+                                                    <span class="badge badge-blood" style="font-size: 15px; padding: 6px 12px;">
+                                                        <i class="fas fa-tint mr-1"></i> <%= donor.blood_group %>
+                                                    </span>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <strong><%= donor.department %></strong>
+                                                    <br><small class="badge badge-session"><%= donor.session %></small>
+                                                </td>
+                                                <td class="text-center align-middle">
+                                                    <span class="badge badge-upazila"><%= donor.upazila %></span>
+                                                </td>
+                                                <td class="align-middle small">
+                                                    <i class="fas fa-map-marker-alt text-danger mr-1"></i> <%= donor.hall || donor.present_address %>
+                                                </td>
+                                                <td class="text-center align-middle">
+                                                    <a href="tel:<%= donor.contact_number %>" class="btn btn-success btn-sm font-weight-bold px-2 py-1 shadow-sm mr-1" title="সরাসরি কল করুন">
+                                                        <i class="fas fa-phone-alt"></i> কল
+                                                    </a>
+                                                    <a href="https://wa.me/<%= donor.contact_number.replace(/[^0-9]/g, '') %>" target="_blank" class="btn btn-outline-success btn-sm px-2 py-1" title="হোয়াটসঅ্যাপে বার্তা পাঠান">
+                                                        <i class="fab fa-whatsapp"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <tr>
+                                            <td colspan="7" class="text-center py-4 text-muted">
+                                                নির্বাচিত গ্রুপের কোনো রক্তদাতা পাওয়া যায়নি।
+                                            </td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-4 pl-4">
+                        <a href="/home.aspx" class="text-primary font-weight-bold">&lt;&lt; হোমে ফিরে যান</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,33 +1,64 @@
     <!-- Footer -->
     <footer class="mt-5">
-        <div class="row m-0">
-            <div class="col p-0">
-                <hr class="m-0" />
-            </div>
-        </div>
-
         <div id="footer1">
-            <div class="container text-center">
-                <p class="m-0">
-                    <% if (typeof currentAdmin !== 'undefined' && currentAdmin) { %>
-                        <a id="LinkButton2" class="footerlinks font-weight-bold" href="/membermanagement.aspx"><i class="fas fa-shield-alt"></i> Go to Admin Panel</a>
-                        &nbsp;&nbsp;|&nbsp;&nbsp;
-                        <a class="footerlinks" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                    <% } else { %>
-                        <a id="LinkButton2" class="footerlinks" href="/adminlogin.aspx"><i class="fas fa-user-lock"></i> Admin Login</a>
-                    <% } %>
-                    &nbsp;&nbsp;|&nbsp;&nbsp;
-                    <a class="footerlinks" href="/about.aspx">About Us</a>
-                    &nbsp;&nbsp;|&nbsp;&nbsp;
-                    <a class="footerlinks" href="/contact.aspx">Contact Support</a>
-                </p>
+            <div class="container py-3">
+                <div class="row">
+                    <!-- Col 1: About Zilla Samity -->
+                    <div class="col-md-5 mb-4 mb-md-0">
+                        <h5 class="font-weight-bold text-white mb-3">
+                            <i class="fas fa-landmark text-success mr-2"></i> পাবিপ্রবি চাঁপাইনবাবগঞ্জ জেলা সমিতি
+                        </h5>
+                        <p class="text-light" style="font-size: 14px; line-height: 1.8;">
+                            পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়ে অধ্যয়নরত ও প্রাক্তন চাঁপাইনবাবগঞ্জ জেলার শিক্ষার্থীদের পারস্পরিক ভ্রাতৃত্ব, ঐক্য, শিক্ষা সহায়তা ও কল্যাণে নিয়োজিত একটি অরাজনৈতিক স্বেচ্ছাসেবী সংগঠন।
+                        </p>
+                        <div class="mt-3">
+                            <span class="badge badge-light p-2 mr-1"><i class="fas fa-phone-alt text-success mr-1"></i> হেল্পলাইন: +8801712345678</span>
+                            <span class="badge badge-light p-2"><i class="fas fa-envelope text-primary mr-1"></i> pust.chapai@gmail.com</span>
+                        </div>
+                    </div>
+
+                    <!-- Col 2: Student Welfare & Services -->
+                    <div class="col-md-4 mb-4 mb-md-0">
+                        <h6 class="font-weight-bold text-warning mb-3">
+                            <i class="fas fa-hands-helping mr-2"></i> শিক্ষার্থী সেবা ও সহায়তা
+                        </h6>
+                        <ul class="list-unstyled text-light" style="font-size: 14px; line-height: 2;">
+                            <li><a href="/blood_donation.aspx" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> জরুরি রক্তদাতা খুঁজুন</a></li>
+                            <li><a href="/student_support.aspx" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> নতুন ভর্তিচ্ছু শিক্ষার্থীদের সহায়তা</a></li>
+                            <li><a href="/student_support.aspx#mess" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> মেস ও আবাসন পরামর্শ</a></li>
+                            <li><a href="/alumnilist.aspx" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> শিক্ষার্থী ও অ্যালামনাই ডিরেক্টরি</a></li>
+                            <li><a href="/registration.aspx" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> সদস্য হিসেবে নিবন্ধন করুন</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Col 3: Upazilas & Admin -->
+                    <div class="col-md-3">
+                        <h6 class="font-weight-bold text-warning mb-3">
+                            <i class="fas fa-map-marked-alt mr-2"></i> উপজেলাসমূহ
+                        </h6>
+                        <p class="text-light small mb-3">
+                            চাঁপাইনবাবগঞ্জ সদর &bull; শিবগঞ্জ &bull; গোমস্তাপুর &bull; নাচোল &bull; ভোলাহাট
+                        </p>
+                        <div class="pt-2 border-top border-secondary">
+                            <% if (typeof currentAdmin !== 'undefined' && currentAdmin) { %>
+                                <a class="btn btn-warning btn-sm font-weight-bold btn-block" href="/membermanagement.aspx">
+                                    <i class="fas fa-user-shield mr-1"></i> অ্যাডমিন ড্যাশবোর্ড
+                                </a>
+                            <% } else { %>
+                                <a id="LinkButton2" class="btn btn-outline-light btn-sm btn-block" href="/adminlogin.aspx">
+                                    <i class="fas fa-lock mr-1"></i> অ্যাডমিন লগইন
+                                </a>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div id="footer2">
             <div class="container text-center">
-                <p class="m-0 text-white font-weight-light" style="font-size: 14px;">
-                    &copy; All right Reserved - PUST EEE Alumni
+                <p class="m-0 font-weight-normal">
+                    &copy; 2026 <strong>পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়স্থ চাঁপাইনবাবগঞ্জ জেলা সমিতি</strong> | All Rights Reserved.
                 </p>
             </div>
         </div>
@@ -41,7 +72,13 @@
                     "pageLength": 10,
                     "responsive": true,
                     "language": {
-                        "search": "Filter Records:"
+                        "search": "সদস্য খুঁজুন:",
+                        "lengthMenu": "_MENU_ টি রেকর্ড প্রদর্শন",
+                        "info": "_TOTAL_ জন শিক্ষার্থীর মধ্যে _START_ থেকে _END_ দেখানো হচ্ছে",
+                        "paginate": {
+                            "previous": "পূর্ববর্তী",
+                            "next": "পরবর্তী"
+                        }
                     }
                 });
             }

@@ -1,0 +1,83 @@
+<%- include('partials/header', { title: 'কার্যনির্বাহী কমিটি (Executive Committee)', activePage: 'committee' }) %>
+
+<section class="content my-4">
+    <div class="container-fluid px-lg-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4 p-md-5">
+
+                        <div class="page-title-banner">
+                            <i class="fas fa-users mr-2"></i> কার্যনির্বাহী কমিটি ও উপদেষ্টা পরিষদ - চাঁপাইনবাবগঞ্জ জেলা সমিতি, পাবিপ্রবি
+                        </div>
+
+                        <div class="text-center mb-5">
+                            <h4 class="font-weight-bold text-dark">
+                                কার্যনির্বাহী পরিষদ ২০২৫-২০২৬
+                            </h4>
+                            <p class="text-muted">
+                                পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়ে অধ্যয়নরত চাঁপাইনবাবগঞ্জ জেলার শিক্ষার্থীদের প্রতিনিধিত্বকারী পরিষদ
+                            </p>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <% committee.forEach(function(member) { %>
+                                <div class="col-md-4 mb-4">
+                                    <div class="card h-100 text-center p-4 border shadow-sm feature-box">
+                                        <div class="mb-3">
+                                            <img src="/Photo/fahim.png" alt="<%= member.name %>" class="rounded-circle border p-1 shadow-sm" style="width: 90px; height: 90px; object-fit: cover;" />
+                                        </div>
+                                        <h5 class="font-weight-bold text-dark mb-1"><%= member.name %></h5>
+                                        <div class="mb-2">
+                                            <span class="badge badge-emerald text-white font-weight-bold px-3 py-1">
+                                                <%= member.role %>
+                                            </span>
+                                        </div>
+                                        <p class="text-muted small mb-1">
+                                            <strong>বিভাগ:</strong> <%= member.department %> | <strong>সেশন:</strong> <%= member.session %>
+                                        </p>
+                                        <p class="text-muted small mb-3">
+                                            <i class="fas fa-map-marker-alt text-danger mr-1"></i> উপজেলা: <strong><%= member.upazila %></strong>
+                                        </p>
+                                        <div class="mt-auto">
+                                            <a href="tel:<%= member.phone %>" class="btn btn-outline-success btn-sm btn-block font-weight-bold">
+                                                <i class="fas fa-phone mr-1"></i> <%= member.phone %>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        </div>
+
+                        <!-- Advisory Council -->
+                        <div class="mt-5 p-4 rounded bg-light border">
+                            <h4 class="font-weight-bold text-center text-dark mb-4">
+                                <i class="fas fa-award text-warning mr-2"></i> সম্মানিত উপদেষ্টা পরিষদ (Advisory Council)
+                            </h4>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="p-3 bg-white rounded border">
+                                        <h6 class="font-weight-bold text-dark mb-1">প্রফেসর ড. মো: হাবিবুর রহমান</h6>
+                                        <p class="text-muted small mb-0">উপদেষ্টা, চাঁপাইনবাবগঞ্জ জেলা সমিতি, পাবিপ্রবি ও শিক্ষক, পাবিপ্রবি</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="p-3 bg-white rounded border">
+                                        <h6 class="font-weight-bold text-dark mb-1">ড. মো: কামরুল হাসান</h6>
+                                        <p class="text-muted small mb-0">উপদেষ্টা ও সহযোগী অধ্যাপক, পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-4 pl-4">
+                        <a href="/home.aspx" class="text-primary font-weight-bold">&lt;&lt; হোমে ফিরে যান</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

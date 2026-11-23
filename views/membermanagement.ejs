@@ -1,23 +1,23 @@
-<%- include('partials/header', { title: 'Member Management', activePage: 'membermanagement' }) %>
+<%- include('partials/header', { title: 'শিক্ষার্থী ভেরিফিকেশন ও ব্যবস্থাপনা (Admin Panel)', activePage: 'membermanagement' }) %>
 
 <section class="content my-4">
     <div class="container-fluid px-lg-4">
         <div class="card shadow border-0">
             <div class="card-body p-4">
 
-                <!-- Admin Navigation Banner (Original Style) -->
+                <!-- Admin Navigation Banner -->
                 <div class="row mb-3">
                     <div class="col-md-6 mb-2">
                         <div class="page-title-banner p-2 m-0">
-                            <a href="/admin_update_member.aspx" class="text-primary text-decoration-none">
-                                <center><i class="fas fa-user-edit mr-2"></i> Goto -&gt; Update Member Profile</center>
+                            <a href="/admin_update_member.aspx" class="text-white text-decoration-none">
+                                <center><i class="fas fa-user-edit mr-2"></i> স্টুডেন্ট প্রোফাইল এডিট ও আপডেট</center>
                             </a>
                         </div>
                     </div>
                     <div class="col-md-6 mb-2">
-                        <div class="page-title-banner p-2 m-0 bg-light">
-                            <a href="/admin_content.aspx" class="text-info text-decoration-none">
-                                <center><i class="fas fa-bullhorn mr-2"></i> Manage Notices &amp; Downloads</center>
+                        <div class="page-title-banner p-2 m-0" style="background: linear-gradient(135deg, var(--emerald-green) 0%, #0d9488 100%);">
+                            <a href="/admin_content.aspx" class="text-white text-decoration-none">
+                                <center><i class="fas fa-bullhorn mr-2"></i> নোটিশ ও বিজ্ঞপ্তি আপলোড</center>
                             </a>
                         </div>
                     </div>
@@ -26,126 +26,112 @@
                 <!-- Stats Counters -->
                 <div class="row my-4">
                     <div class="col-md-3 col-6 mb-2">
-                        <div class="card bg-primary text-white p-3 text-center rounded">
+                        <div class="card p-3 text-center rounded border-0 text-white shadow-sm" style="background-color: var(--navy-blue);">
                             <h3 class="font-weight-bold m-0"><%= members.length %></h3>
-                            <small>Total Members</small>
+                            <small>মোট নিবন্ধিত শিক্ষার্থী</small>
                         </div>
                     </div>
                     <div class="col-md-3 col-6 mb-2">
-                        <div class="card bg-success text-white p-3 text-center rounded">
+                        <div class="card bg-success text-white p-3 text-center rounded border-0 shadow-sm">
                             <h3 class="font-weight-bold m-0"><%= members.filter(m => m.status === 'Active').length %></h3>
-                            <small>Active Members</small>
+                            <small>সক্রিয় ও অনুমোদিত (Active)</small>
                         </div>
                     </div>
                     <div class="col-md-3 col-6 mb-2">
-                        <div class="card bg-warning text-dark p-3 text-center rounded">
+                        <div class="card bg-warning text-dark p-3 text-center rounded border-0 shadow-sm">
                             <h3 class="font-weight-bold m-0"><%= members.filter(m => m.status === 'Pending').length %></h3>
-                            <small>Pending Approval</small>
+                            <small>ভেরিফিকেশন অপেক্ষমান (Pending)</small>
                         </div>
                     </div>
                     <div class="col-md-3 col-6 mb-2">
-                        <div class="card bg-info text-white p-3 text-center rounded">
-                            <h3 class="font-weight-bold m-0"><%= notCount %></h3>
-                            <small>Notices &amp; Downloads</small>
+                        <div class="card bg-danger text-white p-3 text-center rounded border-0 shadow-sm">
+                            <h3 class="font-weight-bold m-0"><%= members.filter(m => m.is_blood_donor).length %></h3>
+                            <small>জরুরি রক্তদাতা (Blood Donors)</small>
                         </div>
                     </div>
                 </div>
 
-                <!-- Members Table -->
-                <h4 class="font-weight-bold text-dark border-bottom pb-2 mb-3">
-                    <i class="fas fa-users-cog mr-2 text-primary"></i> Registered Members List
-                </h4>
+                <!-- Students & Members Verification Table -->
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center border-bottom pb-2 mb-3">
+                    <h4 class="font-weight-bold text-dark m-0">
+                        <i class="fas fa-user-check text-success mr-2"></i> শিক্ষার্থী নিবন্ধন ও ভেরিফিকেশন তালিকা
+                    </h4>
+                    <span class="text-muted small">
+                        পেন্ডিং শিক্ষার্থীদের নামের পাশে <span class="badge badge-success"><i class="fas fa-check"></i></span> বাটনে ক্লিক করে তাৎক্ষণিক অনুমোদন দিন
+                    </span>
+                </div>
 
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered datatable" style="width: 100%;">
-                        <thead>
-                            <tr style="background-color: #006699; color: white;">
-                                <th class="align-middle">Full Name</th>
-                                <th class="text-center align-middle" style="width: 100px;">Status</th>
-                                <th class="text-center align-middle">Payment</th>
-                                <th class="text-center align-middle">Batch</th>
-                                <th class="text-center align-middle">Roll No</th>
-                                <th class="text-center align-middle">Profile Photo</th>
-                                <th class="text-center align-middle">Certificate</th>
-                                <th class="text-center align-middle">Payment Slip</th>
-                                <th class="text-center align-middle" style="width: 140px;">Admin Actions</th>
+                    <table class="table table-hover table-bordered datatable" style="width: 100%;">
+                        <thead style="background-color: var(--navy-blue); color: white;">
+                            <tr>
+                                <th class="text-center align-middle" style="width: 60px;">ছবি</th>
+                                <th class="align-middle">শিক্ষার্থীর নাম ও যোগাযোগ</th>
+                                <th class="text-center align-middle" style="width: 110px;">আইডি / রোল</th>
+                                <th class="align-middle">বিভাগ ও সেশন</th>
+                                <th class="text-center align-middle" style="width: 120px;">উপজেলা</th>
+                                <th class="text-center align-middle" style="width: 80px;">রক্ত</th>
+                                <th class="text-center align-middle" style="width: 120px;">ভেরিফিকেশন স্ট্যাটাস</th>
+                                <th class="text-center align-middle" style="width: 140px;">অ্যাডমিন অ্যাকশন</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% members.forEach(function(member) { %>
-                                <tr>
-                                    <td class="align-middle font-weight-bold">
-                                        <%= member.full_name %>
-                                        <br><small class="text-muted"><%= member.email %></small>
+                                <tr class="<%= member.status === 'Pending' ? 'table-warning' : '' %>">
+                                    <td class="text-center align-middle">
+                                        <img src="/<%= member.profile_photo || 'Photo/fahim.png' %>" alt="<%= member.full_name %>" class="rounded-circle border" style="width: 44px; height: 44px; object-fit: cover;" onerror="this.src='/Photo/fahim.png'" />
+                                    </td>
+                                    <td class="align-middle">
+                                        <strong class="text-dark"><%= member.full_name %></strong>
+                                        <br><small class="text-muted"><i class="fas fa-phone mr-1 text-success"></i> <%= member.contact_number %></small>
+                                        <br><small class="text-muted"><i class="fas fa-envelope mr-1 text-primary"></i> <%= member.email %></small>
+                                    </td>
+                                    <td class="text-center align-middle font-weight-bold text-primary">
+                                        <%= member.student_id || member.roll_no %>
+                                    </td>
+                                    <td class="align-middle">
+                                        <strong><%= member.department %></strong>
+                                        <br><span class="badge badge-session"><%= member.session %> সেশন</span>
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <span class="badge badge-upazila"><%= member.upazila %></span>
+                                        <br><small class="text-muted"><%= member.profession %></small>
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <span class="badge badge-blood"><%= member.blood_group || 'N/A' %></span>
                                     </td>
                                     <td class="text-center align-middle">
                                         <% if (member.status === 'Active') { %>
-                                            <span class="badge badge-success px-2 py-1"><i class="fas fa-check-circle"></i> Active</span>
+                                            <span class="badge badge-success px-2 py-1"><i class="fas fa-check-circle mr-1"></i> সক্রিয় (Active)</span>
                                         <% } else { %>
-                                            <span class="badge badge-warning px-2 py-1"><i class="fas fa-clock"></i> Pending</span>
-                                        <% } %>
-                                    </td>
-                                    <td class="text-center align-middle text-muted">
-                                        <%= member.payment_method || 'Online' %>
-                                    </td>
-                                    <td class="text-center align-middle">
-                                        <span class="badge badge-light border"><%= member.batch_no || '1st' %></span>
-                                    </td>
-                                    <td class="text-center align-middle font-weight-bold">
-                                        <%= member.roll_no %>
-                                    </td>
-                                    <td class="text-center align-middle">
-                                        <% if (member.profile_photo) { %>
-                                            <a href="/<%= member.profile_photo %>" target="_blank" class="text-primary font-weight-bold">
-                                                <i class="fas fa-image mr-1"></i> View Photo
-                                            </a>
-                                        <% } else { %>
-                                            <span class="text-muted small">No photo</span>
-                                        <% } %>
-                                    </td>
-                                    <td class="text-center align-middle">
-                                        <% if (member.cert_photo) { %>
-                                            <a href="/<%= member.cert_photo %>" target="_blank" class="text-primary font-weight-bold">
-                                                <i class="fas fa-file-pdf mr-1"></i> View Doc
-                                            </a>
-                                        <% } else { %>
-                                            <span class="text-muted small">No cert</span>
-                                        <% } %>
-                                    </td>
-                                    <td class="text-center align-middle">
-                                        <% if (member.payment_photo) { %>
-                                            <a href="/<%= member.payment_photo %>" target="_blank" class="text-success font-weight-bold">
-                                                <i class="fas fa-receipt mr-1"></i> View Slip
-                                            </a>
-                                        <% } else { %>
-                                            <span class="text-muted small">No slip</span>
+                                            <span class="badge badge-warning px-2 py-1"><i class="fas fa-clock mr-1"></i> ভেরিফিকেশন পেন্ডিং</span>
                                         <% } %>
                                     </td>
                                     <td class="text-center align-middle">
                                         <div class="btn-group btn-group-sm">
-                                            <!-- Toggle Status -->
+                                            <!-- Toggle Status / Approve -->
                                             <form action="/admin/toggle_status" method="POST" style="display:inline;">
                                                 <input type="hidden" name="id" value="<%= member.id %>" />
                                                 <% if (member.status === 'Active') { %>
-                                                    <button type="submit" class="btn btn-warning" title="Make Pending">
+                                                    <button type="submit" class="btn btn-warning" title="পেন্ডিং করুন (Make Pending)">
                                                         <i class="fas fa-pause"></i>
                                                     </button>
                                                 <% } else { %>
-                                                    <button type="submit" class="btn btn-success" title="Approve & Activate">
-                                                        <i class="fas fa-check"></i>
+                                                    <button type="submit" class="btn btn-success font-weight-bold px-2" title="ভেরিফাই ও অনুমোদন দিন (Verify & Approve)">
+                                                        <i class="fas fa-check"></i> অনুমোদন
                                                     </button>
                                                 <% } %>
                                             </form>
                                             
                                             <!-- Edit Member Profile -->
-                                            <a href="/admin_update_member.aspx?roll=<%= member.roll_no %>" class="btn btn-primary" title="Edit Full Profile">
+                                            <a href="/admin_update_member.aspx?roll=<%= member.student_id || member.roll_no %>" class="btn btn-primary" title="সম্পূর্ণ তথ্য এডিট করুন">
                                                 <i class="fas fa-edit"></i>
                                             </a>
 
                                             <!-- Delete Member -->
-                                            <form action="/admin/delete_member" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete member <%= member.full_name %> (Roll: <%= member.roll_no %>)?');">
+                                            <form action="/admin/delete_member" method="POST" style="display:inline;" onsubmit="return confirm('আপনি কি নিশ্চিত যে শিক্ষার্থী <%= member.full_name %> এর তথ্য ডিলিট করতে চান?');">
                                                 <input type="hidden" name="id" value="<%= member.id %>" />
-                                                <button type="submit" class="btn btn-danger" title="Delete Member">
+                                                <button type="submit" class="btn btn-danger" title="ডিলিট করুন">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
                                             </form>
@@ -159,7 +145,7 @@
 
             </div>
             <div class="card-footer bg-white border-0 pb-4 pl-4">
-                <a href="/home.aspx" class="text-primary font-weight-bold">&lt;&lt; Back to Home</a>
+                <a href="/home.aspx" class="text-primary font-weight-bold">&lt;&lt; হোমে ফিরে যান</a>
             </div>
         </div>
     </div>

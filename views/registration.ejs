@@ -1,251 +1,244 @@
-<%- include('partials/header', { title: 'Apply for Membership', activePage: 'registration' }) %>
+<%- include('partials/header', { title: 'সদস্য নিবন্ধন (Member Registration)', activePage: 'registration' }) %>
 
 <section class="content my-4">
-    <div class="container-fluid px-lg-5">
+    <div class="container px-lg-4">
         <div class="row justify-content-center">
-            <div class="col-lg-11">
-                <div class="card shadow-sm border-0">
+            <div class="col-lg-10">
+                <div class="card shadow border-0" style="border-radius: 12px; overflow: hidden;">
+                    
+                    <!-- Card Top Banner -->
+                    <div class="p-4 text-white text-center" style="background: linear-gradient(135deg, var(--navy-blue) 0%, var(--emerald-green) 100%);">
+                        <h3 class="font-weight-bold mb-1">
+                            <i class="fas fa-id-card mr-2"></i> শিক্ষার্থী ও সদস্য নিবন্ধন ফরম
+                        </h3>
+                        <p class="mb-0 text-light" style="font-size: 15px;">
+                            পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়স্থ চাঁপাইনবাবগঞ্জ জেলা সমিতি
+                        </p>
+                    </div>
+
                     <div class="card-body p-4 p-md-5">
 
-                        <div class="page-title-banner">
-                            PUST EEE ALUMNI MEMBERSHIP REGISTRATION
+                        <!-- Information Alert (From User's Image Requirement) -->
+                        <div class="alert alert-info border-left shadow-sm mb-4" style="border-left-width: 5px !important; border-left-color: var(--emerald-green) !important;">
+                            <h6 class="font-weight-bold mb-1 text-dark">
+                                <i class="fas fa-info-circle text-primary mr-1"></i> গুরুত্বপূর্ণ নির্দেশনা:
+                            </h6>
+                            <p class="mb-0 text-muted" style="font-size: 14px;">
+                                এই ফরমটি পূরণের মাধ্যমে আপনি পাবিপ্রবি চাঁপাইনবাবগঞ্জ জেলা সমিতির ডাটাবেজে অন্তর্ভুক্ত হবেন।
+                                <strong>রেজিস্ট্রেশন সম্পন্ন করার পর অ্যাডমিন কর্তৃক তথ্য ভেরিফিকেশন (Admin Verification) সম্পন্ন হবে</strong>, এরপর আপনার প্রোফাইল ও ডিজিটাল আইডি কার্ড স্বয়ংক্রিয়ভাবে সক্রিয় হবে।
+                            </p>
                         </div>
 
-                        <p class="text-center text-muted mb-4">
-                            Please fill out all the information accurately. After submitting, your application will be reviewed and verified by the administration.
-                        </p>
+                        <form action="/registration.aspx" method="POST" enctype="multipart/form-data" id="studentRegistrationForm">
 
-                        <form action="/registration.aspx" method="POST" enctype="multipart/form-data" id="registrationForm">
-
-                            <!-- Section 1: Personal Details -->
-                            <h5 class="font-weight-bold text-primary border-bottom pb-2 mb-3">
-                                <i class="fas fa-user mr-2"></i> 1. Personal Information
+                            <!-- Section 1: Personal Information -->
+                            <h5 class="font-weight-bold border-bottom pb-2 mb-3" style="color: var(--navy-blue);">
+                                <i class="fas fa-user-circle text-success mr-2"></i> ১. ব্যক্তিগত তথ্য (Personal Information)
                             </h5>
 
                             <div class="row">
                                 <div class="col-md-6 form-group">
-                                    <label class="font-weight-bold">Full Name <span class="text-danger">*</span></label>
-                                    <input name="full_name" type="text" class="form-control" placeholder="Full Name" required />
+                                    <label class="font-weight-bold">Full Name (পূর্ণ নাম) <span class="text-danger">*</span></label>
+                                    <input name="full_name" type="text" class="form-control" placeholder="আপনার পূর্ণ নাম লিখুন" required />
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">Email Address (ইমেইল ঠিকানা) <span class="text-danger">*</span></label>
+                                    <input name="email" type="email" class="form-control" placeholder="example@gmail.com বা s.pust.ac.bd" required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">Mobile Number (মোবাইল নম্বর) <span class="text-danger">*</span></label>
+                                    <input name="contact_number" type="tel" class="form-control" placeholder="017XXXXXXXX বা +8801XXXXXXXXX" required />
+                                    <small class="text-muted">জরুরি যোগাযোগ ও সমিতির আপডেট পাওয়ার নম্বর</small>
                                 </div>
                                 <div class="col-md-3 form-group">
-                                    <label class="font-weight-bold">Gender <span class="text-danger">*</span></label>
-                                    <select name="gender" class="form-control" required>
-                                        <option value="">Select Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
+                                    <label class="font-weight-bold">Blood Group (রক্তের গ্রুপ) <span class="text-danger">*</span></label>
+                                    <select name="blood_group" class="form-control" required>
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option value="A+">A+ (পজেটিভ)</option>
+                                        <option value="A-">A- (নেগেটিভ)</option>
+                                        <option value="B+">B+ (পজেটিভ)</option>
+                                        <option value="B-">B- (নেগেটিভ)</option>
+                                        <option value="O+">O+ (পজেটিভ)</option>
+                                        <option value="O-">O- (নেগেটিভ)</option>
+                                        <option value="AB+">AB+ (পজেটিভ)</option>
+                                        <option value="AB-">AB- (নেগেটিভ)</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3 form-group">
-                                    <label class="font-weight-bold">Blood Group</label>
-                                    <select name="blood_group" class="form-control">
-                                        <option value="">Select Blood Group</option>
-                                        <option value="A+">A+</option>
-                                        <option value="A-">A-</option>
-                                        <option value="B+">B+</option>
-                                        <option value="B-">B-</option>
-                                        <option value="O+">O+</option>
-                                        <option value="O-">O-</option>
-                                        <option value="AB+">AB+</option>
-                                        <option value="AB-">AB-</option>
+                                    <label class="font-weight-bold">Gender (লিঙ্গ)</label>
+                                    <select name="gender" class="form-control">
+                                        <option value="Male">পুরুষ (Male)</option>
+                                        <option value="Female">নারী (Female)</option>
                                     </select>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 form-group">
-                                    <label class="font-weight-bold">Email Address <span class="text-danger">*</span></label>
-                                    <input name="email" type="email" class="form-control" placeholder="Email Address" required />
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label class="font-weight-bold">Contact Number <span class="text-danger">*</span></label>
-                                    <input name="contact_number" type="text" class="form-control" placeholder="+8801XXXXXXXXX" required />
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 form-group">
-                                    <label class="font-weight-bold">Facebook Profile Link</label>
-                                    <input name="facebook" type="url" class="form-control" placeholder="https://facebook.com/username" />
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label class="font-weight-bold">LinkedIn Profile Link</label>
-                                    <input name="linkedin" type="url" class="form-control" placeholder="https://linkedin.com/in/username" />
-                                </div>
-                            </div>
-
-                            <!-- Section 2: Academic Details -->
-                            <h5 class="font-weight-bold text-primary border-bottom pb-2 mt-4 mb-3">
-                                <i class="fas fa-graduation-cap mr-2"></i> 2. Academic Information
-                            </h5>
-
-                            <div class="row">
-                                <div class="col-md-4 form-group">
-                                    <label class="font-weight-bold">Roll No. <span class="text-danger">*</span></label>
-                                    <input name="roll_no" type="text" class="form-control" placeholder="e.g. 090201" required />
-                                </div>
-                                <div class="col-md-4 form-group">
-                                    <label class="font-weight-bold">Batch No. <span class="text-danger">*</span></label>
-                                    <select name="batch_no" class="form-control" required>
-                                        <option value="">Select Batch</option>
-                                        <option value="1st">1st Batch</option>
-                                        <option value="2nd">2nd Batch</option>
-                                        <option value="3rd">3rd Batch</option>
-                                        <option value="4th">4th Batch</option>
-                                        <option value="5th">5th Batch</option>
-                                        <option value="6th">6th Batch</option>
-                                        <option value="7th">7th Batch</option>
-                                        <option value="8th">8th Batch</option>
-                                        <option value="9th">9th Batch</option>
-                                        <option value="10th">10th Batch</option>
-                                        <option value="11th">11th Batch</option>
-                                        <option value="12th">12th Batch</option>
-                                        <option value="13th">13th Batch</option>
-                                        <option value="14th">14th Batch</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4 form-group">
-                                    <label class="font-weight-bold">Degree <span class="text-danger">*</span></label>
-                                    <select name="degree" class="form-control" required>
-                                        <option value="">Select Degree</option>
-                                        <option value="B.Sc in EEE">B.Sc in EEE</option>
-                                        <option value="M.Sc. Engineering">M.Sc. Engineering</option>
-                                        <option value="B.Sc in EEE, M.Sc in Computer Science">B.Sc in EEE, M.Sc in Computer Science & ACMP IBA DU</option>
-                                        <option value="M.Phil.">M.Phil.</option>
-                                        <option value="Ph.D.">Ph.D.</option>
-                                        <option value="Other higher degrees">Other higher degrees</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-4 form-group">
-                                    <label class="font-weight-bold">Department <span class="text-danger">*</span></label>
-                                    <input name="department" type="text" class="form-control" value="Electrical and Electronic Engineering (EEE)" readonly />
-                                </div>
-                                <div class="col-md-4 form-group">
-                                    <label class="font-weight-bold">Residential Hall</label>
-                                    <select name="hall" class="form-control">
-                                        <option value="">Select Hall</option>
-                                        <option value="Bangabandhu Sheikh Mujibur Rahman hall">Bangabandhu Sheikh Mujibur Rahman hall</option>
-                                        <option value="Sheikh Rasel Hall">Sheikh Rasel Hall</option>
-                                        <option value="Sheikh Hasina hall">Sheikh Hasina hall</option>
-                                        <option value="Sheikh Fajilatunnesa Mujib Hall">Sheikh Fajilatunnesa Mujib Hall</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-2 form-group">
-                                    <label class="font-weight-bold">Passing Year</label>
-                                    <input name="passing_year" type="text" class="form-control" placeholder="e.g. 2014" />
-                                </div>
-                                <div class="col-md-2 form-group">
-                                    <label class="font-weight-bold">Grade/CGPA</label>
-                                    <input name="grade_cgpa" type="text" class="form-control" placeholder="e.g. 3.75" />
-                                </div>
-                            </div>
-
-                            <!-- Section 3: Professional & Address Details -->
-                            <h5 class="font-weight-bold text-primary border-bottom pb-2 mt-4 mb-3">
-                                <i class="fas fa-building mr-2"></i> 3. Professional &amp; Address Information
-                            </h5>
-
-                            <div class="row">
-                                <div class="col-md-4 form-group">
-                                    <label class="font-weight-bold">Current Organization</label>
-                                    <input name="organization" type="text" class="form-control" placeholder="Company / Institution" />
-                                </div>
-                                <div class="col-md-4 form-group">
-                                    <label class="font-weight-bold">Last Position / Designation</label>
-                                    <input name="designation" type="text" class="form-control" placeholder="e.g. Senior Engineer" />
-                                </div>
-                                <div class="col-md-4 form-group">
-                                    <label class="font-weight-bold">Work / Present Country</label>
-                                    <input name="work_country" type="text" class="form-control" value="Bangladesh" />
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 form-group">
-                                    <label class="font-weight-bold">Permanent District &amp; Address</label>
-                                    <input name="permanent_district" type="text" class="form-control mb-2" placeholder="Permanent District (e.g. Pabna)" />
-                                    <textarea name="permanent_address" rows="2" class="form-control" placeholder="Full Permanent Address"></textarea>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label class="font-weight-bold">Present District &amp; Address</label>
-                                    <input name="present_district" type="text" class="form-control mb-2" placeholder="Present District (e.g. Dhaka)" />
-                                    <textarea name="present_address" rows="2" class="form-control" placeholder="Full Present / Working Address"></textarea>
-                                </div>
-                            </div>
-
-                            <!-- Section 4: Membership, Documents & Payment -->
-                            <h5 class="font-weight-bold text-primary border-bottom pb-2 mt-4 mb-3">
-                                <i class="fas fa-id-card mr-2"></i> 4. Membership, Documents &amp; Payment
-                            </h5>
-
-                            <div class="row">
-                                <div class="col-md-4 form-group">
-                                    <label class="font-weight-bold">Membership Type <span class="text-danger">*</span></label>
-                                    <select name="membership_type" class="form-control" required>
-                                        <option value="Member">Member</option>
-                                        <option value="Fellow">Fellow</option>
-                                        <option value="Associate member">Associate member</option>
-                                        <option value="Certified">Certified</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4 form-group">
-                                    <label class="font-weight-bold">Membership No. (Optional)</label>
-                                    <input name="membership_no" type="text" class="form-control" placeholder="Auto-generated if blank" />
-                                </div>
-                                <div class="col-md-4 form-group">
-                                    <label class="font-weight-bold">Certificate Serial No.</label>
-                                    <input name="cert_serial_no" type="text" class="form-control" placeholder="Certificate Serial No." />
                                 </div>
                             </div>
 
                             <div class="row align-items-center mb-3">
+                                <div class="col-md-8 form-group">
+                                    <label class="font-weight-bold">Profile Picture (প্রোফাইল ছবি) <span class="text-danger">*</span></label>
+                                    <input type="file" name="profile_photo" class="form-control-file" accept="image/*" onchange="previewStudentPhoto(this);" required />
+                                    <small class="text-muted">ডিজিটাল স্টুডেন্ট আইডি কার্ডের জন্য স্পষ্ট পাসপোর্ট সাইজ ছবি আপলোড করুন</small>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <img id="photoPreview" src="/Photo/fahim.png" alt="Preview" class="rounded-circle border p-1 shadow-sm" style="width: 85px; height: 85px; object-fit: cover;" />
+                                    <div class="small text-muted mt-1">ছবির প্রিভিউ</div>
+                                </div>
+                            </div>
+
+                            <!-- Section 2: University & Academic Information -->
+                            <h5 class="font-weight-bold border-bottom pb-2 mt-4 mb-3" style="color: var(--navy-blue);">
+                                <i class="fas fa-graduation-cap text-success mr-2"></i> ২. প্রাতিষ্ঠানিক তথ্য (Academic Information)
+                            </h5>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">Department (বিভাগ) <span class="text-danger">*</span></label>
+                                    <select name="department" class="form-control" required>
+                                        <option value="">বিভাগ নির্বাচন করুন</option>
+                                        <!-- Engineering & Tech -->
+                                        <optgroup label="Faculty of Engineering & Technology">
+                                            <option value="Computer Science and Engineering (CSE)">Computer Science and Engineering (CSE)</option>
+                                            <option value="Electrical and Electronic Engineering (EEE)">Electrical and Electronic Engineering (EEE)</option>
+                                            <option value="Information and Communication Engineering (ICE)">Information and Communication Engineering (ICE)</option>
+                                            <option value="Civil Engineering (CE)">Civil Engineering (CE)</option>
+                                            <option value="Mechanical Engineering (ME)">Mechanical Engineering (ME)</option>
+                                            <option value="Architecture (Arch)">Architecture (Arch)</option>
+                                            <option value="Urban and Regional Planning (URP)">Urban and Regional Planning (URP)</option>
+                                        </optgroup>
+                                        <!-- Science -->
+                                        <optgroup label="Faculty of Science">
+                                            <option value="Physics">Physics (পদার্থবিজ্ঞান)</option>
+                                            <option value="Chemistry">Chemistry (রসায়ন)</option>
+                                            <option value="Mathematics">Mathematics (গণিত)</option>
+                                            <option value="Statistics">Statistics (পরিসংখ্যান)</option>
+                                            <option value="Pharmacy">Pharmacy (ফার্মেসি)</option>
+                                            <option value="Biochemistry and Molecular Biology">Biochemistry and Molecular Biology</option>
+                                        </optgroup>
+                                        <!-- Business & Humanities -->
+                                        <optgroup label="Business & Humanities">
+                                            <option value="Business Administration (BBA)">Business Administration (BBA)</option>
+                                            <option value="Economics">Economics (অর্থনীতি)</option>
+                                            <option value="English">English (ইংরেজি)</option>
+                                            <option value="Bangla">Bangla (বাংলা)</option>
+                                            <option value="Public Administration">Public Administration (লোকপ্রশাসন)</option>
+                                            <option value="Social Work">Social Work (সমাজকর্ম)</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3 form-group">
+                                    <label class="font-weight-bold">Academic Session (সেশন) <span class="text-danger">*</span></label>
+                                    <select name="session" class="form-control" required>
+                                        <option value="">সেশন নির্বাচন করুন</option>
+                                        <option value="2024-25">2024-25</option>
+                                        <option value="2023-24">2023-24</option>
+                                        <option value="2022-23">2022-23</option>
+                                        <option value="2021-22">2021-22</option>
+                                        <option value="2020-21">2020-21</option>
+                                        <option value="2019-20">2019-20</option>
+                                        <option value="2018-19">2018-19</option>
+                                        <option value="2017-18">2017-18</option>
+                                        <option value="2016-17">2016-17</option>
+                                        <option value="2015-16">2015-16</option>
+                                        <option value="2014-15">2014-15</option>
+                                        <option value="2013-14">2013-14</option>
+                                        <option value="2012-13">2012-13</option>
+                                        <option value="2011-12">2011-12</option>
+                                        <option value="2010-11">2010-11</option>
+                                        <option value="2009-10">2009-10</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3 form-group">
+                                    <label class="font-weight-bold">Student ID / Roll No <span class="text-danger">*</span></label>
+                                    <input name="student_id" type="text" class="form-control" placeholder="যেমন: 200101" required />
+                                </div>
+                            </div>
+
+                            <!-- Section 3: Chapainawabganj Roots & Profession -->
+                            <h5 class="font-weight-bold border-bottom pb-2 mt-4 mb-3" style="color: var(--navy-blue);">
+                                <i class="fas fa-map-marker-alt text-success mr-2"></i> ৩. চাঁপাইনবাবগঞ্জ জেলা ও বর্তমান ঠিকানা (Address & Profession)
+                            </h5>
+
+                            <div class="row">
                                 <div class="col-md-4 form-group">
-                                    <label class="font-weight-bold">Profile Photo <span class="text-danger">*</span></label>
-                                    <input type="file" name="profile_photo" class="form-control-file" accept="image/*" onchange="previewImage(this, 'imgview');" required />
-                                    <small class="text-muted">JPG or PNG format</small>
+                                    <label class="font-weight-bold">Home District (নিজ জেলা)</label>
+                                    <input type="text" class="form-control bg-light font-weight-bold text-success" value="চাঁপাইনবাবগঞ্জ (Chapainawabganj)" readonly />
                                 </div>
-                                <div class="col-md-2 text-center">
-                                    <img id="imgview" src="/Photo/fahim.png" alt="Preview" class="rounded border p-1" style="height: 80px; width: 80px; object-fit: cover;" />
+                                <div class="col-md-4 form-group">
+                                    <label class="font-weight-bold">Home Upazila (নিজ উপজেলা) <span class="text-danger">*</span></label>
+                                    <select name="upazila" class="form-control" required>
+                                        <option value="">উপজেলা নির্বাচন করুন</option>
+                                        <option value="Chapainawabganj Sadar">চাঁপাইনবাবগঞ্জ সদর (Sadar)</option>
+                                        <option value="Shibganj">শিবগঞ্জ (Shibganj)</option>
+                                        <option value="Gomostapur">গোমস্তাপুর (Gomostapur)</option>
+                                        <option value="Nachole">নাচোল (Nachole)</option>
+                                        <option value="Bholahat">ভোলাহাট (Bholahat)</option>
+                                    </select>
                                 </div>
-                                <div class="col-md-3 form-group">
-                                    <label class="font-weight-bold">Degree Certificate</label>
-                                    <input type="file" name="cert_photo" class="form-control-file" accept="image/*,.pdf" />
-                                </div>
-                                <div class="col-md-3 form-group">
-                                    <label class="font-weight-bold">Payment Method <span class="text-danger">*</span></label>
-                                    <select name="payment_method" class="form-control" required>
-                                        <option value="Online Payment">Online Payment (bKash / Nagad / Rocket)</option>
-                                        <option value="Bank Recept">Bank Receipt / Deposit</option>
+                                <div class="col-md-4 form-group">
+                                    <label class="font-weight-bold">Current Profession (বর্তমান পেশা) <span class="text-danger">*</span></label>
+                                    <select name="profession" class="form-control" required>
+                                        <option value="Current Student">অধ্যয়নরত শিক্ষার্থী (Current Student)</option>
+                                        <option value="Software / IT Engineer">সফটওয়্যার / আইটি প্রফেশনাল</option>
+                                        <option value="BCS Cadre / Govt Officer">বিসিএস ক্যাডার / সরকারি কর্মকর্তা</option>
+                                        <option value="Banker">ব্যাংকার / আর্থিক প্রতিষ্ঠান</option>
+                                        <option value="Engineer">প্রকৌশলী (Civil / EEE / ME)</option>
+                                        <option value="Teacher / Academician">শিক্ষক / প্রভাষক</option>
+                                        <option value="Entrepreneur / Business">উদ্যোক্তা / ব্যবসায়ী</option>
+                                        <option value="Job Seeker">চাকরি প্রার্থী / প্রস্তুতি গ্রহণকারী</option>
+                                        <option value="Higher Studies Abroad">উচ্চশিক্ষারত (বিদেশে/দেশে)</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 form-group">
-                                    <label class="font-weight-bold">Payment Slip / Screenshot</label>
-                                    <input type="file" name="payment_photo" class="form-control-file" accept="image/*,.pdf" />
+                                    <label class="font-weight-bold">Residential Hall / Mess (পাবনায় বর্তমান বাসস্থান) <span class="text-danger">*</span></label>
+                                    <input name="hall" type="text" class="form-control" placeholder="যেমন: বঙ্গবন্ধু হল, রুম ৩১২ বা রাধানগর মেস, পাবনা" required />
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label class="font-weight-bold">Choose a Password for Login <span class="text-danger">*</span></label>
-                                    <input name="password" type="password" class="form-control" placeholder="Minimum 6 characters" minlength="6" required />
+                                    <label class="font-weight-bold">Present Address (বর্তমান ঠিকানা) <span class="text-danger">*</span></label>
+                                    <textarea name="present_address" rows="2" class="form-control" placeholder="বর্তমান পূর্ণ ঠিকানা লিখুন" required></textarea>
                                 </div>
                             </div>
 
-                            <!-- Terms and Submit -->
-                            <div class="form-group my-4 p-3 bg-light rounded border">
+                            <!-- Section 4: Welfare & Security -->
+                            <h5 class="font-weight-bold border-bottom pb-2 mt-4 mb-3" style="color: var(--navy-blue);">
+                                <i class="fas fa-shield-alt text-success mr-2"></i> ৪. কল্যাণমূলক কার্যক্রম ও অ্যাকাউন্ট নিরাপত্তা
+                            </h5>
+
+                            <div class="form-group p-3 rounded" style="background-color: #f1f8f5; border: 1px dashed var(--emerald-green);">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="agreeTerms" name="terms" value="agree" required />
-                                    <label class="form-check-label font-weight-bold" for="agreeTerms">
-                                        I hereby declare that all the information provided above is true and correct to the best of my knowledge, and I agree to abide by the constitution and rules of PUST EEE Alumni Association.
+                                    <input class="form-check-input" type="checkbox" name="is_blood_donor" id="is_blood_donor" value="yes" checked />
+                                    <label class="form-check-label font-weight-bold text-dark" for="is_blood_donor">
+                                        <i class="fas fa-heartbeat text-danger mr-1"></i> আমি জরুরি প্রয়োজনে রক্তদানে ইচ্ছুক (Willing to Donate Blood)
                                     </label>
+                                    <div class="small text-muted mt-1">
+                                        টিক চিহ্ন দিলে আপনার রক্তের গ্রুপ ও মোবাইল নম্বর সমিতির রক্তদান নেটওয়ার্কে জরুরি রোগীর প্রয়োজনে দৃশ্যমান হবে।
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-success btn-lg px-5 shadow font-weight-bold" style="height: 50px;">
-                                    <i class="fas fa-paper-plane mr-2"></i> Submit Application
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">Password (লগইন পাসওয়ার্ড) <span class="text-danger">*</span></label>
+                                    <input name="password" type="password" class="form-control" placeholder="কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড" minlength="6" required />
+                                    <small class="text-muted">ভবিষ্যতে লগইন ও ডিজিটাল আইডি কার্ড দেখার জন্য এই পাসওয়ার্ডটি ব্যবহার করবেন</small>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">Confirm Password (পাসওয়ার্ড নিশ্চিত করুন) <span class="text-danger">*</span></label>
+                                    <input name="confirm_password" type="password" class="form-control" placeholder="পুনরায় পাসওয়ার্ড লিখুন" minlength="6" required />
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-emerald btn-lg px-5 shadow font-weight-bold">
+                                    <i class="fas fa-check-circle mr-2"></i> নিবন্ধন সম্পন্ন করুন (Submit Registration)
                                 </button>
                             </div>
 
@@ -253,7 +246,7 @@
 
                     </div>
                     <div class="card-footer bg-white border-0 pb-4 pl-4">
-                        <a href="/home.aspx" class="text-primary font-weight-bold">&lt;&lt; Back to Home</a>
+                        <a href="/home.aspx" class="text-primary font-weight-bold">&lt;&lt; হোমে ফিরে যান</a>
                     </div>
                 </div>
             </div>
@@ -262,15 +255,25 @@
 </section>
 
 <script>
-    function previewImage(input, previewId) {
+    function previewStudentPhoto(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                $('#' + previewId).attr('src', e.target.result);
+                $('#photoPreview').attr('src', e.target.result);
             };
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+    $('#studentRegistrationForm').on('submit', function (e) {
+        var p1 = $('input[name="password"]').val();
+        var p2 = $('input[name="confirm_password"]').val();
+        if (p1 !== p2) {
+            alert('পাসওয়ার্ড দুটি মেলেনি! অনুগ্রহ করে পুনরায় যাচাই করুন।');
+            e.preventDefault();
+            return false;
+        }
+    });
 </script>
 
 <%- include('partials/footer') %>

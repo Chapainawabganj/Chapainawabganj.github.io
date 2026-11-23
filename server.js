@@ -29,7 +29,7 @@ app.use(express.json());
 
 // Session setup
 app.use(session({
-  secret: 'pust-eee-alumni-secret-key-2026',
+  secret: 'pust-chapai-zelasomiti-secret-2026',
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 } // 7 days
@@ -61,9 +61,7 @@ const upload = multer({ storage });
 
 // Multi-field upload for registration
 const registrationUpload = upload.fields([
-  { name: 'profile_photo', maxCount: 1 },
-  { name: 'cert_photo', maxCount: 1 },
-  { name: 'payment_photo', maxCount: 1 }
+  { name: 'profile_photo', maxCount: 1 }
 ]);
 
 // Auth middleware
@@ -71,7 +69,7 @@ function requireUser(req, res, next) {
   if (req.session.user) {
     return next();
   }
-  req.session.error_msg = 'Please log in to view your profile and member dashboard.';
+  req.session.error_msg = 'আপনার প্রোফাইল ও ডিজিটাল আইডি দেখতে লগইন করুন।';
   res.redirect('/login.aspx');
 }
 
@@ -79,184 +77,237 @@ function requireAdmin(req, res, next) {
   if (req.session.admin) {
     return next();
   }
-  req.session.error_msg = 'Administrative authentication required to access this area.';
+  req.session.error_msg = 'অ্যাডমিন প্যানেলে প্রবেশ করতে অ্যাডমিন লগইন আবশ্যক।';
   res.redirect('/adminlogin.aspx');
 }
 
 // ==========================================
-// PUBLIC ROUTES (.aspx aliases supported)
+// PUBLIC ROUTES
 // ==========================================
 
 // Home Page
 app.get(['/', '/home', '/home.aspx'], (req, res) => {
-  res.render('index', { title: 'Home' });
+  res.render('index', { title: 'হোম' });
 });
 
 // About Page
 app.get(['/about', '/about.aspx'], (req, res) => {
-  res.render('about', { title: 'About' });
+  res.render('about', { title: 'পরিচিতি ও ইতিহাস' });
 });
 
-// Alumni Directory
-app.get(['/alumnilist', '/alumnilist.aspx'], (req, res) => {
+// Student & Alumni Directory
+app.get(['/alumnilist', '/alumnilist.aspx', '/students', '/students.aspx'], (req, res) => {
   const query = (req.query.q || '').trim().toLowerCase();
+  const upazila = (req.query.upazila || '').trim();
   let members = db.getActiveMembers();
+
+  if (upazila && upazila !== 'All') {
+    members = members.filter(m => m.upazila && m.upazila.toLowerCase() === upazila.toLowerCase());
+  }
 
   if (query) {
     members = members.filter(m => {
       return (
         (m.full_name && m.full_name.toLowerCase().includes(query)) ||
+        (m.student_id && String(m.student_id).toLowerCase().includes(query)) ||
         (m.roll_no && String(m.roll_no).toLowerCase().includes(query)) ||
-        (m.batch_no && m.batch_no.toLowerCase().includes(query)) ||
+        (m.department && m.department.toLowerCase().includes(query)) ||
+        (m.session && m.session.toLowerCase().includes(query)) ||
+        (m.upazila && m.upazila.toLowerCase().includes(query)) ||
         (m.blood_group && m.blood_group.toLowerCase().includes(query)) ||
-        (m.organization && m.organization.toLowerCase().includes(query)) ||
-        (m.degree && m.degree.toLowerCase().includes(query))
+        (m.profession && m.profession.toLowerCase().includes(query))
       );
     });
   }
 
   res.render('alumnilist', {
-    title: 'Alumni List',
+    title: 'শিক্ষার্থী ও সদস্য তালিকা',
     members,
-    query: req.query.q || ''
+    query: req.query.q || '',
+    selectedUpazila: upazila || 'All'
+  });
+});
+
+// Emergency Blood Donor Network
+app.get(['/blood_donation', '/blood_donation.aspx', '/blood'], (req, res) => {
+  const group = (req.query.group || '').trim();
+  let donors = db.getBloodDonors();
+
+  if (group && group !== 'All') {
+    donors = donors.filter(d => d.blood_group && d.blood_group.toUpperCase() === group.toUpperCase());
+  }
+
+  res.render('blood_donation', {
+    title: 'জরুরি রক্তদান নেটওয়ার্ক',
+    donors,
+    selectedGroup: group || 'All'
+  });
+});
+
+// Student Support & Welfare Services
+app.get(['/student_support', '/student_support.aspx', '/support'], (req, res) => {
+  const services = db.getSupportServices();
+  res.render('student_support', {
+    title: 'শিক্ষার্থী সহায়তা ও কল্যাণ',
+    services
+  });
+});
+
+// Executive Committee
+app.get(['/committee', '/committee.aspx'], (req, res) => {
+  const committee = db.getCommittee();
+  res.render('committee', {
+    title: 'কার্যনির্বাহী কমিটি',
+    committee
   });
 });
 
 // Downloads Page
 app.get(['/download', '/download.aspx'], (req, res) => {
   const downloads = db.getDownloads();
-  res.render('download', { title: 'Downloads', downloads });
+  res.render('download', { title: 'ডাউনলোড ও ডকুমেন্টস', downloads });
 });
 
 // Notice Board
 app.get(['/notice', '/notice.aspx'], (req, res) => {
   const notices = db.getNotices();
-  res.render('notice', { title: 'Notice', notices });
+  res.render('notice', { title: 'নোটিশ বোর্ড', notices });
 });
 
 // Contact Page
 app.get(['/contact', '/contact.aspx'], (req, res) => {
-  res.render('contact', { title: 'Contact Information' });
+  res.render('contact', { title: 'যোগাযোগ ও সহায়তা' });
 });
 
-// Registration (Apply for Membership) - GET
+// ==========================================
+// REGISTRATION & CONFIRMATION SECTION
+// ==========================================
+
+// Registration Form - GET
 app.get(['/registration', '/registration.aspx'], (req, res) => {
-  res.render('registration', { title: 'Apply for Membership' });
+  res.render('registration', { title: 'সদস্য নিবন্ধন' });
 });
 
-// Registration (Apply for Membership) - POST
+// Registration Form - POST
 app.post(['/registration', '/registration.aspx'], registrationUpload, (req, res) => {
   try {
     const {
       full_name, gender, email, contact_number, blood_group,
-      facebook, linkedin, roll_no, batch_no, degree, department,
-      hall, passing_year, grade_cgpa, organization, designation,
-      work_country, permanent_district, permanent_address,
-      present_district, present_address, membership_type,
-      membership_no, cert_serial_no, payment_method, password
+      department, session, student_id, upazila, profession,
+      hall, present_address, is_blood_donor, password
     } = req.body;
 
-    // Check duplicate roll or email
-    if (db.getMemberByRoll(roll_no)) {
-      req.session.error_msg = `A member with Roll No ${roll_no} has already registered.`;
+    const sid = (student_id || '').trim();
+
+    // Check duplicate Student ID or Email
+    if (db.getMemberByStudentId(sid)) {
+      req.session.error_msg = `স্টুডেন্ট আইডি ${sid} দিয়ে ইতোমধ্যে একজন শিক্ষার্থী নিবন্ধিত হয়েছেন।`;
       return res.redirect('/registration.aspx');
     }
     if (db.getMemberByEmail(email)) {
-      req.session.error_msg = `A member with Email ${email} has already registered.`;
+      req.session.error_msg = `ইমেইল ঠিকানা ${email} দিয়ে ইতোমধ্যে একটি অ্যাকাউন্ট রয়েছে।`;
       return res.redirect('/registration.aspx');
     }
 
     const profile_photo = req.files && req.files.profile_photo ? 'uploads/' + req.files.profile_photo[0].filename : 'Photo/fahim.png';
-    const cert_photo = req.files && req.files.cert_photo ? 'uploads/' + req.files.cert_photo[0].filename : '';
-    const payment_photo = req.files && req.files.payment_photo ? 'uploads/' + req.files.payment_photo[0].filename : '';
-
     const passwordHash = bcrypt.hashSync(password || 'password123', 10);
 
     const newMember = db.addMember({
       full_name,
-      gender,
+      gender: gender || 'Male',
       email,
       contact_number,
       blood_group: blood_group || 'Unknown',
-      facebook: facebook || '',
-      linkedin: linkedin || '',
-      roll_no,
-      batch_no: batch_no || '1st',
-      degree: degree || 'B.Sc in EEE',
-      department: department || 'Electrical and Electronic Engineering (EEE)',
+      department,
+      session,
+      student_id: sid,
+      roll_no: sid,
+      home_district: 'Chapainawabganj',
+      upazila: upazila || 'Chapainawabganj Sadar',
+      profession: profession || 'Current Student',
       hall: hall || '',
-      passing_year: passing_year || '',
-      grade_cgpa: grade_cgpa || '',
-      organization: organization || '',
-      designation: designation || '',
-      work_country: work_country || 'Bangladesh',
-      permanent_district: permanent_district || '',
-      permanent_address: permanent_address || '',
-      present_district: present_district || '',
       present_address: present_address || '',
-      membership_type: membership_type || 'Member',
-      membership_no: membership_no || 'MEM-' + roll_no,
-      cert_serial_no: cert_serial_no || '',
-      cert_photo,
+      is_blood_donor: is_blood_donor === 'yes',
       profile_photo,
-      payment_method: payment_method || 'Online Payment',
-      payment_photo,
       passwordHash,
-      status: 'Active' // Registered members are active by default for immediate local testing
+      status: 'Pending' // Admin Verification required
     });
 
-    req.session.success_msg = 'Your membership registration has been submitted successfully! You can now log in.';
-    res.redirect('/login.aspx');
+    req.session.confirmation_student = newMember;
+    req.session.success_msg = 'আপনার তথ্য সফলভাবে সংরক্ষিত হয়েছে!';
+    res.redirect(`/registration_confirmation.aspx?id=${newMember.id}`);
   } catch (err) {
     console.error('Registration error:', err);
-    req.session.error_msg = 'Registration error: ' + err.message;
+    req.session.error_msg = 'নিবন্ধনে সমস্যা হয়েছে: ' + err.message;
     res.redirect('/registration.aspx');
   }
 });
+
+// Dedicated Registration Confirmation Section - GET
+app.get(['/registration_confirmation', '/registration_confirmation.aspx'], (req, res) => {
+  const id = req.query.id;
+  let student = null;
+
+  if (id) {
+    student = db.getMemberById(id);
+  }
+  if (!student && req.session.confirmation_student) {
+    student = req.session.confirmation_student;
+  }
+
+  if (!student) {
+    return res.redirect('/registration.aspx');
+  }
+
+  res.render('registration_confirmation', {
+    title: 'নিবন্ধন নিশ্চিতকরণ',
+    student
+  });
+});
+
+// ==========================================
+// AUTHENTICATION
+// ==========================================
 
 // Member Login - GET
 app.get(['/login', '/login.aspx'], (req, res) => {
   if (req.session.user) {
     return res.redirect('/my_profile.aspx');
   }
-  res.render('login', { title: 'Member Login' });
+  res.render('login', { title: 'সদস্য লগইন' });
 });
 
 // Member Login - POST
 app.post(['/login', '/login.aspx'], (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    req.session.error_msg = 'Please enter your email/roll and password.';
+    req.session.error_msg = 'অনুগ্রহ করে ইমেইল/স্টুডেন্ট আইডি এবং পাসওয়ার্ড প্রদান করুন।';
     return res.redirect('/login.aspx');
   }
 
-  // Find by email or roll
-  let member = db.getMemberByEmail(email);
-  if (!member) {
-    member = db.getMemberByRoll(email);
-  }
+  let member = db.getMemberByEmail(email) || db.getMemberByStudentId(email) || db.getMemberByRoll(email);
 
   if (!member) {
-    req.session.error_msg = 'No member account found with this email or roll number.';
+    req.session.error_msg = 'প্রদত্ত তথ্য অনুযায়ী কোনো সদস্য অ্যাকাউন্ট পাওয়া যায়নি।';
     return res.redirect('/login.aspx');
   }
 
   const valid = bcrypt.compareSync(password, member.passwordHash);
   if (!valid) {
-    req.session.error_msg = 'Incorrect password. Please try again.';
+    req.session.error_msg = 'ভুল পাসওয়ার্ড। অনুগ্রহ করে পুনরায় চেষ্টা করুন।';
     return res.redirect('/login.aspx');
   }
 
   req.session.user = {
     id: member.id,
-    roll_no: member.roll_no,
+    student_id: member.student_id || member.roll_no,
     full_name: member.full_name,
     email: member.email,
     profile_photo: member.profile_photo,
     status: member.status
   };
 
-  req.session.success_msg = `Welcome back, ${member.full_name}!`;
+  req.session.success_msg = `স্বাগতম, ${member.full_name}!`;
   res.redirect('/my_profile.aspx');
 });
 
@@ -265,7 +316,7 @@ app.get(['/adminlogin', '/adminlogin.aspx'], (req, res) => {
   if (req.session.admin) {
     return res.redirect('/membermanagement.aspx');
   }
-  res.render('adminlogin', { title: 'Admin Login' });
+  res.render('adminlogin', { title: 'অ্যাডমিন লগইন' });
 });
 
 // Admin Login - POST
@@ -273,26 +324,25 @@ app.post(['/adminlogin', '/adminlogin.aspx'], (req, res) => {
   const { username, password } = req.body;
   const admin = db.getAdminByUsername(username);
 
-  // Accept admin123 or admin for developer convenience
   let valid = false;
   if (admin) {
     valid = bcrypt.compareSync(password, admin.passwordHash) || password === 'admin' || password === 'admin123';
-  } else if ((username === 'admin' || username === 'admin@pusteeealumni.org') && (password === 'admin' || password === 'admin123')) {
+  } else if ((username === 'admin' || username === 'admin@pust.chapai.org') && (password === 'admin' || password === 'admin123')) {
     valid = true;
   }
 
   if (!valid) {
-    req.session.error_msg = 'Invalid administrator credentials.';
+    req.session.error_msg = 'ভুল অ্যাডমিনিস্ট্রেটর ক্রেডেনশিয়াল।';
     return res.redirect('/adminlogin.aspx');
   }
 
   req.session.admin = {
     username: admin ? admin.username : 'admin',
-    name: admin ? admin.name : 'System Administrator',
+    name: admin ? admin.name : 'Central Administrator',
     role: 'admin'
   };
 
-  req.session.success_msg = 'Administrator access granted. Welcome to Member Management!';
+  req.session.success_msg = 'অ্যাডমিন প্যানেলে স্বাগতম!';
   res.redirect('/membermanagement.aspx');
 });
 
@@ -304,24 +354,24 @@ app.get(['/logout', '/logout.aspx'], (req, res) => {
 });
 
 // ==========================================
-// USER PANEL (MEMBER DASHBOARD)
+// USER PANEL (STUDENT / MEMBER DASHBOARD)
 // ==========================================
 
 app.get(['/my_profile', '/my_profile.aspx'], requireUser, (req, res) => {
-  const member = db.getMemberById(req.session.user.id) || db.getMemberByRoll(req.session.user.roll_no);
+  const member = db.getMemberById(req.session.user.id) || db.getMemberByStudentId(req.session.user.student_id);
   if (!member) {
-    req.session.error_msg = 'Member profile not found.';
+    req.session.error_msg = 'সদস্য প্রোফাইল পাওয়া যায়নি।';
     return res.redirect('/logout');
   }
 
   res.render('my_profile', {
-    title: 'My Profile',
+    title: 'আমার প্রোফাইল ও আইডি কার্ড',
     member
   });
 });
 
 app.post(['/my_profile', '/my_profile.aspx'], requireUser, upload.single('profile_photo'), (req, res) => {
-  const member = db.getMemberById(req.session.user.id) || db.getMemberByRoll(req.session.user.roll_no);
+  const member = db.getMemberById(req.session.user.id) || db.getMemberByStudentId(req.session.user.student_id);
   if (!member) return res.redirect('/login.aspx');
 
   const { action } = req.body;
@@ -329,36 +379,32 @@ app.post(['/my_profile', '/my_profile.aspx'], requireUser, upload.single('profil
   if (action === 'change_password') {
     const { current_password, new_password, confirm_password } = req.body;
     if (!bcrypt.compareSync(current_password, member.passwordHash)) {
-      req.session.error_msg = 'Current password is not correct.';
+      req.session.error_msg = 'বর্তমান পাসওয়ার্ডটি সঠিক নয়।';
       return res.redirect('/my_profile.aspx');
     }
     if (new_password !== confirm_password) {
-      req.session.error_msg = 'New passwords do not match.';
+      req.session.error_msg = 'নতুন পাসওয়ার্ড দুটি মেলেনি।';
       return res.redirect('/my_profile.aspx');
     }
     db.updateMember(member.id, {
       passwordHash: bcrypt.hashSync(new_password, 10)
     });
-    req.session.success_msg = 'Your password has been changed successfully!';
+    req.session.success_msg = 'আপনার পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে!';
     return res.redirect('/my_profile.aspx');
   }
 
-  // Update profile info
+  // Update profile
   const updates = {
     full_name: req.body.full_name || member.full_name,
     gender: req.body.gender || member.gender,
     blood_group: req.body.blood_group || member.blood_group,
     email: req.body.email || member.email,
     contact_number: req.body.contact_number || member.contact_number,
-    facebook: req.body.facebook || member.facebook,
-    linkedin: req.body.linkedin || member.linkedin,
+    upazila: req.body.upazila || member.upazila,
+    profession: req.body.profession || member.profession,
     hall: req.body.hall || member.hall,
-    organization: req.body.organization || member.organization,
-    designation: req.body.designation || member.designation,
-    present_district: req.body.present_district || member.present_district,
     present_address: req.body.present_address || member.present_address,
-    permanent_district: req.body.permanent_district || member.permanent_district,
-    permanent_address: req.body.permanent_address || member.permanent_address
+    is_blood_donor: req.body.is_blood_donor === 'yes'
   };
 
   if (req.file) {
@@ -368,33 +414,31 @@ app.post(['/my_profile', '/my_profile.aspx'], requireUser, upload.single('profil
   req.session.user.full_name = updates.full_name;
 
   db.updateMember(member.id, updates);
-  req.session.success_msg = 'Profile information updated successfully!';
+  req.session.success_msg = 'প্রোফাইলের তথ্য সফলভাবে আপডেট হয়েছে!';
   res.redirect('/my_profile.aspx');
 });
 
 // ==========================================
-// ADMIN PANEL (MEMBER MANAGEMENT & UPDATES)
+// ADMIN PANEL (VERIFICATION & MANAGEMENT)
 // ==========================================
 
-// Member Management Page
+// Member Verification & Management Table
 app.get(['/membermanagement', '/membermanagement.aspx'], requireAdmin, (req, res) => {
   const members = db.getMembers();
-  const notCount = db.getNotices().length + db.getDownloads().length;
   res.render('membermanagement', {
-    title: 'Member Management',
-    members,
-    notCount
+    title: 'শিক্ষার্থী ভেরিফিকেশন ও ব্যবস্থাপনা',
+    members
   });
 });
 
-// Toggle Active/Pending status
+// One-click Verification Toggle (Active <-> Pending)
 app.post('/admin/toggle_status', requireAdmin, (req, res) => {
   const { id } = req.body;
   const member = db.getMemberById(id);
   if (member) {
     const nextStatus = member.status === 'Active' ? 'Pending' : 'Active';
     db.updateMember(id, { status: nextStatus });
-    req.session.success_msg = `Member ${member.full_name} status updated to ${nextStatus}.`;
+    req.session.success_msg = `শিক্ষার্থী ${member.full_name} এর স্ট্যাটাস '${nextStatus === 'Active' ? 'সক্রিয় (Active)' : 'পেন্ডিং (Pending)'}' করা হয়েছে।`;
   }
   res.redirect('/membermanagement.aspx');
 });
@@ -403,20 +447,20 @@ app.post('/admin/toggle_status', requireAdmin, (req, res) => {
 app.post('/admin/delete_member', requireAdmin, (req, res) => {
   const { id } = req.body;
   db.deleteMember(id);
-  req.session.success_msg = 'Member record deleted successfully.';
+  req.session.success_msg = 'শিক্ষার্থীর তথ্য সফলভাবে মুছে ফেলা হয়েছে।';
   res.redirect('/membermanagement.aspx');
 });
 
 // Admin Update Member Profile - GET
 app.get(['/admin_update_member', '/admin_update_member.aspx'], requireAdmin, (req, res) => {
-  const roll = (req.query.roll || '').trim();
+  const roll = (req.query.roll || req.query.id || '').trim();
   let member = null;
   if (roll) {
-    member = db.getMemberByRoll(roll);
+    member = db.getMemberByStudentId(roll) || db.getMemberById(roll);
   }
 
   res.render('admin_update_member', {
-    title: 'Update Member Profile',
+    title: 'শিক্ষার্থী তথ্য আপডেট',
     member,
     searchedRoll: roll
   });
@@ -425,33 +469,24 @@ app.get(['/admin_update_member', '/admin_update_member.aspx'], requireAdmin, (re
 // Admin Update Member Profile - POST
 app.post(['/admin_update_member', '/admin_update_member.aspx'], requireAdmin, (req, res) => {
   const { roll_no } = req.body;
-  const member = db.getMemberByRoll(roll_no);
+  const member = db.getMemberByStudentId(roll_no) || db.getMemberByRoll(roll_no);
   if (!member) {
-    req.session.error_msg = 'Member record not found for Roll: ' + roll_no;
+    req.session.error_msg = 'স্টুডেন্ট আইডি ' + roll_no + ' এর শিক্ষার্থী পাওয়া যায়নি।';
     return res.redirect('/admin_update_member.aspx');
   }
 
   const updates = {
     full_name: req.body.full_name || member.full_name,
-    gender: req.body.gender || member.gender,
-    blood_group: req.body.blood_group || member.blood_group,
     email: req.body.email || member.email,
     contact_number: req.body.contact_number || member.contact_number,
-    facebook: req.body.facebook || member.facebook,
-    linkedin: req.body.linkedin || member.linkedin,
-    degree: req.body.degree || member.degree,
     department: req.body.department || member.department,
-    batch_no: req.body.batch_no || member.batch_no,
-    passing_year: req.body.passing_year || member.passing_year,
-    grade_cgpa: req.body.grade_cgpa || member.grade_cgpa,
-    membership_type: req.body.membership_type || member.membership_type,
-    membership_no: req.body.membership_no || member.membership_no,
-    organization: req.body.organization || member.organization,
-    designation: req.body.designation || member.designation,
-    permanent_district: req.body.permanent_district || member.permanent_district,
-    permanent_address: req.body.permanent_address || member.permanent_address,
-    present_district: req.body.present_district || member.present_district,
+    session: req.body.session || member.session,
+    upazila: req.body.upazila || member.upazila,
+    blood_group: req.body.blood_group || member.blood_group,
+    profession: req.body.profession || member.profession,
+    hall: req.body.hall || member.hall,
     present_address: req.body.present_address || member.present_address,
+    is_blood_donor: req.body.is_blood_donor === 'yes',
     status: req.body.status || member.status
   };
 
@@ -459,84 +494,80 @@ app.post(['/admin_update_member', '/admin_update_member.aspx'], requireAdmin, (r
     updates.passwordHash = bcrypt.hashSync(req.body.new_password.trim(), 10);
   }
 
-  db.updateMemberByRoll(roll_no, updates);
-  req.session.success_msg = `Profile for Roll ${roll_no} (${updates.full_name}) has been updated successfully!`;
+  db.updateMemberByStudentId(roll_no, updates);
+  req.session.success_msg = `${updates.full_name} (আইডি: ${roll_no}) এর তথ্য সফলভাবে আপডেট হয়েছে!`;
   res.redirect(`/admin_update_member.aspx?roll=${roll_no}`);
 });
 
-// Admin Notices & Downloads Manager - GET
+// Admin Notices & Downloads Manager
 app.get(['/admin_content', '/admin_content.aspx'], requireAdmin, (req, res) => {
   const notices = db.getNotices();
   const downloads = db.getDownloads();
   res.render('admin_content', {
-    title: 'Manage Notices & Downloads',
+    title: 'নোটিশ ও ডকুমেন্টস ব্যবস্থাপনা',
     notices,
     downloads
   });
 });
 
-// Add Notice
 app.post('/admin/add_notice', requireAdmin, upload.single('notice_file'), (req, res) => {
   const { title } = req.body;
   if (!req.file || !title) {
-    req.session.error_msg = 'Please specify notice title and attach a document.';
+    req.session.error_msg = 'অনুগ্রহ করে নোটিশের শিরোনাম ও ফাইল প্রদান করুন।';
     return res.redirect('/admin_content.aspx');
   }
   db.addNotice({
     title,
     file_url: 'uploads/' + req.file.filename
   });
-  req.session.success_msg = 'New notice published successfully!';
+  req.session.success_msg = 'নতুন নোটিশ সফলভাবে প্রকাশিত হয়েছে!';
   res.redirect('/admin_content.aspx');
 });
 
-// Delete Notice
 app.post('/admin/delete_notice', requireAdmin, (req, res) => {
   const { id } = req.body;
   db.deleteNotice(id);
-  req.session.success_msg = 'Notice deleted.';
+  req.session.success_msg = 'নোটিশ ডিলিট করা হয়েছে।';
   res.redirect('/admin_content.aspx');
 });
 
-// Add Download
 app.post('/admin/add_download', requireAdmin, upload.single('download_file'), (req, res) => {
   const { title } = req.body;
   if (!req.file || !title) {
-    req.session.error_msg = 'Please specify download title and attach a document.';
+    req.session.error_msg = 'অনুগ্রহ করে ডকুমেন্টের শিরোনাম ও ফাইল প্রদান করুন।';
     return res.redirect('/admin_content.aspx');
   }
   db.addDownload({
     title,
     file_url: 'uploads/' + req.file.filename
   });
-  req.session.success_msg = 'New download resource added successfully!';
+  req.session.success_msg = 'ডাউনলোডেবল ডকুমেন্ট যুক্ত হয়েছে!';
   res.redirect('/admin_content.aspx');
 });
 
-// Delete Download
 app.post('/admin/delete_download', requireAdmin, (req, res) => {
   const { id } = req.body;
   db.deleteDownload(id);
-  req.session.success_msg = 'Download resource deleted.';
+  req.session.success_msg = 'ডকুমেন্ট ডিলিট করা হয়েছে।';
   res.redirect('/admin_content.aspx');
 });
 
-// 404 handler
+// 404
 app.use((req, res) => {
   res.status(404).render('about', {
     title: 'Page Not Found',
-    error_msg: 'The requested page was not found. Redirecting you to the home page...'
+    error_msg: 'অনুরোধকৃত পেজটি পাওয়া যায়নি।'
   });
 });
 
 // Start Server
 app.listen(PORT, () => {
-  console.log(`====================================================`);
-  console.log(`PUST EEE ALUMNI FULL-STACK WEB APPLICATION RUNNING`);
-  console.log(`Local URL : http://localhost:${PORT}`);
-  console.log(`Admin Portal: http://localhost:${PORT}/adminlogin.aspx`);
-  console.log(`Admin User  : admin`);
-  console.log(`Admin Pass  : admin123 (or admin)`);
-  console.log(`Demo Member : amirul.090201@s.pust.ac.bd / password123`);
-  console.log(`====================================================`);
+  console.log(`=======================================================`);
+  console.log(`PUST CHAPAI ZILLA SAMITY WEB PORTAL IS RUNNING`);
+  console.log(`Local URL    : http://localhost:${PORT}`);
+  console.log(`Admin Portal : http://localhost:${PORT}/adminlogin.aspx`);
+  console.log(`Admin User   : admin`);
+  console.log(`Admin Pass   : admin123 (or admin)`);
+  console.log(`Demo Student : 200101 / password123`);
+  console.log(`=======================================================`);
 });

@@ -1,165 +1,117 @@
-# PUST EEE Alumni Association - Full-Stack Web Platform
+# পাবিপ্রবি চাঁপাইনবাবগঞ্জ জেলা সমিতি (PUST Chapainawabganj Student & Alumni Association)
 
-A production-ready, full-stack alumni web platform replicating and enhancing [https://pusteeealumni.org/](https://pusteeealumni.org/) (Pabna University of Science & Technology - Electrical & Electronic Engineering Alumni Association).
-
-Built with **Node.js**, **Express**, **EJS**, **Bootstrap 4**, **DataTables**, and a cross-platform database store with zero external native compilation requirements. Runs seamlessly on Windows, Linux, and macOS, and is ready for one-click deployment to GitHub and cloud providers (Render, Railway, Fly.io, Vercel, VPS).
+একটি পূর্ণাঙ্গ ফুল-স্ট্যাক ওয়েব পোর্টাল ও শিক্ষার্থী সহায়তা প্ল্যাটফর্ম — **পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়স্থ চাঁপাইনবাবগঞ্জ জেলা সমিতি**-র শিক্ষার্থীদের ডাটাবেজ, আবাসন সহায়তা, ভর্তি সেল, জরুরি রক্তদান নেটওয়ার্ক এবং ডিজিটাল স্টুডেন্ট মেম্বারশিপ কার্ড ব্যবস্থাপনার জন্য প্রস্তুতকৃত।
 
 ---
 
-## 🌟 Key Features
+## 🎨 ডিজাইন ও কালার কম্বিনেশন (Design & Color Palette)
 
-### 1. 🌐 Public Pages (1:1 Exact Design & Assets)
-- **Home (`/` or `/home.aspx`)**: Hero banner, Welcome Section, 3 Primary Features (Foster Networking, Support Professional Development, Give Back & Enhance Engagement), and 3-Step Process (Apply for Membership, Search Member, Visit Us) with genuine PUST campus photography.
-- **About (`/about.aspx`)**: Comprehensive history, mission, networking benefits, alumni directory overview, and community goals.
-- **Alumni Directory (`/alumnilist.aspx`)**: Searchable and filterable table of registered graduates with live DataTables search, batch filtering, roll numbers, blood groups, organizations, and quick profile modal previews.
-- **Downloads (`/download.aspx`)**: Downloadable official PDF and images (Approved Convener Committee document, instructions, committee photo).
-- **Notice Board (`/notice.aspx`)**: Official notice board with document attachments and instructions.
-- **Contact (`/contact.aspx`)**: Batch representatives' direct phone numbers and emails (1st Batch, 2nd Batch, 6th Batch).
-
-### 2. 📝 Membership Registration (`/registration.aspx`)
-- Comprehensive application form covering:
-  - **Personal Details**: Full Name, Gender, Blood Group, Email, Contact Phone, Facebook, LinkedIn.
-  - **Academic Details**: Roll No, Batch No, Degree, Department, Residential Hall, Passing Year, Grade/CGPA, Certificate Serial No.
-  - **Professional & Address**: Organization, Designation, Office Address, Permanent District/Address, Present District/Address.
-  - **Documents & Verification**: Profile Photo (with live JavaScript preview), Degree Certificate scan, Payment Method (Online Payment / Bank Receipt), and Payment Slip upload.
-  - **Account Security**: Password selection and agreement to terms.
-
-### 3. 👤 Member User Panel (`/my_profile.aspx`)
-- **Member Dashboard**: Profile summary, membership status (`Active` / `Pending`), Membership ID (e.g. `MEM-090201`), Batch, Roll.
-- **Digital Alumni ID Card**: Formatted digital alumni membership card with official PUST crest, photo, blood group, roll, batch, and print/save capability (`window.print()`).
-- **Profile Management**: Update contact information, employment details, address, and profile photo.
-- **Uploaded Documents**: View submitted certificate and payment documents.
-- **Security**: Self-service password change.
-
-### 4. 🛡️ Administration Panel (`/membermanagement.aspx`)
-Full administrative access out of the box:
-- **Member Management**:
-  - Live statistics: Total Members, Active Members, Pending Applications, Notices & Downloads.
-  - Interactive table of all members with search, pagination, and status badges.
-  - Quick action buttons to **Approve/Activate** pending members or set active members to pending.
-  - Direct links to inspect uploaded profile photos, degree certificates, and payment slips.
-  - One-click deletion of member records.
-- **Update Member Profile (`/admin_update_member.aspx`)**:
-  - Search any graduate by **Roll No**.
-  - Modify any field (personal, academic, professional, address, membership tier, active/pending status).
-  - Admin password override/reset for members who forgot their credentials.
-- **Notice & Download Manager (`/admin_content.aspx`)**:
-  - Publish new notices with title and file attachments (PDF/images).
-  - Upload downloadable resources and forms.
-  - Delete expired or obsolete notices/downloads.
+- **Navy Blue (`#142B49`)** — বিশ্ববিদ্যালয়ের প্রাতিষ্ঠানিক পরিচয় ও আভিজাত্য (Professional University Identity)
+- **Emerald Green (`#16865B`)** — চাঁপাইনবাবগঞ্জের আম্রকানন ও সবুজ ঐতিহ্য ও পরিচয় (Symbol of Chapainawabganj's Heritage)
+- **Off-White (`#F8F9FA` / `#FFFFFF`)** — পরিষ্কার ও মার্জিত ব্যাকগ্রাউন্ড
 
 ---
 
-## 🚀 Quick Start (Running Locally)
+## 🌟 প্রধান প্রধান ফিচারসমূহ (Key Features)
 
-### Prerequisites
-- [Node.js](https://nodejs.org/) (v16, v18, v20, v22, or v26)
-- npm (comes with Node.js)
+### ১. 📝 শিক্ষার্থী ও সদস্য নিবন্ধন (Student Registration System)
+রেজিস্ট্রেশন ফর্মে অন্তর্ভুক্ত সকল আবশ্যকীয় তথ্য:
+- **Full Name** (পূর্ণ নাম)
+- **Profile Picture** (লাইভ প্রিভিউসহ পাসপোর্ট সাইজ ছবি আপলোড)
+- **Department** (পাবিপ্রবির সকল অনুষদ ও বিভাগ: CSE, EEE, ICE, CE, ME, Arch, URP, Physics, Chemistry, Math, Stats, Pharmacy, BMB, BBA, Economics, English, Bangla, Public Admin, Social Work ইত্যাদি)
+- **Academic Session** (২০১০-১১ থেকে ২০২৪-২৫ সেশন পর্যন্ত)
+- **Student ID / Roll No** (ইউনিক স্টুডেন্ট আইডি)
+- **Mobile Number** (জরুরি যোগাযোগের নম্বর)
+- **Email Address** (ইমেইল ঠিকানা)
+- **Home District / Upazila** (চাঁপাইনবাবগঞ্জ সদর, শিবগঞ্জ, গোমস্তাপুর, নাচোল, ভোলাহাট)
+- **Current Profession** (অধ্যয়নরত শিক্ষার্থী, বিসিএস ক্যাডার, ইঞ্জিনিয়ার, সফটওয়্যার ডেভেলপার, ব্যাংকার ইত্যাদি)
+- **Present Address / Hall** (পাবনায় আবাসিক হল বা মেসের ঠিকানা)
+- **Blood Group** (A+, A-, B+, B-, O+, O-, AB+, AB-)
+- **রক্তদানে ইচ্ছুক চেকবক্স** (স্বেচ্ছায় রক্তদান নেটওয়ার্কে অন্তর্ভুক্ত হওয়ার জন্য)
+- **পাসওয়ার্ড** (ভবিষ্যতে লগইন ও ডিজিটাল আইডি কার্ড দেখার জন্য)
 
-### Installation & Run
+### ২. ✅ নিবন্ধন নিশ্চিতকরণ সেকশন (Registration Confirmation Section)
+- ফরম সাবমিট করার সাথে সাথেই শিক্ষার্থী একটি আকর্ষণীয় **নিবন্ধন নিশ্চিতকরণ (Confirmation)** পেজে রিডাইরেক্ট হবে।
+- এতে প্রদর্শিত হয়:
+  - সফল নিবন্ধন ও ভেরিফিকেশন অপেক্ষমান মেসেজ
+  - **স্ট্যাটাস ব্যাজ: `⏳ Pending Admin Verification`**
+  - শিক্ষার্থীর পূর্ণ তথ্য ও ছবির সারসংক্ষেপ কার্ড
+  - **প্রিন্ট বা সেভ স্লিপ বাটন (`window.print()`)**
+  - সরাসরি লগইন বা হোমে যাওয়ার নেভিগেশন।
 
-1. Open a terminal in this project folder:
+### ৩. 🩸 জরুরি রক্তদান নেটওয়ার্ক (Emergency Blood Directory)
+- পাবনা ও চাঁপাইনবাবগঞ্জের যেকোনো রোগীর জরুরি প্রয়োজনে রক্তদাতা খোঁজার জন্য বিশেষ মডিউল।
+- রক্তের গ্রুপ (A+, B+, O+, AB+ ইত্যাদি) অনুযায়ী এক ক্লিকেই ফিল্টারিং।
+- সরাসরি **কল (Call)** এবং **হোয়াটসঅ্যাপ (WhatsApp)** বাটন।
+
+### ৪. 🤝 শিক্ষার্থী সহায়তা ও কল্যাণ সেল (Student Support Services)
+- **ভর্তি সহায়তা সেল (Admission Helper):** চাঁপাইনবাবগঞ্জ থেকে আসা নতুন ভর্তি পরীক্ষার্থীদের বাস কাউন্টার থেকে রিসিভ, ক্যাম্পাসে দিকনির্দেশনা ও সিট খুঁজে দেওয়ার সার্বিক সহায়তা।
+- **মেস ও আবাসন সহায়তা (Mess & Accommodation):** পাবনা শহর ও ক্যাম্পাসের কাছে নিরাপদ ছাত্র ও ছাত্রী মেস নির্বাচনে দিকনির্দেশনা।
+- **ক্যারিয়ার ও বিসিএস মেন্টরিং:** পাবিপ্রবি থেকে পাস করা চাঁপাইনবাবগঞ্জের সফল অ্যালামনাই ও সিনিয়র বিসিএস কর্মকর্তাদের ক্যারিয়ার গাইডলাইন।
+- **উপজেলা ভিত্তিক সমন্বয়ক হেল্পডেস্ক:** ৫টি উপজেলার জন্য পৃথক দায়িত্বশীলদের যোগাযোগের ব্যবস্থা।
+
+### ৫. 🔍 শিক্ষার্থী ও সদস্য ডিরেক্টরি (Student Directory with DataTables)
+- লাইভ সার্চ ও উপজেলা ফিল্টার পিলস (চাঁপাইনবাবগঞ্জ সদর, শিবগঞ্জ, গোমস্তাপুর, নাচোল, ভোলাহাট)।
+- এক ক্লিকেই শিক্ষার্থীর বিস্তারিত তথ্য ও সরাসরি যোগাযোগের পপ-আপ প্রিভিউ।
+
+### ৬. 🪪 শিক্ষার্থী ইউজার প্যানেল ও ডিজিটাল আইডি কার্ড (User Panel)
+- লগইন করার পর আকর্ষণীয় **ডিজিটাল স্টুডেন্ট আইডি কার্ড**।
+- আইডি কার্ডে রয়েছে পাবিপ্রবি ও সমিতির লোগো, ছবি, স্টুডেন্ট আইডি, বিভাগ, সেশন, রক্তের গ্রুপ, নিজ উপজেলা এবং ইউনিক কার্ড নম্বর।
+- যেকোনো সময় এক ক্লিকেই প্রিন্ট বা পিডিএফ সংরক্ষণের সুবিধা।
+- প্রোফাইল তথ্য সংশোধন ও পাসওয়ার্ড পরিবর্তনের সুবিধা।
+
+### ৭. 🛡️ কেন্দ্রীয় অ্যাডমিন প্যানেল ও ভেরিফিকেশন (Admin Verification Panel)
+- **One-Click ভেরিফিকেশন:** নতুন কোনো শিক্ষার্থী রেজিস্ট্রেশন করলে অ্যাডমিন প্যানেলে তাৎক্ষণিক **"অনুমোদন (Verify & Approve)"** বাটনে ক্লিক করে এক সেকেন্ডেই সক্রিয় করা যায়।
+- যেকোনো শিক্ষার্থীর স্টুডেন্ট আইডি দিয়ে সম্পূর্ণ তথ্য পরিবর্তন, পাসওয়ার্ড রিসেট বা রেকর্ড ডিলিট।
+- নোটিশ প্রকাশনা ও ডাউনলোড ফাইল আপলোড/ডিলিট করার স্বয়ংক্রিয় ব্যবস্থা।
+
+---
+
+## 🚀 লোকাল সার্ভার চালনা (How to Run Locally)
+
+1. প্রজেক্ট ফোল্ডারে টার্মিনাল খুলুন:
    ```bash
    cd "d:\Emran\pust.chapai website"
    ```
 
-2. Install dependencies (if not already installed):
+2. ডিপেন্ডেন্সি ইন্সটল (প্রয়োজন হলে):
    ```bash
    npm install
    ```
 
-3. Start the application:
+3. সার্ভার চালু করুন:
    ```bash
    npm start
    ```
 
-4. Open your web browser:
-   - **Website & Home Page**: [http://localhost:3000](http://localhost:3000)
-   - **Member Login**: [http://localhost:3000/login.aspx](http://localhost:3000/login.aspx)
-   - **Admin Portal**: [http://localhost:3000/adminlogin.aspx](http://localhost:3000/adminlogin.aspx)
+4. ব্রাউজারে প্রবেশ করুন:
+   - **মূল ওয়েবসাইট:** [http://localhost:3000](http://localhost:3000)
+   - **সদস্য নিবন্ধন ফরম:** [http://localhost:3000/registration.aspx](http://localhost:3000/registration.aspx)
+   - **শিক্ষার্থী লগইন:** [http://localhost:3000/login.aspx](http://localhost:3000/login.aspx)
+   - **অ্যাডমিন প্যানেল:** [http://localhost:3000/adminlogin.aspx](http://localhost:3000/adminlogin.aspx)
+   - **জরুরি রক্তদান নেটওয়ার্ক:** [http://localhost:3000/blood_donation.aspx](http://localhost:3000/blood_donation.aspx)
+   - **শিক্ষার্থী সহায়তা সেল:** [http://localhost:3000/student_support.aspx](http://localhost:3000/student_support.aspx)
 
 ---
 
-## 🔑 Login Credentials
+## 🔑 লগইন ক্রেডেনশিয়াল (Login Credentials)
 
-### 🛡️ Full Administration Access
-- **URL**: [http://localhost:3000/adminlogin.aspx](http://localhost:3000/adminlogin.aspx)
-- **Username**: `admin`
-- **Password**: `admin123` *(also accepts `admin`)*
+### 🛡️ কেন্দ্রীয় অ্যাডমিনিস্ট্রেটর
+- **URL:** [http://localhost:3000/adminlogin.aspx](http://localhost:3000/adminlogin.aspx)
+- **ইউজারনেম:** `admin`
+- **পাসওয়ার্ড:** `admin123` *(অথবা `admin`)*
 
-### 👤 Demo Alumni Account
-- **URL**: [http://localhost:3000/login.aspx](http://localhost:3000/login.aspx)
-- **Email / Roll**: `amirul.090201@s.pust.ac.bd` *(or roll: `090201`)*
-- **Password**: `password123`
-
----
-
-## 📁 Project Structure
-
-```
-pust.chapai website/
-├── data/
-│   ├── db.js              # Database access layer and query functions
-│   └── db.json            # JSON database with seeded members, notices, and downloads
-├── public/
-│   ├── CSS/
-│   │   └── customstylesheet.css  # Original PUST EEE color scheme (#762b00, #531f00)
-│   ├── DownloadDoc/       # Official downloadable PDFs and pictures
-│   ├── NoticeDoc/         # Official notice documents
-│   ├── Photo/             # Campus banners, logos, crests, and gallery pictures
-│   ├── ProfilePhoto/      # Seed member profile pictures
-│   ├── CertPhoto/         # Certificate storage
-│   ├── PaymentPhoto/      # Payment slip storage
-│   └── uploads/           # User & Admin dynamic file uploads
-├── views/
-│   ├── partials/
-│   │   ├── header.ejs     # Responsive navbar with user/admin session states
-│   │   └── footer.ejs     # Footer with brown bands and admin login link
-│   ├── index.ejs          # Home page
-│   ├── about.ejs          # About page
-│   ├── registration.ejs   # Apply for membership
-│   ├── alumnilist.ejs     # Searchable directory with DataTables
-│   ├── download.ejs       # Downloads page
-│   ├── notice.ejs         # Notice board
-│   ├── contact.ejs        # Contact information
-│   ├── login.ejs          # Member login
-│   ├── adminlogin.ejs     # Admin login
-│   ├── my_profile.ejs     # User Panel & Digital Alumni ID Card
-│   ├── membermanagement.ejs     # Admin Member Management
-│   ├── admin_update_member.ejs  # Admin Member Profile Editor
-│   └── admin_content.ejs        # Admin Notice & Download Manager
-├── server.js              # Express server and application routes
-├── package.json           # Dependencies and scripts
-└── README.md              # Documentation
-```
+### 👤 শিক্ষার্থী ডেমো অ্যাকাউন্ট
+- **URL:** [http://localhost:3000/login.aspx](http://localhost:3000/login.aspx)
+- **আইডি / ইমেইল:** `200101` *(অথবা `emran.cse@s.pust.ac.bd`)*
+- **পাসওয়ার্ড:** `password123`
 
 ---
 
-## 📤 Deploying to a GitHub Repository
-
-When you are ready to publish this project to GitHub, run the following commands in your project directory:
+## 📤 গিটহাবে ডিপ্লয় করার নির্দেশিকা (GitHub Push)
 
 ```bash
-# 1. Initialize Git repository
-git init
-
-# 2. Add all files
 git add .
-
-# 3. Create your first commit
-git commit -m "Initial commit - PUST EEE Alumni full-stack website with Admin & User panels"
-
-# 4. Set main branch
-git branch -M main
-
-# 5. Link your GitHub remote repository (replace with your repo URL)
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-
-# 6. Push to GitHub
-git push -u origin main
+git commit -m "Update PUST Chapainawabganj Zilla Samity features, registration confirmation, and blood directory"
+git push origin main
 ```
-
----
-
-## 📄 License
-This project is open-source and free to customize for university alumni associations.

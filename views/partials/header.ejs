@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title><%= typeof title !== 'undefined' ? title + ' | PUST EEE Alumni' : 'PUST | Home' %></title>
+    <title><%= typeof title !== 'undefined' ? title + ' | পাবিপ্রবি চাঁপাইনবাবগঞ্জ জেলা সমিতি' : 'পাবিপ্রবি চাঁপাইনবাবগঞ্জ জেলা সমিতি | PUST' %></title>
 
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+    <!-- Google Font: Hind Siliguri & Source Sans Pro -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Source+Sans+Pro:wght@400;600;700&display=fallback" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <!-- Bootstrap 4 CSS -->
@@ -15,42 +17,43 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
-    <!-- Custom Stylesheet -->
+    <!-- Custom Stylesheet with Navy Blue & Emerald Green -->
     <link rel="stylesheet" href="/CSS/customstylesheet.css" />
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <style>
+        body, h1, h2, h3, h4, h5, h6, .nav-link, button, input, select {
+            font-family: 'Hind Siliguri', 'Source Sans Pro', sans-serif;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Top Header / Crest -->
+    <!-- Top Header / Crest & Identity -->
     <div class="jumbotron-header text-center">
         <div class="container">
-            <table class="table-borderless mx-auto" style="width: auto;">
-                <tbody>
-                    <tr>
-                        <td class="align-middle pr-3">
-                            <img id="ImgLogo" src="/Photo/me.png" alt="PUST Logo" style="height:auto; width:95px;" onerror="this.src='/Photo/pust-eee.png'">
-                        </td>
-                        <td class="align-middle text-center">
-                            <h2 style="font-weight: bold; margin-bottom: 2px; color: #1a2a4b;">PUST EEE ALUMNI</h2>
-                            <div style="border-bottom: 2px solid #0056b3; width: 85%; margin: 4px auto 6px auto;"></div>
-                            <h5 style="margin-bottom: 0; color: #495057;">
-                                <span class="badge badge-light" style="font-size: 15px; font-weight: 600;">Pabna University of Science &amp; Technology (PUST)</span>
-                            </h5>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
+                <div class="mr-md-3 mb-2 mb-md-0">
+                    <img id="ImgLogo" src="/Photo/me.png" alt="PUST Logo" style="height: 85px; width: auto;" onerror="this.src='/Photo/pust-eee.png'">
+                </div>
+                <div class="text-center text-md-left">
+                    <h2 class="brand-title-bn mb-0">পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়স্থ চাঁপাইনবাবগঞ্জ জেলা সমিতি</h2>
+                    <h5 class="brand-title-en mb-0">PUST Chapainawabganj Student &amp; Alumni Association</h5>
+                    <small class="text-muted font-weight-bold" style="font-size: 13px;">
+                        <i class="fas fa-map-marker-alt text-danger mr-1"></i> পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয় (PUST), পাবনা-৬৬০০ &bull; ঐক্য, সৌহার্দ্য ও প্রগতি
+                    </small>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom sticky-top">
         <div class="container-fluid px-lg-4">
-            <a class="navbar-brand-footerlinks mr-3" href="/home.aspx">
-                <img src="/Photo/pust-eee.png" alt="PUST EEE Logo" width="110" height="110" style="object-fit: contain;" />
+            <a class="navbar-brand d-lg-none font-weight-bold" href="/home.aspx" style="color: var(--navy-blue);">
+                <i class="fas fa-users text-success mr-1"></i> চাঁপাইনবাবগঞ্জ জেলা সমিতি
             </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,71 +63,77 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto align-items-lg-center">
                     <li class="nav-item <%= (typeof activePage !== 'undefined' && activePage === 'home') ? 'active' : '' %>">
-                        <a id="LinkButton7" class="nav-link px-2" href="/home.aspx"><i class="fas fa-home text-primary"></i> Home</a>
+                        <a class="nav-link" href="/home.aspx"><i class="fas fa-home"></i> হোম</a>
                     </li>
                     <li class="nav-item <%= (typeof activePage !== 'undefined' && activePage === 'about') ? 'active' : '' %>">
-                        <a id="LinkButton8" class="nav-link px-2" href="/about.aspx">About</a>
-                    </li>
-                    <li class="nav-item <%= (typeof activePage !== 'undefined' && activePage === 'registration') ? 'active' : '' %>">
-                        <a id="LinkButton9" class="nav-link px-2 text-primary font-weight-bold" href="/registration.aspx">Apply for Membership</a>
+                        <a class="nav-link" href="/about.aspx">পরিচিতি ও ইতিহাস</a>
                     </li>
                     <li class="nav-item <%= (typeof activePage !== 'undefined' && activePage === 'alumnilist') ? 'active' : '' %>">
-                        <a id="LinkButton11" class="nav-link px-2" href="/alumnilist.aspx">Alumni List</a>
+                        <a class="nav-link" href="/alumnilist.aspx"><i class="fas fa-search text-info mr-1"></i> শিক্ষার্থী ও সদস্য তালিকা</a>
                     </li>
-                    <li class="nav-item <%= (typeof activePage !== 'undefined' && activePage === 'download') ? 'active' : '' %>">
-                        <a id="LinkButton13" class="nav-link px-2" href="/download.aspx">Download</a>
+                    <li class="nav-item <%= (typeof activePage !== 'undefined' && activePage === 'blood') ? 'active' : '' %>">
+                        <a class="nav-link text-danger font-weight-bold" href="/blood_donation.aspx">
+                            <i class="fas fa-tint text-danger mr-1 animate__animated animate__pulse animate__infinite"></i> রক্তদান নেটওয়ার্ক
+                        </a>
                     </li>
-                    <li class="nav-item <%= (typeof activePage !== 'undefined' && activePage === 'contact') ? 'active' : '' %>">
-                        <a id="LinkButton14" class="nav-link px-2" href="/contact.aspx">Contact</a>
+                    <li class="nav-item <%= (typeof activePage !== 'undefined' && activePage === 'support') ? 'active' : '' %>">
+                        <a class="nav-link" href="/student_support.aspx"><i class="fas fa-hands-helping text-success mr-1"></i> শিক্ষার্থী সহায়তা</a>
+                    </li>
+                    <li class="nav-item <%= (typeof activePage !== 'undefined' && activePage === 'committee') ? 'active' : '' %>">
+                        <a class="nav-link" href="/committee.aspx">কার্যনির্বাহী কমিটি</a>
                     </li>
                     <li class="nav-item <%= (typeof activePage !== 'undefined' && activePage === 'notice') ? 'active' : '' %>">
-                        <a id="LinkButton15" class="nav-link px-2" href="/notice.aspx">Notice</a>
+                        <a class="nav-link" href="/notice.aspx">নোটিশ ও বিজ্ঞপ্তি</a>
                     </li>
 
                     <% if (typeof currentAdmin !== 'undefined' && currentAdmin) { %>
                     <li class="nav-item dropdown ml-lg-2">
                         <a class="nav-link dropdown-toggle text-danger font-weight-bold" href="#" id="adminMenuDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-shield-alt"></i> Admin Panel
+                            <i class="fas fa-shield-alt"></i> অ্যাডমিন প্যানেল
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="adminMenuDropdown">
-                            <a class="dropdown-item" href="/membermanagement.aspx"><i class="fas fa-users-cog"></i> Member Management</a>
-                            <a class="dropdown-item" href="/admin_update_member.aspx"><i class="fas fa-user-edit"></i> Update Member Profile</a>
-                            <a class="dropdown-item" href="/admin_content.aspx"><i class="fas fa-bullhorn"></i> Manage Notices &amp; Downloads</a>
+                        <div class="dropdown-menu shadow border-0" aria-labelledby="adminMenuDropdown">
+                            <a class="dropdown-item" href="/membermanagement.aspx"><i class="fas fa-user-check text-success mr-2"></i> শিক্ষার্থী ভেরিফিকেশন ও তালিকা</a>
+                            <a class="dropdown-item" href="/admin_update_member.aspx"><i class="fas fa-user-edit text-primary mr-2"></i> তথ্য সংশোধন ও আপডেট</a>
+                            <a class="dropdown-item" href="/admin_content.aspx"><i class="fas fa-bullhorn text-info mr-2"></i> নোটিশ ও ফাইল আপলোড</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="/logout"><i class="fas fa-sign-out-alt"></i> Admin Logout</a>
+                            <a class="dropdown-item text-danger" href="/logout"><i class="fas fa-sign-out-alt mr-2"></i> অ্যাডমিন লগআউট</a>
                         </div>
                     </li>
                     <% } %>
                 </ul>
 
-                <!-- User Account Area -->
+                <!-- Action Button & User Area -->
                 <ul class="navbar-nav ml-auto align-items-lg-center">
+                    <li class="nav-item mr-lg-3 my-2 my-lg-0">
+                        <a class="nav-link btn-apply font-weight-bold" href="/registration.aspx">
+                            <i class="fas fa-user-plus mr-1"></i> সদস্য নিবন্ধন
+                        </a>
+                    </li>
+
                     <% if (typeof currentUser !== 'undefined' && currentUser) { %>
                         <li class="nav-item d-flex align-items-center">
-                            <img src="/<%= currentUser.profile_photo || 'Photo/fahim.png' %>" class="rounded-circle mr-2 border border-primary" alt="<%= currentUser.full_name %>" height="42" width="42" style="object-fit: cover;" onerror="this.src='/Photo/fahim.png'" />
+                            <img src="/<%= currentUser.profile_photo || 'Photo/fahim.png' %>" class="rounded-circle mr-2 border border-success" alt="<%= currentUser.full_name %>" height="38" width="38" style="object-fit: cover;" onerror="this.src='/Photo/fahim.png'" />
                             <div class="dropdown">
-                                <a class="nav-link dropdown-toggle font-weight-bold text-dark" href="#" id="userDropdown" role="button" data-toggle="dropdown">
+                                <a class="nav-link dropdown-toggle font-weight-bold text-dark px-1" href="#" id="userDropdown" role="button" data-toggle="dropdown">
                                     <%= currentUser.full_name.split(' ')[0] %>
-                                    <span class="badge badge-<%= currentUser.status === 'Active' ? 'success' : 'warning' %>"><%= currentUser.status %></span>
+                                    <span class="badge badge-<%= currentUser.status === 'Active' ? 'success' : 'warning' %> ml-1"><%= currentUser.status === 'Active' ? 'সক্রিয়' : 'পেন্ডিং' %></span>
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-right shadow">
-                                    <a class="dropdown-item" href="/my_profile.aspx"><i class="fas fa-user-circle"></i> My Profile &amp; Card</a>
+                                <div class="dropdown-menu dropdown-menu-right shadow border-0">
+                                    <a class="dropdown-item" href="/my_profile.aspx"><i class="fas fa-id-card text-primary mr-2"></i> প্রোফাইল ও ডিজিটাল আইডি</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                    <a class="dropdown-item text-danger" href="/logout"><i class="fas fa-sign-out-alt mr-2"></i> লগআউট</a>
                                 </div>
                             </div>
                         </li>
                     <% } else if (typeof currentAdmin !== 'undefined' && currentAdmin) { %>
                         <li class="nav-item d-flex align-items-center">
-                            <img src="/Photo/adminuser.png" class="rounded-circle mr-2 border border-danger" alt="Admin" height="42" width="42" style="object-fit: cover;" onerror="this.src='/Photo/fahim.png'" />
-                            <span class="badge badge-danger p-2 mr-2"><i class="fas fa-user-shield"></i> Administrator</span>
-                            <a class="btn btn-outline-danger btn-sm" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                            <span class="badge badge-danger p-2 mr-2"><i class="fas fa-user-shield"></i> অ্যাডমিনিস্ট্রেটর</span>
+                            <a class="btn btn-outline-danger btn-sm" href="/logout">লগআউট</a>
                         </li>
                     <% } else { %>
-                        <li class="nav-item d-flex align-items-center">
-                            <img src="/Photo/fahim.png" id="LinkButton20" class="rounded-circle mr-2 border" alt="Member Avatar" height="42" width="42" />
-                            <a id="LinkButton16" class="btn btn-primary btn-sm px-3 shadow-sm font-weight-bold" href="/login.aspx">
-                                <i class="fas fa-sign-in-alt"></i> Member Login
+                        <li class="nav-item">
+                            <a class="btn btn-outline-primary btn-sm px-3 font-weight-bold" href="/login.aspx">
+                                <i class="fas fa-sign-in-alt mr-1"></i> লগইন
                             </a>
                         </li>
                     <% } %>
@@ -136,13 +145,13 @@
     <!-- Global Flash Alerts -->
     <div class="container mt-3">
         <% if (typeof success_msg !== 'undefined' && success_msg && success_msg.length > 0) { %>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
                 <i class="fas fa-check-circle mr-2"></i> <%= success_msg %>
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
         <% } %>
         <% if (typeof error_msg !== 'undefined' && error_msg && error_msg.length > 0) { %>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
                 <i class="fas fa-exclamation-triangle mr-2"></i> <%= error_msg %>
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
