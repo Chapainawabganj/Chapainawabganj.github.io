@@ -3,7 +3,7 @@ const path = require('path');
 const ejs = require('ejs');
 const db = require('./data/db');
 
-const OUTPUT_DIR = path.join(__dirname, 'docs');
+const OUTPUT_DIR = path.join(__dirname, '.');
 const VIEWS_DIR = path.join(__dirname, 'views');
 const PUBLIC_DIR = path.join(__dirname, 'public');
 
@@ -31,7 +31,7 @@ function copyDirSync(src, dest) {
 }
 
 // Copy public assets to docs/
-console.log('Copying public assets to docs/...');
+console.log('Copying public assets to root...');
 copyDirSync(PUBLIC_DIR, OUTPUT_DIR);
 
 // Create .nojekyll for GitHub Pages

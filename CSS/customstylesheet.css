@@ -1,0 +1,297 @@
+﻿/* ========================================================
+   PUST Chapainawabganj Zilla Samity - Official Stylesheet
+   Color Palette:
+   - Navy Blue: #142B49 (University & Professional Identity)
+   - Emerald Green: #16865B (Chapainawabganj Green Heritage)
+   - Off-White: #F8F9FA
+   ======================================================== */
+
+:root {
+    --navy-blue: #142B49;
+    --navy-dark: #0c1b2e;
+    --emerald-green: #16865B;
+    --emerald-light: #20a06e;
+    --off-white: #F8F9FA;
+    --accent-gold: #ffc107;
+}
+
+body {
+    background-color: var(--off-white);
+    font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #2c3e50;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header & Branding */
+.jumbotron-header {
+    background: #ffffff;
+    border-bottom: 3px solid var(--emerald-green);
+    padding: 16px 10px;
+    margin-bottom: 0;
+}
+
+.brand-title-bn {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--navy-blue);
+    margin-bottom: 2px;
+    letter-spacing: 0.3px;
+}
+
+.brand-title-en {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--emerald-green);
+    margin-bottom: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Navigation */
+.navbar-custom {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 2px 10px rgba(20, 43, 73, 0.08);
+}
+
+.nav-link {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy-blue) !important;
+    padding: 8px 12px !important;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-link:hover, .nav-item.active .nav-link {
+    color: #ffffff !important;
+    background-color: var(--emerald-green);
+}
+
+.nav-link.btn-apply {
+    background-color: var(--emerald-green);
+    color: #ffffff !important;
+    padding: 8px 16px !important;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(22, 134, 91, 0.25);
+}
+
+.nav-link.btn-apply:hover {
+    background-color: var(--emerald-light);
+}
+
+/* Footer Styling */
+#footer1 {
+    background: var(--navy-blue);
+    color: #ffffff;
+    padding: 24px 0 12px 0;
+    border-top: 4px solid var(--emerald-green);
+}
+
+#footer2 {
+    background: var(--navy-dark);
+    color: #cbd5e1;
+    padding: 14px 0;
+    font-size: 13px;
+}
+
+.footerlinks {
+    color: #e2e8f0;
+    text-decoration: none !important;
+    font-weight: 500;
+    margin: 0 8px;
+    transition: color 0.2s;
+}
+
+.footerlinks:hover {
+    color: var(--accent-gold);
+}
+
+/* Page Title Banner */
+.page-title-banner {
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, var(--navy-blue) 0%, var(--emerald-green) 100%);
+    padding: 12px 15px;
+    border-radius: 6px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 8px rgba(20, 43, 73, 0.15);
+}
+
+/* Buttons */
+.btn-primary, .btn-navy {
+    background-color: var(--navy-blue);
+    border-color: var(--navy-blue);
+    color: #ffffff;
+}
+
+.btn-primary:hover, .btn-navy:hover {
+    background-color: var(--navy-dark);
+    border-color: var(--navy-dark);
+    color: #ffffff;
+}
+
+.btn-success, .btn-emerald {
+    background-color: var(--emerald-green);
+    border-color: var(--emerald-green);
+    color: #ffffff;
+}
+
+.btn-success:hover, .btn-emerald:hover {
+    background-color: var(--emerald-light);
+    border-color: var(--emerald-light);
+    color: #ffffff;
+}
+
+.btn-outline-emerald {
+    color: var(--emerald-green);
+    border-color: var(--emerald-green);
+}
+
+.btn-outline-emerald:hover {
+    background-color: var(--emerald-green);
+    color: #ffffff;
+}
+
+/* Badges */
+.badge-upazila {
+    background-color: #e8f5e9;
+    color: var(--emerald-green);
+    border: 1px solid #c8e6c9;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.badge-session {
+    background-color: #e3f2fd;
+    color: #0d47a1;
+    border: 1px solid #bbdefb;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.badge-blood {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.badge-active {
+    background-color: var(--emerald-green);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.badge-pending {
+    background-color: #f59e0b;
+    color: #ffffff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* DataTables & Tables */
+.table th {
+    background-color: var(--navy-blue);
+    color: #ffffff;
+    border-color: #24416b;
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(22, 134, 91, 0.05);
+}
+
+/* Student & Alumni ID Card */
+.id-card-preview {
+    background: linear-gradient(135deg, var(--navy-blue) 0%, #1c3d69 60%, var(--emerald-green) 100%);
+    color: white;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 6px 20px rgba(20, 43, 73, 0.25);
+    max-width: 440px;
+    margin: 0 auto;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Student Registration Confirmation Card */
+.confirmation-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(20, 43, 73, 0.1);
+    border-top: 5px solid var(--emerald-green);
+}
+
+.confirmation-check-circle {
+    width: 75px;
+    height: 75px;
+    background: #e8f5e9;
+    color: var(--emerald-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    margin: 0 auto 15px auto;
+}
+
+/* Feature & Service Cards */
+.feature-box {
+    border-radius: 10px;
+    transition: transform 0.25s, box-shadow 0.25s;
+    background: #ffffff;
+    border: 1px solid #eef2f6;
+}
+
+.feature-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(20, 43, 73, 0.08);
+    border-color: var(--emerald-green);
+}
+
+.feature-icon-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #e8f5e9;
+    color: var(--emerald-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 15px auto;
+}
+
+/* Upazila Quick Filter Pills */
+.upazila-pill {
+    cursor: pointer;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    margin: 3px;
+    display: inline-block;
+    transition: all 0.2s;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: var(--navy-blue);
+    text-decoration: none !important;
+}
+
+.upazila-pill:hover, .upazila-pill.active {
+    background-color: var(--emerald-green);
+    color: #ffffff;
+    border-color: var(--emerald-green);
+}
