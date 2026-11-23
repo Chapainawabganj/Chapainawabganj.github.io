@@ -10,7 +10,7 @@ const defaultData = {
       id: 1,
       username: 'admin',
       email: 'admin@pust.chapai.org',
-      passwordHash: bcrypt.hashSync('admin123', 10),
+      passwordHash: bcrypt.hashSync('Chapai@Admin2026', 10),
       name: 'Central Administrator',
       role: 'admin'
     }

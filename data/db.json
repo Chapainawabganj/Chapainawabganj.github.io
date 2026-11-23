@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "email": "admin@pust.chapai.org",
-      "passwordHash": "$2b$10$XJ3WlMb.JcDLB0ZB2v7Ph.oNbE4.UWZH5nNExNQg1mXuuCI0t7Bv2",
+      "passwordHash": "$2b$10$bwREonjmvEVTBEvn/1rbfe3yk5YG31YIjnNVpUq1NhiSQ8n5QQvaq",
       "name": "Central Administrator",
       "role": "admin"
     }

@@ -325,9 +325,7 @@ app.post(['/adminlogin', '/adminlogin.aspx'], (req, res) => {
   const admin = db.getAdminByUsername(username);
 
   let valid = false;
-  if (admin) {
-    valid = bcrypt.compareSync(password, admin.passwordHash) || password === 'admin' || password === 'admin123';
-  } else if ((username === 'admin' || username === 'admin@pust.chapai.org') && (password === 'admin' || password === 'admin123')) {
+  if (admin && bcrypt.compareSync(password, admin.passwordHash)) {
     valid = true;
   }
 
@@ -337,8 +335,8 @@ app.post(['/adminlogin', '/adminlogin.aspx'], (req, res) => {
   }
 
   req.session.admin = {
-    username: admin ? admin.username : 'admin',
-    name: admin ? admin.name : 'Central Administrator',
+    username: admin.username,
+    name: admin.name,
     role: 'admin'
   };
 
@@ -566,8 +564,5 @@ app.listen(PORT, () => {
   console.log(`PUST CHAPAI ZILLA SAMITY WEB PORTAL IS RUNNING`);
   console.log(`Local URL    : http://localhost:${PORT}`);
   console.log(`Admin Portal : http://localhost:${PORT}/adminlogin.aspx`);
-  console.log(`Admin User   : admin`);
-  console.log(`Admin Pass   : admin123 (or admin)`);
-  console.log(`Demo Student : 200101 / password123`);
   console.log(`=======================================================`);
 });
