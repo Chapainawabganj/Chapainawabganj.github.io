@@ -1,7 +1,7 @@
 {
-  "name": "pust-eee-alumni-portal",
+  "name": "pust-chapai-zelasomiti-portal",
   "version": "1.0.0",
-  "description": "Full-stack replica and alumni management platform for PUST EEE Alumni Association with User Panel and Admin Panel",
+  "description": "Web portal and student support platform for Chapainabjanj Jelashomi PUST. Developed by Md Al Eman (EEE 2019-20), Engineer at Fiber at Home Ltd.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -9,15 +9,16 @@
   },
   "keywords": [
     "pust",
-    "eee",
-    "alumni",
-    "association",
+    "chapainawabganj",
+    "zelasomiti",
+    "students-support",
+    "blood-donation",
     "full-stack",
     "express",
     "ejs",
     "admin-panel"
   ],
-  "author": "PUST Alumni",
+  "author": "Md Al Eman (EEE 2019-20), Engineer at Fiber at Home Ltd.",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
