@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= typeof title !== 'undefined' ? title + ' | PUST EEE Alumni' : 'PUST | Home' %></title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="/CSS/customstylesheet.css" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+
+    <!-- Top Header / Crest -->
+    <div class="jumbotron-header text-center">
+        <div class="container">
+            <table class="table-borderless mx-auto" style="width: auto;">
+                <tbody>
+                    <tr>
+                        <td class="align-middle pr-3">
+                            <img id="ImgLogo" src="/Photo/me.png" alt="PUST Logo" style="height:auto; width:95px;" onerror="this.src='/Photo/pust-eee.png'">
+                        </td>
+                        <td class="align-middle text-center">
+                            <h2 style="font-weight: bold; margin-bottom: 2px; color: #1a2a4b;">PUST EEE ALUMNI</h2>
+                            <div style="border-bottom: 2px solid #0056b3; width: 85%; margin: 4px auto 6px auto;"></div>
+                            <h5 style="margin-bottom: 0; color: #495057;">
+                                <span class="badge badge-light" style="font-size: 15px; font-weight: 600;">Pabna University of Science &amp; Technology (PUST)</span>
+                            </h5>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+        <div class="container-fluid px-lg-4">
+            <a class="navbar-brand-footerlinks mr-3" href="/home.aspx">
+                <img src="/Photo/pust-eee.png" alt="PUST EEE Logo" width="110" height="110" style="object-fit: contain;" />
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto align-items-lg-center">
+                    <li class="nav-item <%= (typeof activePage !== 'undefined' && activePage === 'home') ? 'active' : '' %>">
+                        <a id="LinkButton7" class="nav-link px-2" href="/home.aspx"><i class="fas fa-home text-primary"></i> Home</a>
+                    </li>
+                    <li class="nav-item <%= (typeof activePage !== 'undefined' && activePage === 'about') ? 'active' : '' %>">
+                        <a id="LinkButton8" class="nav-link px-2" href="/about.aspx">About</a>
+                    </li>
+                    <li class="nav-item <%= (typeof activePage !== 'undefined' && activePage === 'registration') ? 'active' : '' %>">
+                        <a id="LinkButton9" class="nav-link px-2 text-primary font-weight-bold" href="/registration.aspx">Apply for Membership</a>
+                    </li>
+                    <li class="nav-item <%= (typeof activePage !== 'undefined' && activePage === 'alumnilist') ? 'active' : '' %>">
+                        <a id="LinkButton11" class="nav-link px-2" href="/alumnilist.aspx">Alumni List</a>
+                    </li>
+                    <li class="nav-item <%= (typeof activePage !== 'undefined' && activePage === 'download') ? 'active' : '' %>">
+                        <a id="LinkButton13" class="nav-link px-2" href="/download.aspx">Download</a>
+                    </li>
+                    <li class="nav-item <%= (typeof activePage !== 'undefined' && activePage === 'contact') ? 'active' : '' %>">
+                        <a id="LinkButton14" class="nav-link px-2" href="/contact.aspx">Contact</a>
+                    </li>
+                    <li class="nav-item <%= (typeof activePage !== 'undefined' && activePage === 'notice') ? 'active' : '' %>">
+                        <a id="LinkButton15" class="nav-link px-2" href="/notice.aspx">Notice</a>
+                    </li>
+
+                    <% if (typeof currentAdmin !== 'undefined' && currentAdmin) { %>
+                    <li class="nav-item dropdown ml-lg-2">
+                        <a class="nav-link dropdown-toggle text-danger font-weight-bold" href="#" id="adminMenuDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-shield-alt"></i> Admin Panel
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="adminMenuDropdown">
+                            <a class="dropdown-item" href="/membermanagement.aspx"><i class="fas fa-users-cog"></i> Member Management</a>
+                            <a class="dropdown-item" href="/admin_update_member.aspx"><i class="fas fa-user-edit"></i> Update Member Profile</a>
+                            <a class="dropdown-item" href="/admin_content.aspx"><i class="fas fa-bullhorn"></i> Manage Notices &amp; Downloads</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="/logout"><i class="fas fa-sign-out-alt"></i> Admin Logout</a>
+                        </div>
+                    </li>
+                    <% } %>
+                </ul>
+
+                <!-- User Account Area -->
+                <ul class="navbar-nav ml-auto align-items-lg-center">
+                    <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+                        <li class="nav-item d-flex align-items-center">
+                            <img src="/<%= currentUser.profile_photo || 'Photo/fahim.png' %>" class="rounded-circle mr-2 border border-primary" alt="<%= currentUser.full_name %>" height="42" width="42" style="object-fit: cover;" onerror="this.src='/Photo/fahim.png'" />
+                            <div class="dropdown">
+                                <a class="nav-link dropdown-toggle font-weight-bold text-dark" href="#" id="userDropdown" role="button" data-toggle="dropdown">
+                                    <%= currentUser.full_name.split(' ')[0] %>
+                                    <span class="badge badge-<%= currentUser.status === 'Active' ? 'success' : 'warning' %>"><%= currentUser.status %></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right shadow">
+                                    <a class="dropdown-item" href="/my_profile.aspx"><i class="fas fa-user-circle"></i> My Profile &amp; Card</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                </div>
+                            </div>
+                        </li>
+                    <% } else if (typeof currentAdmin !== 'undefined' && currentAdmin) { %>
+                        <li class="nav-item d-flex align-items-center">
+                            <img src="/Photo/adminuser.png" class="rounded-circle mr-2 border border-danger" alt="Admin" height="42" width="42" style="object-fit: cover;" onerror="this.src='/Photo/fahim.png'" />
+                            <span class="badge badge-danger p-2 mr-2"><i class="fas fa-user-shield"></i> Administrator</span>
+                            <a class="btn btn-outline-danger btn-sm" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </li>
+                    <% } else { %>
+                        <li class="nav-item d-flex align-items-center">
+                            <img src="/Photo/fahim.png" id="LinkButton20" class="rounded-circle mr-2 border" alt="Member Avatar" height="42" width="42" />
+                            <a id="LinkButton16" class="btn btn-primary btn-sm px-3 shadow-sm font-weight-bold" href="/login.aspx">
+                                <i class="fas fa-sign-in-alt"></i> Member Login
+                            </a>
+                        </li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Global Flash Alerts -->
+    <div class="container mt-3">
+        <% if (typeof success_msg !== 'undefined' && success_msg && success_msg.length > 0) { %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle mr-2"></i> <%= success_msg %>
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        <% } %>
+        <% if (typeof error_msg !== 'undefined' && error_msg && error_msg.length > 0) { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-triangle mr-2"></i> <%= error_msg %>
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        <% } %>
+    </div>

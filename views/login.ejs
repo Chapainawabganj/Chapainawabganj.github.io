@@ -1,0 +1,66 @@
+<%- include('partials/header', { title: 'Member Login', activePage: 'login' }) %>
+
+<section class="content my-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card shadow border-0 rounded-lg">
+                    <div class="card-body p-4 p-md-5">
+
+                        <div class="text-center mb-4">
+                            <img src="/Photo/fahim.png" alt="Member Avatar" class="rounded-circle border p-1 shadow-sm mb-3" style="width: 80px; height: 80px; object-fit: cover;" />
+                            <h3 class="font-weight-bold text-dark">Member Login</h3>
+                            <p class="text-muted">Sign in to your PUST EEE Alumni Account</p>
+                        </div>
+
+                        <form action="/login.aspx" method="POST">
+                            <div class="form-group mb-3">
+                                <label class="font-weight-bold">Email Account or Roll No.</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    </div>
+                                    <input type="text" name="email" class="form-control" placeholder="e.g. amirul.090201@s.pust.ac.bd or 090201" required />
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="font-weight-bold">Password</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    </div>
+                                    <input type="password" name="password" class="form-control" placeholder="Enter password" required />
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-success btn-block btn-lg font-weight-bold shadow-sm mb-3">
+                                <i class="fas fa-sign-in-alt mr-2"></i> Login
+                            </button>
+
+                            <div class="text-center my-2 text-muted">
+                                <span>- OR -</span>
+                            </div>
+
+                            <a href="/registration.aspx" class="btn btn-primary btn-block btn-lg font-weight-bold shadow-sm">
+                                <i class="fas fa-user-plus mr-2"></i> Apply for Membership
+                            </a>
+                        </form>
+
+                        <div class="mt-4 p-3 bg-light rounded text-center" style="font-size: 13px;">
+                            <strong>Demo Alumni Login:</strong><br>
+                            Email: <code>amirul.090201@s.pust.ac.bd</code><br>
+                            Password: <code>password123</code>
+                        </div>
+
+                    </div>
+                    <div class="card-footer bg-white border-0 text-center pb-4">
+                        <a href="/home.aspx" class="text-primary font-weight-bold">&lt;&lt; Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

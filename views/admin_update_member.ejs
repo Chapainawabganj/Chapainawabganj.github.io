@@ -1,0 +1,186 @@
+<%- include('partials/header', { title: 'Update Member Profile', activePage: 'admin_update_member' }) %>
+
+<section class="content my-4">
+    <div class="container-fluid px-lg-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-11">
+                <div class="card shadow border-0">
+                    <div class="card-body p-4 p-md-5">
+
+                        <div class="page-title-banner">
+                            ADMINISTRATOR: UPDATE MEMBER PROFILE
+                        </div>
+
+                        <!-- Top Search Roll Bar (Original Style) -->
+                        <form action="/admin_update_member.aspx" method="GET" class="my-4">
+                            <div class="row justify-content-center">
+                                <div class="col-md-6">
+                                    <div class="input-group input-group-lg shadow-sm">
+                                        <input type="text" name="roll" value="<%= typeof searchedRoll !== 'undefined' ? searchedRoll : '' %>" class="form-control" placeholder="ENTER ROLL (e.g. 090201)" required />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary font-weight-bold px-4" type="submit">
+                                                <i class="fas fa-search"></i> SEARCH
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <% if (typeof member !== 'undefined' && member) { %>
+                            <!-- Member Edit Form -->
+                            <form action="/admin_update_member.aspx" method="POST">
+                                <input type="hidden" name="roll_no" value="<%= member.roll_no %>" />
+
+                                <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+                                    <h5 class="font-weight-bold text-primary m-0">
+                                        <i class="fas fa-user-edit mr-2"></i> Editing Member: <%= member.full_name %> (Roll: <%= member.roll_no %>)
+                                    </h5>
+                                    <div>
+                                        <label class="font-weight-bold mr-2">Status:</label>
+                                        <select name="status" class="form-control d-inline-block w-auto">
+                                            <option value="Active" <%= member.status === 'Active' ? 'selected' : '' %>>Active</option>
+                                            <option value="Pending" <%= member.status === 'Pending' ? 'selected' : '' %>>Pending</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label class="font-weight-bold">Full Name</label>
+                                        <input name="full_name" type="text" class="form-control" value="<%= member.full_name %>" required />
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label class="font-weight-bold">Gender</label>
+                                        <select name="gender" class="form-control">
+                                            <option value="Male" <%= member.gender === 'Male' ? 'selected' : '' %>>Male</option>
+                                            <option value="Female" <%= member.gender === 'Female' ? 'selected' : '' %>>Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label class="font-weight-bold">Blood Group</label>
+                                        <input name="blood_group" type="text" class="form-control" value="<%= member.blood_group %>" placeholder="Blood Group" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label class="font-weight-bold">Email Address</label>
+                                        <input name="email" type="email" class="form-control" value="<%= member.email %>" required />
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label class="font-weight-bold">Contact Number</label>
+                                        <input name="contact_number" type="text" class="form-control" value="<%= member.contact_number %>" required />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label class="font-weight-bold">Facebook Profile</label>
+                                        <input name="facebook" type="text" class="form-control" value="<%= member.facebook %>" placeholder="Facebook URL" />
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label class="font-weight-bold">LinkedIn Profile</label>
+                                        <input name="linkedin" type="text" class="form-control" value="<%= member.linkedin %>" placeholder="LinkedIn URL" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="font-weight-bold">Degree</label>
+                                        <input name="degree" type="text" class="form-control" value="<%= member.degree %>" />
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="font-weight-bold">Department</label>
+                                        <input name="department" type="text" class="form-control" value="<%= member.department %>" />
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="font-weight-bold">Batch No</label>
+                                        <input name="batch_no" type="text" class="form-control" value="<%= member.batch_no %>" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 form-group">
+                                        <label class="font-weight-bold">Passing Year</label>
+                                        <input name="passing_year" type="text" class="form-control" value="<%= member.passing_year %>" />
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label class="font-weight-bold">Grade/CGPA</label>
+                                        <input name="grade_cgpa" type="text" class="form-control" value="<%= member.grade_cgpa %>" />
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label class="font-weight-bold">Membership Type</label>
+                                        <select name="membership_type" class="form-control">
+                                            <option value="Member" <%= member.membership_type === 'Member' ? 'selected' : '' %>>Member</option>
+                                            <option value="Fellow" <%= member.membership_type === 'Fellow' ? 'selected' : '' %>>Fellow</option>
+                                            <option value="Associate member" <%= member.membership_type === 'Associate member' ? 'selected' : '' %>>Associate member</option>
+                                            <option value="Certified" <%= member.membership_type === 'Certified' ? 'selected' : '' %>>Certified</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label class="font-weight-bold">Membership No.</label>
+                                        <input name="membership_no" type="text" class="form-control" value="<%= member.membership_no %>" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label class="font-weight-bold">Current Organization</label>
+                                        <input name="organization" type="text" class="form-control" value="<%= member.organization %>" />
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label class="font-weight-bold">Last Position / Designation</label>
+                                        <input name="designation" type="text" class="form-control" value="<%= member.designation %>" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label class="font-weight-bold">Permanent District &amp; Address</label>
+                                        <input name="permanent_district" type="text" class="form-control mb-2" value="<%= member.permanent_district %>" placeholder="Permanent District" />
+                                        <textarea name="permanent_address" rows="2" class="form-control" placeholder="Permanent Address"><%= member.permanent_address %></textarea>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label class="font-weight-bold">Present District &amp; Address</label>
+                                        <input name="present_district" type="text" class="form-control mb-2" value="<%= member.present_district %>" placeholder="Present District" />
+                                        <textarea name="present_address" rows="2" class="form-control" placeholder="Present Address"><%= member.present_address %></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label class="font-weight-bold text-danger">Reset Member's Password (Optional)</label>
+                                        <input name="new_password" type="text" class="form-control" placeholder="Leave blank to keep unchanged" />
+                                        <small class="text-muted">Enter a new password if the member forgot theirs.</small>
+                                    </div>
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5 shadow font-weight-bold">
+                                        <i class="fas fa-save mr-2"></i> Update Profile
+                                    </button>
+                                </div>
+                            </form>
+                        <% } else if (typeof searchedRoll !== 'undefined' && searchedRoll) { %>
+                            <div class="alert alert-warning text-center my-4">
+                                <i class="fas fa-exclamation-circle mr-2"></i> No member found with Roll No: <strong><%= searchedRoll %></strong>. Please verify the roll number.
+                            </div>
+                        <% } else { %>
+                            <div class="text-center text-muted my-5">
+                                <i class="fas fa-search fa-3x mb-3 text-secondary"></i>
+                                <h5>Enter a member's Roll Number above and click SEARCH to view and edit their profile.</h5>
+                            </div>
+                        <% } %>
+
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-4 pl-4">
+                        <a href="/membermanagement.aspx" class="text-primary font-weight-bold">&lt;&lt; Back to Member Management</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

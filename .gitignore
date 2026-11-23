@@ -1,0 +1,6 @@
+node_modules/
+.env
+*.tmp
+*.log
+scraped_pages/
+homepage_raw.html

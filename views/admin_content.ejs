@@ -1,0 +1,130 @@
+<%- include('partials/header', { title: 'Manage Content', activePage: 'admin_content' }) %>
+
+<section class="content my-4">
+    <div class="container-fluid px-lg-5">
+        <div class="card shadow border-0">
+            <div class="card-body p-4 p-md-5">
+
+                <div class="page-title-banner">
+                    MANAGE NOTICES &amp; DOWNLOADABLE DOCUMENTS
+                </div>
+
+                <div class="row">
+                    <!-- Manage Notices Section -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card border h-100 shadow-sm">
+                            <div class="card-header bg-danger text-white font-weight-bold">
+                                <i class="fas fa-bullhorn mr-2"></i> Notices Management
+                            </div>
+                            <div class="card-body">
+                                <!-- Upload New Notice -->
+                                <h6 class="font-weight-bold text-dark border-bottom pb-2">Publish New Notice</h6>
+                                <form action="/admin/add_notice" method="POST" enctype="multipart/form-data" class="mb-4">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold">Notice Title</label>
+                                        <input type="text" name="title" class="form-control" placeholder="e.g. Annual Alumni Reunion Notice" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="font-weight-bold">Attach Document (PDF, Image)</label>
+                                        <input type="file" name="notice_file" class="form-control-file" required />
+                                    </div>
+                                    <button type="submit" class="btn btn-danger btn-sm font-weight-bold">
+                                        <i class="fas fa-upload mr-1"></i> Publish Notice
+                                    </button>
+                                </form>
+
+                                <!-- Existing Notices List -->
+                                <h6 class="font-weight-bold text-dark border-bottom pb-2">Active Notices</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-bordered">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Date</th>
+                                                <th style="width: 80px;">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% notices.forEach(function(n) { %>
+                                                <tr>
+                                                    <td><a href="/<%= n.file_url %>" target="_blank"><%= n.title %></a></td>
+                                                    <td><small class="text-muted"><%= n.date %></small></td>
+                                                    <td class="text-center">
+                                                        <form action="/admin/delete_notice" method="POST" onsubmit="return confirm('Delete this notice?');">
+                                                            <input type="hidden" name="id" value="<%= n.id %>" />
+                                                            <button type="submit" class="btn btn-outline-danger btn-sm py-0 px-1"><i class="fas fa-trash"></i></button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            <% }); %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Manage Downloads Section -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card border h-100 shadow-sm">
+                            <div class="card-header bg-primary text-white font-weight-bold">
+                                <i class="fas fa-download mr-2"></i> Downloads Management
+                            </div>
+                            <div class="card-body">
+                                <!-- Upload New Download -->
+                                <h6 class="font-weight-bold text-dark border-bottom pb-2">Upload Downloadable Resource</h6>
+                                <form action="/admin/add_download" method="POST" enctype="multipart/form-data" class="mb-4">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold">Document Title</label>
+                                        <input type="text" name="title" class="form-control" placeholder="e.g. Constitution &amp; By-Laws" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="font-weight-bold">File (PDF, Doc, Image)</label>
+                                        <input type="file" name="download_file" class="form-control-file" required />
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-sm font-weight-bold">
+                                        <i class="fas fa-upload mr-1"></i> Upload File
+                                    </button>
+                                </form>
+
+                                <!-- Existing Downloads List -->
+                                <h6 class="font-weight-bold text-dark border-bottom pb-2">Uploaded Resources</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-bordered">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Date</th>
+                                                <th style="width: 80px;">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% downloads.forEach(function(d) { %>
+                                                <tr>
+                                                    <td><a href="/<%= d.file_url %>" target="_blank"><%= d.title %></a></td>
+                                                    <td><small class="text-muted"><%= d.date %></small></td>
+                                                    <td class="text-center">
+                                                        <form action="/admin/delete_download" method="POST" onsubmit="return confirm('Delete this download?');">
+                                                            <input type="hidden" name="id" value="<%= d.id %>" />
+                                                            <button type="submit" class="btn btn-outline-danger btn-sm py-0 px-1"><i class="fas fa-trash"></i></button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            <% }); %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-footer bg-white border-0 pb-4 pl-4">
+                <a href="/membermanagement.aspx" class="text-primary font-weight-bold">&lt;&lt; Back to Member Management</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

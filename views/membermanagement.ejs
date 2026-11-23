@@ -1,0 +1,168 @@
+<%- include('partials/header', { title: 'Member Management', activePage: 'membermanagement' }) %>
+
+<section class="content my-4">
+    <div class="container-fluid px-lg-4">
+        <div class="card shadow border-0">
+            <div class="card-body p-4">
+
+                <!-- Admin Navigation Banner (Original Style) -->
+                <div class="row mb-3">
+                    <div class="col-md-6 mb-2">
+                        <div class="page-title-banner p-2 m-0">
+                            <a href="/admin_update_member.aspx" class="text-primary text-decoration-none">
+                                <center><i class="fas fa-user-edit mr-2"></i> Goto -&gt; Update Member Profile</center>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="page-title-banner p-2 m-0 bg-light">
+                            <a href="/admin_content.aspx" class="text-info text-decoration-none">
+                                <center><i class="fas fa-bullhorn mr-2"></i> Manage Notices &amp; Downloads</center>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Counters -->
+                <div class="row my-4">
+                    <div class="col-md-3 col-6 mb-2">
+                        <div class="card bg-primary text-white p-3 text-center rounded">
+                            <h3 class="font-weight-bold m-0"><%= members.length %></h3>
+                            <small>Total Members</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-2">
+                        <div class="card bg-success text-white p-3 text-center rounded">
+                            <h3 class="font-weight-bold m-0"><%= members.filter(m => m.status === 'Active').length %></h3>
+                            <small>Active Members</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-2">
+                        <div class="card bg-warning text-dark p-3 text-center rounded">
+                            <h3 class="font-weight-bold m-0"><%= members.filter(m => m.status === 'Pending').length %></h3>
+                            <small>Pending Approval</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-2">
+                        <div class="card bg-info text-white p-3 text-center rounded">
+                            <h3 class="font-weight-bold m-0"><%= notCount %></h3>
+                            <small>Notices &amp; Downloads</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Members Table -->
+                <h4 class="font-weight-bold text-dark border-bottom pb-2 mb-3">
+                    <i class="fas fa-users-cog mr-2 text-primary"></i> Registered Members List
+                </h4>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered datatable" style="width: 100%;">
+                        <thead>
+                            <tr style="background-color: #006699; color: white;">
+                                <th class="align-middle">Full Name</th>
+                                <th class="text-center align-middle" style="width: 100px;">Status</th>
+                                <th class="text-center align-middle">Payment</th>
+                                <th class="text-center align-middle">Batch</th>
+                                <th class="text-center align-middle">Roll No</th>
+                                <th class="text-center align-middle">Profile Photo</th>
+                                <th class="text-center align-middle">Certificate</th>
+                                <th class="text-center align-middle">Payment Slip</th>
+                                <th class="text-center align-middle" style="width: 140px;">Admin Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% members.forEach(function(member) { %>
+                                <tr>
+                                    <td class="align-middle font-weight-bold">
+                                        <%= member.full_name %>
+                                        <br><small class="text-muted"><%= member.email %></small>
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <% if (member.status === 'Active') { %>
+                                            <span class="badge badge-success px-2 py-1"><i class="fas fa-check-circle"></i> Active</span>
+                                        <% } else { %>
+                                            <span class="badge badge-warning px-2 py-1"><i class="fas fa-clock"></i> Pending</span>
+                                        <% } %>
+                                    </td>
+                                    <td class="text-center align-middle text-muted">
+                                        <%= member.payment_method || 'Online' %>
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <span class="badge badge-light border"><%= member.batch_no || '1st' %></span>
+                                    </td>
+                                    <td class="text-center align-middle font-weight-bold">
+                                        <%= member.roll_no %>
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <% if (member.profile_photo) { %>
+                                            <a href="/<%= member.profile_photo %>" target="_blank" class="text-primary font-weight-bold">
+                                                <i class="fas fa-image mr-1"></i> View Photo
+                                            </a>
+                                        <% } else { %>
+                                            <span class="text-muted small">No photo</span>
+                                        <% } %>
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <% if (member.cert_photo) { %>
+                                            <a href="/<%= member.cert_photo %>" target="_blank" class="text-primary font-weight-bold">
+                                                <i class="fas fa-file-pdf mr-1"></i> View Doc
+                                            </a>
+                                        <% } else { %>
+                                            <span class="text-muted small">No cert</span>
+                                        <% } %>
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <% if (member.payment_photo) { %>
+                                            <a href="/<%= member.payment_photo %>" target="_blank" class="text-success font-weight-bold">
+                                                <i class="fas fa-receipt mr-1"></i> View Slip
+                                            </a>
+                                        <% } else { %>
+                                            <span class="text-muted small">No slip</span>
+                                        <% } %>
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <div class="btn-group btn-group-sm">
+                                            <!-- Toggle Status -->
+                                            <form action="/admin/toggle_status" method="POST" style="display:inline;">
+                                                <input type="hidden" name="id" value="<%= member.id %>" />
+                                                <% if (member.status === 'Active') { %>
+                                                    <button type="submit" class="btn btn-warning" title="Make Pending">
+                                                        <i class="fas fa-pause"></i>
+                                                    </button>
+                                                <% } else { %>
+                                                    <button type="submit" class="btn btn-success" title="Approve & Activate">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                <% } %>
+                                            </form>
+                                            
+                                            <!-- Edit Member Profile -->
+                                            <a href="/admin_update_member.aspx?roll=<%= member.roll_no %>" class="btn btn-primary" title="Edit Full Profile">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+
+                                            <!-- Delete Member -->
+                                            <form action="/admin/delete_member" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete member <%= member.full_name %> (Roll: <%= member.roll_no %>)?');">
+                                                <input type="hidden" name="id" value="<%= member.id %>" />
+                                                <button type="submit" class="btn btn-danger" title="Delete Member">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="card-footer bg-white border-0 pb-4 pl-4">
+                <a href="/home.aspx" class="text-primary font-weight-bold">&lt;&lt; Back to Home</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

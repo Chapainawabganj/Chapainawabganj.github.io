@@ -1,0 +1,58 @@
+<%- include('partials/header', { title: 'Admin Login', activePage: 'adminlogin' }) %>
+
+<section class="content my-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card shadow border-0 rounded-lg">
+                    <div class="card-body p-4 p-md-5">
+
+                        <div class="text-center mb-4">
+                            <img src="/Photo/adminuser.png" alt="Admin Avatar" class="rounded-circle border p-1 shadow-sm mb-3" style="width: 85px; height: 85px; object-fit: cover;" onerror="this.src='/Photo/fahim.png'" />
+                            <h3 class="font-weight-bold text-danger">Administration Portal</h3>
+                            <p class="text-muted">PUST EEE Alumni Administrative Control</p>
+                        </div>
+
+                        <form action="/adminlogin.aspx" method="POST">
+                            <div class="form-group mb-3">
+                                <label class="font-weight-bold">Administrator Username</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user-shield text-danger"></i></span>
+                                    </div>
+                                    <input type="text" name="username" class="form-control" placeholder="Enter username (e.g. admin)" required />
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="font-weight-bold">Admin Password</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-key text-danger"></i></span>
+                                    </div>
+                                    <input type="password" name="password" class="form-control" placeholder="Enter admin password" required />
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-danger btn-block btn-lg font-weight-bold shadow-sm mb-3">
+                                <i class="fas fa-lock-open mr-2"></i> Enter Admin Panel
+                            </button>
+                        </form>
+
+                        <div class="alert alert-info mt-4 p-3 text-center" style="font-size: 13px;">
+                            <strong><i class="fas fa-info-circle mr-1"></i> Local Admin Credentials:</strong><br>
+                            Username: <code>admin</code><br>
+                            Password: <code>admin123</code> (or <code>admin</code>)
+                        </div>
+
+                    </div>
+                    <div class="card-footer bg-white border-0 text-center pb-4">
+                        <a href="/home.aspx" class="text-primary font-weight-bold">&lt;&lt; Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,59 @@
+<%- include('partials/header', { title: 'Downloads', activePage: 'download' }) %>
+
+<section class="content my-4">
+    <div class="container-fluid px-lg-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4 p-md-5">
+
+                        <div class="page-title-banner">
+                            DOWNLOADS &amp; DOCUMENTS
+                        </div>
+
+                        <div class="table-responsive mt-4">
+                            <table class="table table-striped table-bordered datatable" style="width: 100%;">
+                                <thead>
+                                    <tr style="background-color: #5D7B9D; color: white;">
+                                        <th class="align-middle">Title</th>
+                                        <th class="text-center align-middle" style="width: 150px;">Published Date</th>
+                                        <th class="text-center align-middle" style="width: 180px;">Document Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if (downloads && downloads.length > 0) { %>
+                                        <% downloads.forEach(function(item) { %>
+                                            <tr>
+                                                <td class="align-middle font-weight-bold">
+                                                    <i class="fas fa-file-alt text-primary mr-2"></i> <%= item.title %>
+                                                </td>
+                                                <td class="text-center align-middle text-muted">
+                                                    <%= item.date || 'N/A' %>
+                                                </td>
+                                                <td class="text-center align-middle">
+                                                    <a href="/<%= item.file_url %>" class="btn btn-primary btn-sm px-3 shadow-sm" target="_blank" download>
+                                                        <i class="fas fa-download mr-1"></i> View and Download
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <tr>
+                                            <td colspan="3" class="text-center py-4 text-muted">No downloads available at the moment.</td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-4 pl-4">
+                        <a href="/home.aspx" class="text-primary font-weight-bold">&lt;&lt; Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

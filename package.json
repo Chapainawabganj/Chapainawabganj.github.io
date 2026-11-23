@@ -1,0 +1,29 @@
+{
+  "name": "pust-eee-alumni-portal",
+  "version": "1.0.0",
+  "description": "Full-stack replica and alumni management platform for PUST EEE Alumni Association with User Panel and Admin Panel",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "pust",
+    "eee",
+    "alumni",
+    "association",
+    "full-stack",
+    "express",
+    "ejs",
+    "admin-panel"
+  ],
+  "author": "PUST Alumni",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "multer": "^1.4.5-lts.1"
+  }
+}
