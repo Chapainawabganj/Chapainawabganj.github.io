@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>সদস্য নিবন্ধন (Member Registration) | পাবিপ্রবি চাঁপাইনবাবগঞ্জ জেলা সমিতি</title>
+
+    <!-- Google Font: Hind Siliguri & Source Sans Pro -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Source+Sans+Pro:wght@400;600;700&display=fallback" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
+    <!-- Custom Stylesheet with Navy Blue & Emerald Green -->
+    <link rel="stylesheet" href="CSS/customstylesheet.css?v=2.2" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <style>
+        body, h1, h2, h3, h4, h5, h6, .nav-link, button, input, select {
+            font-family: 'Hind Siliguri', 'Source Sans Pro', sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Header / Crest & Identity -->
+    <div class="jumbotron-header text-center">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
+                <div class="mr-md-3 mb-2 mb-md-0">
+                    <img id="ImgLogo" src="Photo/me.png" alt="PUST Logo" style="height: 85px; width: auto;" onerror="this.src="Photo/me.png'">
+                </div>
+                <div class="text-center text-md-left">
+                    <h2 class="brand-title-bn mb-0">পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়স্থ চাঁপাইনবাবগঞ্জ জেলা সমিতি</h2>
+                    <h5 class="brand-title-en mb-0">Chapainabjanj Jelashomiti PUST</h5>
+                    <small class="text-muted font-weight-bold" style="font-size: 13px;">
+                        <i class="fas fa-map-marker-alt text-danger mr-1"></i> পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয় (PUST), পাবনা-৬৬০০ &bull; ঐক্য, সৌহার্দ্য ও প্রগতি
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom sticky-top">
+        <div class="container-fluid px-lg-4">
+            <a class="navbar-brand d-lg-none font-weight-bold" href="index.html" style="color: var(--navy-blue);">
+                <i class="fas fa-users text-success mr-1"></i> চাঁপাইনবাবগঞ্জ জেলা সমিতি
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto align-items-lg-center">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="index.html"><i class="fas fa-home"></i> হোম</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="about.html">পরিচিতি ও ইতিহাস</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="alumnilist.html"><i class="fas fa-search text-info mr-1"></i> শিক্ষার্থী ও সদস্য তালিকা</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link text-danger font-weight-bold" href="blood_donation.html">
+                            <i class="fas fa-tint text-danger mr-1 animate__animated animate__pulse animate__infinite"></i> রক্তদান নেটওয়ার্ক
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="student_support.html"><i class="fas fa-hands-helping text-success mr-1"></i> শিক্ষার্থী সহায়তা</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="committee.html">কার্যনির্বাহী কমিটি</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="notice.html">নোটিশ ও বিজ্ঞপ্তি</a>
+                    </li>
+
+                    
+                    <li class="nav-item dropdown ml-lg-2">
+                        <a class="nav-link dropdown-toggle text-danger font-weight-bold" href="#" id="adminMenuDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-shield-alt"></i> অ্যাডমিন প্যানেল
+                        </a>
+                        <div class="dropdown-menu shadow border-0" aria-labelledby="adminMenuDropdown">
+                            <a class="dropdown-item" href="membermanagement.html"><i class="fas fa-user-check text-success mr-2"></i> শিক্ষার্থী ভেরিফিকেশন ও তালিকা</a>
+                            <a class="dropdown-item" href="admin_update_member.html"><i class="fas fa-user-edit text-primary mr-2"></i> তথ্য সংশোধন ও আপডেট</a>
+                            <a class="dropdown-item" href="admin_content.html"><i class="fas fa-bullhorn text-info mr-2"></i> নোটিশ ও ফাইল আপলোড</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="index.html"><i class="fas fa-sign-out-alt mr-2"></i> অ্যাডমিন লগআউট</a>
+                        </div>
+                    </li>
+                    
+                </ul>
+
+                <!-- Action Button & User Area -->
+                <ul class="navbar-nav ml-auto align-items-lg-center">
+                    <li class="nav-item mr-lg-3 my-2 my-lg-0">
+                        <a class="nav-link btn-apply font-weight-bold" href="registration.html">
+                            <i class="fas fa-user-plus mr-1"></i> সদস্য নিবন্ধন
+                        </a>
+                    </li>
+
+                    
+                        <li class="nav-item d-flex align-items-center">
+                            <img src="Photo/fahim.png" class="rounded-circle mr-2 border border-success" alt="Md. Al-Emran" height="38" width="38" style="object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
+                            <div class="dropdown">
+                                <a class="nav-link dropdown-toggle font-weight-bold text-dark px-1" href="#" id="userDropdown" role="button" data-toggle="dropdown">
+                                    Md.
+                                    <span class="badge badge-success ml-1">সক্রিয়</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right shadow border-0">
+                                    <a class="dropdown-item" href="my_profile.html"><i class="fas fa-id-card text-primary mr-2"></i> প্রোফাইল ও ডিজিটাল আইডি</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger" href="index.html"><i class="fas fa-sign-out-alt mr-2"></i> লগআউট</a>
+                                </div>
+                            </div>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Global Flash Alerts -->
+    <div class="container mt-3">
+        
+        
+    </div>
+
+
+<section class="content my-4">
+    <div class="container px-lg-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow border-0" style="border-radius: 12px; overflow: hidden;">
+                    
+                    <!-- Card Top Banner -->
+                    <div class="p-4 text-white text-center" style="background: linear-gradient(135deg, var(--navy-blue) 0%, var(--emerald-green) 100%);">
+                        <h3 class="font-weight-bold mb-1">
+                            <i class="fas fa-id-card mr-2"></i> শিক্ষার্থী ও সদস্য নিবন্ধন ফরম
+                        </h3>
+                        <p class="mb-0 text-light" style="font-size: 15px;">
+                            পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়স্থ চাঁপাইনবাবগঞ্জ জেলা সমিতি
+                        </p>
+                    </div>
+
+                    <div class="card-body p-4 p-md-5">
+
+                        <!-- Information Alert (From User's Image Requirement) -->
+                        <div class="alert alert-info border-left shadow-sm mb-4" style="border-left-width: 5px !important; border-left-color: var(--emerald-green) !important;">
+                            <h6 class="font-weight-bold mb-1 text-dark">
+                                <i class="fas fa-info-circle text-primary mr-1"></i> গুরুত্বপূর্ণ নির্দেশনা:
+                            </h6>
+                            <p class="mb-0 text-muted" style="font-size: 14px;">
+                                এই ফরমটি পূরণের মাধ্যমে আপনি পাবিপ্রবি চাঁপাইনবাবগঞ্জ জেলা সমিতির ডাটাবেজে অন্তর্ভুক্ত হবেন।
+                                <strong>রেজিস্ট্রেশন সম্পন্ন করার পর অ্যাডমিন কর্তৃক তথ্য ভেরিফিকেশন (Admin Verification) সম্পন্ন হবে</strong>, এরপর আপনার প্রোফাইল ও ডিজিটাল আইডি কার্ড স্বয়ংক্রিয়ভাবে সক্রিয় হবে।
+                            </p>
+                        </div>
+
+                        <form action="/registration.aspx" method="POST" enctype="multipart/form-data" id="studentRegistrationForm">
+
+                            <!-- Section 1: Personal Information -->
+                            <h5 class="font-weight-bold border-bottom pb-2 mb-3" style="color: var(--navy-blue);">
+                                <i class="fas fa-user-circle text-success mr-2"></i> ১. ব্যক্তিগত তথ্য (Personal Information)
+                            </h5>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">Full Name (পূর্ণ নাম) <span class="text-danger">*</span></label>
+                                    <input name="full_name" type="text" class="form-control" placeholder="আপনার পূর্ণ নাম লিখুন" required />
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">Email Address (ইমেইল ঠিকানা) <span class="text-danger">*</span></label>
+                                    <input name="email" type="email" class="form-control" placeholder="example@gmail.com বা s.pust.ac.bd" required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">Mobile Number (মোবাইল নম্বর) <span class="text-danger">*</span></label>
+                                    <input name="contact_number" type="tel" class="form-control" placeholder="017XXXXXXXX বা +8801XXXXXXXXX" required />
+                                    <small class="text-muted">জরুরি যোগাযোগ ও সমিতির আপডেট পাওয়ার নম্বর</small>
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label class="font-weight-bold">Blood Group (রক্তের গ্রুপ) <span class="text-danger">*</span></label>
+                                    <select name="blood_group" class="form-control" required>
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option value="A+">A+ (পজেটিভ)</option>
+                                        <option value="A-">A- (নেগেটিভ)</option>
+                                        <option value="B+">B+ (পজেটিভ)</option>
+                                        <option value="B-">B- (নেগেটিভ)</option>
+                                        <option value="O+">O+ (পজেটিভ)</option>
+                                        <option value="O-">O- (নেগেটিভ)</option>
+                                        <option value="AB+">AB+ (পজেটিভ)</option>
+                                        <option value="AB-">AB- (নেগেটিভ)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label class="font-weight-bold">Gender (লিঙ্গ)</label>
+                                    <select name="gender" class="form-control">
+                                        <option value="Male">পুরুষ (Male)</option>
+                                        <option value="Female">নারী (Female)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center mb-3">
+                                <div class="col-md-8 form-group">
+                                    <label class="font-weight-bold">Profile Picture (প্রোফাইল ছবি) <span class="text-danger">*</span></label>
+                                    <input type="file" name="profile_photo" class="form-control-file" accept="image/*" onchange="previewStudentPhoto(this);" required />
+                                    <small class="text-muted">ডিজিটাল স্টুডেন্ট আইডি কার্ডের জন্য স্পষ্ট পাসপোর্ট সাইজ ছবি আপলোড করুন</small>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <img id="photoPreview" src="Photo/fahim.png" alt="Preview" class="rounded-circle border p-1 shadow-sm" style="width: 85px; height: 85px; object-fit: cover;" />
+                                    <div class="small text-muted mt-1">ছবির প্রিভিউ</div>
+                                </div>
+                            </div>
+
+                            <!-- Section 2: University & Academic Information -->
+                            <h5 class="font-weight-bold border-bottom pb-2 mt-4 mb-3" style="color: var(--navy-blue);">
+                                <i class="fas fa-graduation-cap text-success mr-2"></i> ২. প্রাতিষ্ঠানিক তথ্য (Academic Information)
+                            </h5>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">Department (বিভাগ) <span class="text-danger">*</span></label>
+                                    <select name="department" class="form-control" required>
+                                        <option value="">বিভাগ নির্বাচন করুন</option>
+                                        <!-- Engineering & Tech -->
+                                        <optgroup label="Faculty of Engineering & Technology">
+                                            <option value="Computer Science and Engineering (CSE)">Computer Science and Engineering (CSE)</option>
+                                            <option value="Electrical and Electronic Engineering (EEE)">Electrical and Electronic Engineering (EEE)</option>
+                                            <option value="Information and Communication Engineering (ICE)">Information and Communication Engineering (ICE)</option>
+                                            <option value="Civil Engineering (CE)">Civil Engineering (CE)</option>
+                                            <option value="Mechanical Engineering (ME)">Mechanical Engineering (ME)</option>
+                                            <option value="Architecture (Arch)">Architecture (Arch)</option>
+                                            <option value="Urban and Regional Planning (URP)">Urban and Regional Planning (URP)</option>
+                                        </optgroup>
+                                        <!-- Science -->
+                                        <optgroup label="Faculty of Science">
+                                            <option value="Physics">Physics (পদার্থবিজ্ঞান)</option>
+                                            <option value="Chemistry">Chemistry (রসায়ন)</option>
+                                            <option value="Mathematics">Mathematics (গণিত)</option>
+                                            <option value="Statistics">Statistics (পরিসংখ্যান)</option>
+                                            <option value="Pharmacy">Pharmacy (ফার্মেসি)</option>
+                                            <option value="Biochemistry and Molecular Biology">Biochemistry and Molecular Biology</option>
+                                        </optgroup>
+                                        <!-- Business & Humanities -->
+                                        <optgroup label="Business & Humanities">
+                                            <option value="Business Administration (BBA)">Business Administration (BBA)</option>
+                                            <option value="Economics">Economics (অর্থনীতি)</option>
+                                            <option value="English">English (ইংরেজি)</option>
+                                            <option value="Bangla">Bangla (বাংলা)</option>
+                                            <option value="Public Administration">Public Administration (লোকপ্রশাসন)</option>
+                                            <option value="Social Work">Social Work (সমাজকর্ম)</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3 form-group">
+                                    <label class="font-weight-bold">Academic Session (সেশন) <span class="text-danger">*</span></label>
+                                    <select name="session" class="form-control" required>
+                                        <option value="">সেশন নির্বাচন করুন</option>
+                                        <option value="2024-25">2024-25</option>
+                                        <option value="2023-24">2023-24</option>
+                                        <option value="2022-23">2022-23</option>
+                                        <option value="2021-22">2021-22</option>
+                                        <option value="2020-21">2020-21</option>
+                                        <option value="2019-20">2019-20</option>
+                                        <option value="2018-19">2018-19</option>
+                                        <option value="2017-18">2017-18</option>
+                                        <option value="2016-17">2016-17</option>
+                                        <option value="2015-16">2015-16</option>
+                                        <option value="2014-15">2014-15</option>
+                                        <option value="2013-14">2013-14</option>
+                                        <option value="2012-13">2012-13</option>
+                                        <option value="2011-12">2011-12</option>
+                                        <option value="2010-11">2010-11</option>
+                                        <option value="2009-10">2009-10</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3 form-group">
+                                    <label class="font-weight-bold">Student ID / Roll No <span class="text-danger">*</span></label>
+                                    <input name="student_id" type="text" class="form-control" placeholder="যেমন: 200101" required />
+                                </div>
+                            </div>
+
+                            <!-- Section 3: Chapainawabganj Roots & Profession -->
+                            <h5 class="font-weight-bold border-bottom pb-2 mt-4 mb-3" style="color: var(--navy-blue);">
+                                <i class="fas fa-map-marker-alt text-success mr-2"></i> ৩. চাঁপাইনবাবগঞ্জ জেলা ও বর্তমান ঠিকানা (Address & Profession)
+                            </h5>
+
+                            <div class="row">
+                                <div class="col-md-4 form-group">
+                                    <label class="font-weight-bold">Home District (নিজ জেলা)</label>
+                                    <input type="text" class="form-control bg-light font-weight-bold text-success" value="চাঁপাইনবাবগঞ্জ (Chapainawabganj)" readonly />
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label class="font-weight-bold">Home Upazila (নিজ উপজেলা) <span class="text-danger">*</span></label>
+                                    <select name="upazila" class="form-control" required>
+                                        <option value="">উপজেলা নির্বাচন করুন</option>
+                                        <option value="Chapainawabganj Sadar">চাঁপাইনবাবগঞ্জ সদর (Sadar)</option>
+                                        <option value="Shibganj">শিবগঞ্জ (Shibganj)</option>
+                                        <option value="Gomostapur">গোমস্তাপুর (Gomostapur)</option>
+                                        <option value="Nachole">নাচোল (Nachole)</option>
+                                        <option value="Bholahat">ভোলাহাট (Bholahat)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label class="font-weight-bold">Current Profession (বর্তমান পেশা) <span class="text-danger">*</span></label>
+                                    <select name="profession" class="form-control" required>
+                                        <option value="Current Student">অধ্যয়নরত শিক্ষার্থী (Current Student)</option>
+                                        <option value="Software / IT Engineer">সফটওয়্যার / আইটি প্রফেশনাল</option>
+                                        <option value="BCS Cadre / Govt Officer">বিসিএস ক্যাডার / সরকারি কর্মকর্তা</option>
+                                        <option value="Banker">ব্যাংকার / আর্থিক প্রতিষ্ঠান</option>
+                                        <option value="Engineer">প্রকৌশলী (Civil / EEE / ME)</option>
+                                        <option value="Teacher / Academician">শিক্ষক / প্রভাষক</option>
+                                        <option value="Entrepreneur / Business">উদ্যোক্তা / ব্যবসায়ী</option>
+                                        <option value="Job Seeker">চাকরি প্রার্থী / প্রস্তুতি গ্রহণকারী</option>
+                                        <option value="Higher Studies Abroad">উচ্চশিক্ষারত (বিদেশে/দেশে)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">Residential Hall / Mess (পাবনায় বর্তমান বাসস্থান) <span class="text-danger">*</span></label>
+                                    <input name="hall" type="text" class="form-control" placeholder="যেমন: বঙ্গবন্ধু হল, রুম ৩১২ বা রাধানগর মেস, পাবনা" required />
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">Present Address (বর্তমান ঠিকানা) <span class="text-danger">*</span></label>
+                                    <textarea name="present_address" rows="2" class="form-control" placeholder="বর্তমান পূর্ণ ঠিকানা লিখুন" required></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Section 4: Welfare & Security -->
+                            <h5 class="font-weight-bold border-bottom pb-2 mt-4 mb-3" style="color: var(--navy-blue);">
+                                <i class="fas fa-shield-alt text-success mr-2"></i> ৪. কল্যাণমূলক কার্যক্রম ও অ্যাকাউন্ট নিরাপত্তা
+                            </h5>
+
+                            <div class="form-group p-3 rounded" style="background-color: #f1f8f5; border: 1px dashed var(--emerald-green);">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="is_blood_donor" id="is_blood_donor" value="yes" checked />
+                                    <label class="form-check-label font-weight-bold text-dark" for="is_blood_donor">
+                                        <i class="fas fa-heartbeat text-danger mr-1"></i> আমি জরুরি প্রয়োজনে রক্তদানে ইচ্ছুক (Willing to Donate Blood)
+                                    </label>
+                                    <div class="small text-muted mt-1">
+                                        টিক চিহ্ন দিলে আপনার রক্তের গ্রুপ ও মোবাইল নম্বর সমিতির রক্তদান নেটওয়ার্কে জরুরি রোগীর প্রয়োজনে দৃশ্যমান হবে।
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">Password (লগইন পাসওয়ার্ড) <span class="text-danger">*</span></label>
+                                    <input name="password" type="password" class="form-control" placeholder="কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড" minlength="6" required />
+                                    <small class="text-muted">ভবিষ্যতে লগইন ও ডিজিটাল আইডি কার্ড দেখার জন্য এই পাসওয়ার্ডটি ব্যবহার করবেন</small>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">Confirm Password (পাসওয়ার্ড নিশ্চিত করুন) <span class="text-danger">*</span></label>
+                                    <input name="confirm_password" type="password" class="form-control" placeholder="পুনরায় পাসওয়ার্ড লিখুন" minlength="6" required />
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-emerald btn-lg px-5 shadow font-weight-bold">
+                                    <i class="fas fa-check-circle mr-2"></i> নিবন্ধন সম্পন্ন করুন (Submit Registration)
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-4 pl-4">
+                        <a href="index.html" class="text-primary font-weight-bold">&lt;&lt; হোমে ফিরে যান</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function previewStudentPhoto(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#photoPreview').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $('#studentRegistrationForm').on('submit', function (e) {
+        var p1 = $('input[name="password"]').val();
+        var p2 = $('input[name="confirm_password"]').val();
+        if (p1 !== p2) {
+            alert('পাসওয়ার্ড দুটি মেলেনি! অনুগ্রহ করে পুনরায় যাচাই করুন।');
+            e.preventDefault();
+            return false;
+        }
+    });
+</script>
+
+    <!-- Footer -->
+    <footer class="mt-5">
+        <div id="footer1">
+            <div class="container py-3">
+                <div class="row">
+                    <!-- Col 1: About Zilla Samity -->
+                    <div class="col-md-5 mb-4 mb-md-0">
+                        <h5 class="font-weight-bold text-white mb-3">
+                            <i class="fas fa-landmark text-success mr-2"></i> পাবিপ্রবি চাঁপাইনবাবগঞ্জ জেলা সমিতি
+                        </h5>
+                        <p class="text-light" style="font-size: 14px; line-height: 1.8;">
+                            পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়ে অধ্যয়নরত ও প্রাক্তন চাঁপাইনবাবগঞ্জ জেলার শিক্ষার্থীদের পারস্পরিক ভ্রাতৃত্ব, ঐক্য, শিক্ষা সহায়তা ও কল্যাণে নিয়োজিত একটি অরাজনৈতিক স্বেচ্ছাসেবী সংগঠন।
+                        </p>
+                        <div class="mt-3">
+                            <span class="badge badge-light p-2 mr-1"><i class="fas fa-phone-alt text-success mr-1"></i> হেল্পলাইন: +8801712345678</span>
+                            <span class="badge badge-light p-2"><i class="fas fa-envelope text-primary mr-1"></i> pust.chapai@gmail.com</span>
+                        </div>
+                    </div>
+
+                    <!-- Col 2: Student Welfare & Services -->
+                    <div class="col-md-4 mb-4 mb-md-0">
+                        <h6 class="font-weight-bold text-warning mb-3">
+                            <i class="fas fa-hands-helping mr-2"></i> শিক্ষার্থী সেবা ও সহায়তা
+                        </h6>
+                        <ul class="list-unstyled text-light" style="font-size: 14px; line-height: 2;">
+                            <li><a href="blood_donation.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> জরুরি রক্তদাতা খুঁজুন</a></li>
+                            <li><a href="student_support.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> নতুন ভর্তিচ্ছু শিক্ষার্থীদের সহায়তা</a></li>
+                            <li><a href="/student_support.aspx#mess" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> মেস ও আবাসন পরামর্শ</a></li>
+                            <li><a href="alumnilist.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> শিক্ষার্থী ও অ্যালামনাই ডিরেক্টরি</a></li>
+                            <li><a href="registration.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> সদস্য হিসেবে নিবন্ধন করুন</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Col 3: Upazilas & Admin -->
+                    <div class="col-md-3">
+                        <h6 class="font-weight-bold text-warning mb-3">
+                            <i class="fas fa-map-marked-alt mr-2"></i> উপজেলাসমূহ
+                        </h6>
+                        <p class="text-light small mb-3">
+                            চাঁপাইনবাবগঞ্জ সদর &bull; শিবগঞ্জ &bull; গোমস্তাপুর &bull; নাচোল &bull; ভোলাহাট
+                        </p>
+                        <div class="pt-2 border-top border-secondary">
+                            
+                                <a class="btn btn-warning btn-sm font-weight-bold btn-block" href="membermanagement.html">
+                                    <i class="fas fa-user-shield mr-1"></i> অ্যাডমিন ড্যাশবোর্ড
+                                </a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer2">
+            <div class="container text-center">
+                <p class="m-0 font-weight-normal text-white" style="font-size: 14px; letter-spacing: 0.3px;">
+                    &copy; All rights reserved @ Chapainabjanj Jelashomi PUST | Website Develop by <strong>Md Al Eman (EEE 2019-20)</strong>, Engineer at Fiber at Home Ltd.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Initializer for DataTables -->
+    <script>
+        $(document).ready(function () {
+            if ($('.datatable').length) {
+                $('.datatable').DataTable({
+                    "pageLength": 10,
+                    "responsive": true,
+                    "language": {
+                        "search": "সদস্য খুঁজুন:",
+                        "lengthMenu": "_MENU_ টি রেকর্ড প্রদর্শন",
+                        "info": "_TOTAL_ জন শিক্ষার্থীর মধ্যে _START_ থেকে _END_ দেখানো হচ্ছে",
+                        "paginate": {
+                            "previous": "পূর্ববর্তী",
+                            "next": "পরবর্তী"
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
