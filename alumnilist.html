@@ -36,7 +36,7 @@
         <div class="container">
             <div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
                 <div class="mr-md-3 mb-2 mb-md-0">
-                    <img id="ImgLogo" src="Photo/me.png" alt="PUST Logo" style="height: 85px; width: auto;" onerror="this.src="Photo/me.png'">
+                    <img id="ImgLogo" src="Photo/me.png" alt="PUST Logo" style="height: 85px; width: auto;" onerror="this.src='Photo/me.png'">
                 </div>
                 <div class="text-center text-md-left">
                     <h2 class="brand-title-bn mb-0">পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়স্থ চাঁপাইনবাবগঞ্জ জেলা সমিতি</h2>
@@ -87,19 +87,6 @@
                     </li>
 
                     
-                    <li class="nav-item dropdown ml-lg-2">
-                        <a class="nav-link dropdown-toggle text-danger font-weight-bold" href="#" id="adminMenuDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-shield-alt"></i> অ্যাডমিন প্যানেল
-                        </a>
-                        <div class="dropdown-menu shadow border-0" aria-labelledby="adminMenuDropdown">
-                            <a class="dropdown-item" href="membermanagement.html"><i class="fas fa-user-check text-success mr-2"></i> শিক্ষার্থী ভেরিফিকেশন ও তালিকা</a>
-                            <a class="dropdown-item" href="admin_update_member.html"><i class="fas fa-user-edit text-primary mr-2"></i> তথ্য সংশোধন ও আপডেট</a>
-                            <a class="dropdown-item" href="admin_content.html"><i class="fas fa-bullhorn text-info mr-2"></i> নোটিশ ও ফাইল আপলোড</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="index.html"><i class="fas fa-sign-out-alt mr-2"></i> অ্যাডমিন লগআউট</a>
-                        </div>
-                    </li>
-                    
                 </ul>
 
                 <!-- Action Button & User Area -->
@@ -111,19 +98,10 @@
                     </li>
 
                     
-                        <li class="nav-item d-flex align-items-center">
-                            <img src="Photo/fahim.png" class="rounded-circle mr-2 border border-success" alt="Md. Al-Emran" height="38" width="38" style="object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
-                            <div class="dropdown">
-                                <a class="nav-link dropdown-toggle font-weight-bold text-dark px-1" href="#" id="userDropdown" role="button" data-toggle="dropdown">
-                                    Md.
-                                    <span class="badge badge-success ml-1">সক্রিয়</span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right shadow border-0">
-                                    <a class="dropdown-item" href="my_profile.html"><i class="fas fa-id-card text-primary mr-2"></i> প্রোফাইল ও ডিজিটাল আইডি</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="index.html"><i class="fas fa-sign-out-alt mr-2"></i> লগআউট</a>
-                                </div>
-                            </div>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-primary btn-sm px-3 font-weight-bold" href="login.html">
+                                <i class="fas fa-sign-in-alt mr-1"></i> লগইন
+                            </a>
                         </li>
                     
                 </ul>
@@ -221,532 +199,16 @@
                                 </thead>
                                 <tbody>
                                     
-                                        
-                                            <tr>
-                                                <td class="text-center align-middle">
-                                                    <img src="Photo/fahim.png" alt="Md. Sajjad Hossain" class="rounded-circle border" style="width: 48px; height: 48px; object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
-                                                </td>
-                                                <td class="align-middle">
-                                                    <strong class="text-dark" style="font-size: 16px;">Md. Sajjad Hossain</strong>
-                                                    <br><small class="text-muted">Current Student</small>
-                                                </td>
-                                                <td class="text-center align-middle font-weight-bold text-primary">
-                                                    240199
-                                                </td>
-                                                <td class="align-middle">
-                                                    <strong>Computer Science and Engineering (CSE)</strong>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-session">2024-25</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-upazila">Shibganj</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-blood">O+</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <button type="button" class="btn btn-outline-emerald btn-sm font-weight-bold" data-toggle="modal" data-target="#studentModal_0">
-                                                        <i class="fas fa-eye"></i> বিস্তারিত
-                                                    </button>
-                                                </td>
-                                            </tr>
-
-                                            <!-- Modal Profile Preview -->
-                                            <div class="modal fade" id="studentModal_0" tabindex="-1" role="dialog" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content border-0 shadow">
-                                                        <div class="modal-header text-white" style="background: linear-gradient(135deg, var(--navy-blue) 0%, var(--emerald-green) 100%);">
-                                                            <h5 class="modal-title font-weight-bold">
-                                                                <i class="fas fa-user-graduate mr-2"></i> Md. Sajjad Hossain
-                                                            </h5>
-                                                            <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
-                                                        </div>
-                                                        <div class="modal-body p-4 text-center">
-                                                            <img src="Photo/fahim.png" alt="Md. Sajjad Hossain" class="rounded-circle border border-success p-1 shadow-sm mb-3" style="width: 105px; height: 105px; object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
-                                                            <h4 class="font-weight-bold text-dark mb-1">Md. Sajjad Hossain</h4>
-                                                            <p class="text-muted mb-2">Current Student</p>
-                                                            <p class="mb-3">
-                                                                <span class="badge badge-upazila px-3 py-1 font-weight-bold"><i class="fas fa-map-marker-alt mr-1"></i> Shibganj, চাঁপাইনবাবগঞ্জ</span>
-                                                                <span class="badge badge-session px-3 py-1 font-weight-bold">2024-25 সেশন</span>
-                                                            </p>
-
-                                                            <div class="text-left bg-light p-3 rounded" style="font-size: 14px; line-height: 1.8;">
-                                                                <p class="mb-1"><strong><i class="fas fa-id-badge text-primary mr-2"></i> স্টুডেন্ট আইডি:</strong> 240199</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-graduation-cap text-success mr-2"></i> বিভাগ:</strong> Computer Science and Engineering (CSE)</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-tint text-danger mr-2"></i> রক্তের গ্রুপ:</strong> O+</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-hotel text-warning mr-2"></i> হল / মেস:</strong> Bangabandhu Hall</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-map-pin text-info mr-2"></i> বর্তমান ঠিকানা:</strong> Bangabandhu Hall, Room 102, PUST</p>
-                                                                <p class="mb-0"><strong><i class="fas fa-envelope text-secondary mr-2"></i> ইমেইল:</strong> sajjad.cse@s.pust.ac.bd</p>
-                                                            </div>
-
-                                                            <div class="mt-4 d-flex justify-content-center">
-                                                                <a href="tel:+8801799887766" class="btn btn-success font-weight-bold mr-2 px-3">
-                                                                    <i class="fas fa-phone-alt mr-1"></i> কল করুন
-                                                                </a>
-                                                                <a href="https://wa.me/8801799887766" target="_blank" class="btn btn-outline-success font-weight-bold px-3">
-                                                                    <i class="fab fa-whatsapp mr-1"></i> হোয়াটসঅ্যাপ
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer bg-light py-2">
-                                                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">বন্ধ করুন</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        
-                                            <tr>
-                                                <td class="text-center align-middle">
-                                                    <img src="Photo/fahim.png" alt="Md. Al-Emran" class="rounded-circle border" style="width: 48px; height: 48px; object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
-                                                </td>
-                                                <td class="align-middle">
-                                                    <strong class="text-dark" style="font-size: 16px;">Md. Al-Emran</strong>
-                                                    <br><small class="text-muted">Current Student</small>
-                                                </td>
-                                                <td class="text-center align-middle font-weight-bold text-primary">
-                                                    200101
-                                                </td>
-                                                <td class="align-middle">
-                                                    <strong>Computer Science and Engineering (CSE)</strong>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-session">2020-21</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-upazila">Shibganj</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-blood">B+</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <button type="button" class="btn btn-outline-emerald btn-sm font-weight-bold" data-toggle="modal" data-target="#studentModal_1">
-                                                        <i class="fas fa-eye"></i> বিস্তারিত
-                                                    </button>
-                                                </td>
-                                            </tr>
-
-                                            <!-- Modal Profile Preview -->
-                                            <div class="modal fade" id="studentModal_1" tabindex="-1" role="dialog" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content border-0 shadow">
-                                                        <div class="modal-header text-white" style="background: linear-gradient(135deg, var(--navy-blue) 0%, var(--emerald-green) 100%);">
-                                                            <h5 class="modal-title font-weight-bold">
-                                                                <i class="fas fa-user-graduate mr-2"></i> Md. Al-Emran
-                                                            </h5>
-                                                            <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
-                                                        </div>
-                                                        <div class="modal-body p-4 text-center">
-                                                            <img src="Photo/fahim.png" alt="Md. Al-Emran" class="rounded-circle border border-success p-1 shadow-sm mb-3" style="width: 105px; height: 105px; object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
-                                                            <h4 class="font-weight-bold text-dark mb-1">Md. Al-Emran</h4>
-                                                            <p class="text-muted mb-2">Current Student</p>
-                                                            <p class="mb-3">
-                                                                <span class="badge badge-upazila px-3 py-1 font-weight-bold"><i class="fas fa-map-marker-alt mr-1"></i> Shibganj, চাঁপাইনবাবগঞ্জ</span>
-                                                                <span class="badge badge-session px-3 py-1 font-weight-bold">2020-21 সেশন</span>
-                                                            </p>
-
-                                                            <div class="text-left bg-light p-3 rounded" style="font-size: 14px; line-height: 1.8;">
-                                                                <p class="mb-1"><strong><i class="fas fa-id-badge text-primary mr-2"></i> স্টুডেন্ট আইডি:</strong> 200101</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-graduation-cap text-success mr-2"></i> বিভাগ:</strong> Computer Science and Engineering (CSE)</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-tint text-danger mr-2"></i> রক্তের গ্রুপ:</strong> B+</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-hotel text-warning mr-2"></i> হল / মেস:</strong> Bangabandhu Sheikh Mujibur Rahman Hall</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-map-pin text-info mr-2"></i> বর্তমান ঠিকানা:</strong> Bangabandhu Sheikh Mujibur Rahman Hall, Room 412, PUST</p>
-                                                                <p class="mb-0"><strong><i class="fas fa-envelope text-secondary mr-2"></i> ইমেইল:</strong> emran.cse@s.pust.ac.bd</p>
-                                                            </div>
-
-                                                            <div class="mt-4 d-flex justify-content-center">
-                                                                <a href="tel:+8801712345678" class="btn btn-success font-weight-bold mr-2 px-3">
-                                                                    <i class="fas fa-phone-alt mr-1"></i> কল করুন
-                                                                </a>
-                                                                <a href="https://wa.me/8801712345678" target="_blank" class="btn btn-outline-success font-weight-bold px-3">
-                                                                    <i class="fab fa-whatsapp mr-1"></i> হোয়াটসঅ্যাপ
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer bg-light py-2">
-                                                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">বন্ধ করুন</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        
-                                            <tr>
-                                                <td class="text-center align-middle">
-                                                    <img src="ProfilePhoto/Navil090205.png" alt="Tanzim Ahmed Shiblu" class="rounded-circle border" style="width: 48px; height: 48px; object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
-                                                </td>
-                                                <td class="align-middle">
-                                                    <strong class="text-dark" style="font-size: 16px;">Tanzim Ahmed Shiblu</strong>
-                                                    <br><small class="text-muted">Current Student</small>
-                                                </td>
-                                                <td class="text-center align-middle font-weight-bold text-primary">
-                                                    190215
-                                                </td>
-                                                <td class="align-middle">
-                                                    <strong>Electrical and Electronic Engineering (EEE)</strong>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-session">2019-20</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-upazila">Chapainawabganj Sadar</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-blood">O+</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <button type="button" class="btn btn-outline-emerald btn-sm font-weight-bold" data-toggle="modal" data-target="#studentModal_2">
-                                                        <i class="fas fa-eye"></i> বিস্তারিত
-                                                    </button>
-                                                </td>
-                                            </tr>
-
-                                            <!-- Modal Profile Preview -->
-                                            <div class="modal fade" id="studentModal_2" tabindex="-1" role="dialog" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content border-0 shadow">
-                                                        <div class="modal-header text-white" style="background: linear-gradient(135deg, var(--navy-blue) 0%, var(--emerald-green) 100%);">
-                                                            <h5 class="modal-title font-weight-bold">
-                                                                <i class="fas fa-user-graduate mr-2"></i> Tanzim Ahmed Shiblu
-                                                            </h5>
-                                                            <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
-                                                        </div>
-                                                        <div class="modal-body p-4 text-center">
-                                                            <img src="ProfilePhoto/Navil090205.png" alt="Tanzim Ahmed Shiblu" class="rounded-circle border border-success p-1 shadow-sm mb-3" style="width: 105px; height: 105px; object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
-                                                            <h4 class="font-weight-bold text-dark mb-1">Tanzim Ahmed Shiblu</h4>
-                                                            <p class="text-muted mb-2">Current Student</p>
-                                                            <p class="mb-3">
-                                                                <span class="badge badge-upazila px-3 py-1 font-weight-bold"><i class="fas fa-map-marker-alt mr-1"></i> Chapainawabganj Sadar, চাঁপাইনবাবগঞ্জ</span>
-                                                                <span class="badge badge-session px-3 py-1 font-weight-bold">2019-20 সেশন</span>
-                                                            </p>
-
-                                                            <div class="text-left bg-light p-3 rounded" style="font-size: 14px; line-height: 1.8;">
-                                                                <p class="mb-1"><strong><i class="fas fa-id-badge text-primary mr-2"></i> স্টুডেন্ট আইডি:</strong> 190215</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-graduation-cap text-success mr-2"></i> বিভাগ:</strong> Electrical and Electronic Engineering (EEE)</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-tint text-danger mr-2"></i> রক্তের গ্রুপ:</strong> O+</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-hotel text-warning mr-2"></i> হল / মেস:</strong> Sheikh Rasel Hall</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-map-pin text-info mr-2"></i> বর্তমান ঠিকানা:</strong> Sheikh Rasel Hall, Room 205, PUST</p>
-                                                                <p class="mb-0"><strong><i class="fas fa-envelope text-secondary mr-2"></i> ইমেইল:</strong> tanzim.eee@s.pust.ac.bd</p>
-                                                            </div>
-
-                                                            <div class="mt-4 d-flex justify-content-center">
-                                                                <a href="tel:+8801723456789" class="btn btn-success font-weight-bold mr-2 px-3">
-                                                                    <i class="fas fa-phone-alt mr-1"></i> কল করুন
-                                                                </a>
-                                                                <a href="https://wa.me/8801723456789" target="_blank" class="btn btn-outline-success font-weight-bold px-3">
-                                                                    <i class="fab fa-whatsapp mr-1"></i> হোয়াটসঅ্যাপ
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer bg-light py-2">
-                                                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">বন্ধ করুন</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        
-                                            <tr>
-                                                <td class="text-center align-middle">
-                                                    <img src="Photo/fahim.png" alt="Nusrat Jahan Mim" class="rounded-circle border" style="width: 48px; height: 48px; object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
-                                                </td>
-                                                <td class="align-middle">
-                                                    <strong class="text-dark" style="font-size: 16px;">Nusrat Jahan Mim</strong>
-                                                    <br><small class="text-muted">Current Student</small>
-                                                </td>
-                                                <td class="text-center align-middle font-weight-bold text-primary">
-                                                    210512
-                                                </td>
-                                                <td class="align-middle">
-                                                    <strong>Pharmacy</strong>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-session">2021-22</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-upazila">Gomostapur</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-blood">A+</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <button type="button" class="btn btn-outline-emerald btn-sm font-weight-bold" data-toggle="modal" data-target="#studentModal_3">
-                                                        <i class="fas fa-eye"></i> বিস্তারিত
-                                                    </button>
-                                                </td>
-                                            </tr>
-
-                                            <!-- Modal Profile Preview -->
-                                            <div class="modal fade" id="studentModal_3" tabindex="-1" role="dialog" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content border-0 shadow">
-                                                        <div class="modal-header text-white" style="background: linear-gradient(135deg, var(--navy-blue) 0%, var(--emerald-green) 100%);">
-                                                            <h5 class="modal-title font-weight-bold">
-                                                                <i class="fas fa-user-graduate mr-2"></i> Nusrat Jahan Mim
-                                                            </h5>
-                                                            <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
-                                                        </div>
-                                                        <div class="modal-body p-4 text-center">
-                                                            <img src="Photo/fahim.png" alt="Nusrat Jahan Mim" class="rounded-circle border border-success p-1 shadow-sm mb-3" style="width: 105px; height: 105px; object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
-                                                            <h4 class="font-weight-bold text-dark mb-1">Nusrat Jahan Mim</h4>
-                                                            <p class="text-muted mb-2">Current Student</p>
-                                                            <p class="mb-3">
-                                                                <span class="badge badge-upazila px-3 py-1 font-weight-bold"><i class="fas fa-map-marker-alt mr-1"></i> Gomostapur, চাঁপাইনবাবগঞ্জ</span>
-                                                                <span class="badge badge-session px-3 py-1 font-weight-bold">2021-22 সেশন</span>
-                                                            </p>
-
-                                                            <div class="text-left bg-light p-3 rounded" style="font-size: 14px; line-height: 1.8;">
-                                                                <p class="mb-1"><strong><i class="fas fa-id-badge text-primary mr-2"></i> স্টুডেন্ট আইডি:</strong> 210512</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-graduation-cap text-success mr-2"></i> বিভাগ:</strong> Pharmacy</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-tint text-danger mr-2"></i> রক্তের গ্রুপ:</strong> A+</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-hotel text-warning mr-2"></i> হল / মেস:</strong> Sheikh Hasina Hall</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-map-pin text-info mr-2"></i> বর্তমান ঠিকানা:</strong> Sheikh Hasina Hall, Room 310, PUST</p>
-                                                                <p class="mb-0"><strong><i class="fas fa-envelope text-secondary mr-2"></i> ইমেইল:</strong> mim.pharmacy@s.pust.ac.bd</p>
-                                                            </div>
-
-                                                            <div class="mt-4 d-flex justify-content-center">
-                                                                <a href="tel:+8801734567890" class="btn btn-success font-weight-bold mr-2 px-3">
-                                                                    <i class="fas fa-phone-alt mr-1"></i> কল করুন
-                                                                </a>
-                                                                <a href="https://wa.me/8801734567890" target="_blank" class="btn btn-outline-success font-weight-bold px-3">
-                                                                    <i class="fab fa-whatsapp mr-1"></i> হোয়াটসঅ্যাপ
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer bg-light py-2">
-                                                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">বন্ধ করুন</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        
-                                            <tr>
-                                                <td class="text-center align-middle">
-                                                    <img src="ProfilePhoto/Amir.jpg" alt="Md. Tariqul Islam" class="rounded-circle border" style="width: 48px; height: 48px; object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
-                                                </td>
-                                                <td class="align-middle">
-                                                    <strong class="text-dark" style="font-size: 16px;">Md. Tariqul Islam</strong>
-                                                    <br><small class="text-muted">Assistant Engineer (RHD)</small>
-                                                </td>
-                                                <td class="text-center align-middle font-weight-bold text-primary">
-                                                    160308
-                                                </td>
-                                                <td class="align-middle">
-                                                    <strong>Civil Engineering (CE)</strong>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-session">2016-17</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-upazila">Nachole</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-blood">AB+</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <button type="button" class="btn btn-outline-emerald btn-sm font-weight-bold" data-toggle="modal" data-target="#studentModal_4">
-                                                        <i class="fas fa-eye"></i> বিস্তারিত
-                                                    </button>
-                                                </td>
-                                            </tr>
-
-                                            <!-- Modal Profile Preview -->
-                                            <div class="modal fade" id="studentModal_4" tabindex="-1" role="dialog" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content border-0 shadow">
-                                                        <div class="modal-header text-white" style="background: linear-gradient(135deg, var(--navy-blue) 0%, var(--emerald-green) 100%);">
-                                                            <h5 class="modal-title font-weight-bold">
-                                                                <i class="fas fa-user-graduate mr-2"></i> Md. Tariqul Islam
-                                                            </h5>
-                                                            <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
-                                                        </div>
-                                                        <div class="modal-body p-4 text-center">
-                                                            <img src="ProfilePhoto/Amir.jpg" alt="Md. Tariqul Islam" class="rounded-circle border border-success p-1 shadow-sm mb-3" style="width: 105px; height: 105px; object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
-                                                            <h4 class="font-weight-bold text-dark mb-1">Md. Tariqul Islam</h4>
-                                                            <p class="text-muted mb-2">Assistant Engineer (RHD)</p>
-                                                            <p class="mb-3">
-                                                                <span class="badge badge-upazila px-3 py-1 font-weight-bold"><i class="fas fa-map-marker-alt mr-1"></i> Nachole, চাঁপাইনবাবগঞ্জ</span>
-                                                                <span class="badge badge-session px-3 py-1 font-weight-bold">2016-17 সেশন</span>
-                                                            </p>
-
-                                                            <div class="text-left bg-light p-3 rounded" style="font-size: 14px; line-height: 1.8;">
-                                                                <p class="mb-1"><strong><i class="fas fa-id-badge text-primary mr-2"></i> স্টুডেন্ট আইডি:</strong> 160308</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-graduation-cap text-success mr-2"></i> বিভাগ:</strong> Civil Engineering (CE)</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-tint text-danger mr-2"></i> রক্তের গ্রুপ:</strong> AB+</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-hotel text-warning mr-2"></i> হল / মেস:</strong> Bangabandhu Sheikh Mujibur Rahman Hall</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-map-pin text-info mr-2"></i> বর্তমান ঠিকানা:</strong> Tejgaon, Dhaka</p>
-                                                                <p class="mb-0"><strong><i class="fas fa-envelope text-secondary mr-2"></i> ইমেইল:</strong> tariqul.ce@alumni.pust.ac.bd</p>
-                                                            </div>
-
-                                                            <div class="mt-4 d-flex justify-content-center">
-                                                                <a href="tel:+8801745678901" class="btn btn-success font-weight-bold mr-2 px-3">
-                                                                    <i class="fas fa-phone-alt mr-1"></i> কল করুন
-                                                                </a>
-                                                                <a href="https://wa.me/8801745678901" target="_blank" class="btn btn-outline-success font-weight-bold px-3">
-                                                                    <i class="fab fa-whatsapp mr-1"></i> হোয়াটসঅ্যাপ
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer bg-light py-2">
-                                                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">বন্ধ করুন</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        
-                                            <tr>
-                                                <td class="text-center align-middle">
-                                                    <img src="Photo/fahim.png" alt="Mahmudul Hasan Shanto" class="rounded-circle border" style="width: 48px; height: 48px; object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
-                                                </td>
-                                                <td class="align-middle">
-                                                    <strong class="text-dark" style="font-size: 16px;">Mahmudul Hasan Shanto</strong>
-                                                    <br><small class="text-muted">Current Student</small>
-                                                </td>
-                                                <td class="text-center align-middle font-weight-bold text-primary">
-                                                    220914
-                                                </td>
-                                                <td class="align-middle">
-                                                    <strong>Business Administration (BBA)</strong>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-session">2022-23</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-upazila">Bholahat</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-blood">O-</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <button type="button" class="btn btn-outline-emerald btn-sm font-weight-bold" data-toggle="modal" data-target="#studentModal_5">
-                                                        <i class="fas fa-eye"></i> বিস্তারিত
-                                                    </button>
-                                                </td>
-                                            </tr>
-
-                                            <!-- Modal Profile Preview -->
-                                            <div class="modal fade" id="studentModal_5" tabindex="-1" role="dialog" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content border-0 shadow">
-                                                        <div class="modal-header text-white" style="background: linear-gradient(135deg, var(--navy-blue) 0%, var(--emerald-green) 100%);">
-                                                            <h5 class="modal-title font-weight-bold">
-                                                                <i class="fas fa-user-graduate mr-2"></i> Mahmudul Hasan Shanto
-                                                            </h5>
-                                                            <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
-                                                        </div>
-                                                        <div class="modal-body p-4 text-center">
-                                                            <img src="Photo/fahim.png" alt="Mahmudul Hasan Shanto" class="rounded-circle border border-success p-1 shadow-sm mb-3" style="width: 105px; height: 105px; object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
-                                                            <h4 class="font-weight-bold text-dark mb-1">Mahmudul Hasan Shanto</h4>
-                                                            <p class="text-muted mb-2">Current Student</p>
-                                                            <p class="mb-3">
-                                                                <span class="badge badge-upazila px-3 py-1 font-weight-bold"><i class="fas fa-map-marker-alt mr-1"></i> Bholahat, চাঁপাইনবাবগঞ্জ</span>
-                                                                <span class="badge badge-session px-3 py-1 font-weight-bold">2022-23 সেশন</span>
-                                                            </p>
-
-                                                            <div class="text-left bg-light p-3 rounded" style="font-size: 14px; line-height: 1.8;">
-                                                                <p class="mb-1"><strong><i class="fas fa-id-badge text-primary mr-2"></i> স্টুডেন্ট আইডি:</strong> 220914</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-graduation-cap text-success mr-2"></i> বিভাগ:</strong> Business Administration (BBA)</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-tint text-danger mr-2"></i> রক্তের গ্রুপ:</strong> O-</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-hotel text-warning mr-2"></i> হল / মেস:</strong> Off-Campus Mess</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-map-pin text-info mr-2"></i> বর্তমান ঠিকানা:</strong> Radhanagar Student Mess, Pabna</p>
-                                                                <p class="mb-0"><strong><i class="fas fa-envelope text-secondary mr-2"></i> ইমেইল:</strong> shanto.bba@s.pust.ac.bd</p>
-                                                            </div>
-
-                                                            <div class="mt-4 d-flex justify-content-center">
-                                                                <a href="tel:+8801756789012" class="btn btn-success font-weight-bold mr-2 px-3">
-                                                                    <i class="fas fa-phone-alt mr-1"></i> কল করুন
-                                                                </a>
-                                                                <a href="https://wa.me/8801756789012" target="_blank" class="btn btn-outline-success font-weight-bold px-3">
-                                                                    <i class="fab fa-whatsapp mr-1"></i> হোয়াটসঅ্যাপ
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer bg-light py-2">
-                                                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">বন্ধ করুন</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        
-                                            <tr>
-                                                <td class="text-center align-middle">
-                                                    <img src="Photo/adminuser.png" alt="Engr. Md. Faruk Hossain" class="rounded-circle border" style="width: 48px; height: 48px; object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
-                                                </td>
-                                                <td class="align-middle">
-                                                    <strong class="text-dark" style="font-size: 16px;">Engr. Md. Faruk Hossain</strong>
-                                                    <br><small class="text-muted">Senior Software Engineer, Brain Station 23</small>
-                                                </td>
-                                                <td class="text-center align-middle font-weight-bold text-primary">
-                                                    140102
-                                                </td>
-                                                <td class="align-middle">
-                                                    <strong>Computer Science and Engineering (CSE)</strong>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-session">2014-15</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-upazila">Chapainawabganj Sadar</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <span class="badge badge-blood">A+</span>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <button type="button" class="btn btn-outline-emerald btn-sm font-weight-bold" data-toggle="modal" data-target="#studentModal_6">
-                                                        <i class="fas fa-eye"></i> বিস্তারিত
-                                                    </button>
-                                                </td>
-                                            </tr>
-
-                                            <!-- Modal Profile Preview -->
-                                            <div class="modal fade" id="studentModal_6" tabindex="-1" role="dialog" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content border-0 shadow">
-                                                        <div class="modal-header text-white" style="background: linear-gradient(135deg, var(--navy-blue) 0%, var(--emerald-green) 100%);">
-                                                            <h5 class="modal-title font-weight-bold">
-                                                                <i class="fas fa-user-graduate mr-2"></i> Engr. Md. Faruk Hossain
-                                                            </h5>
-                                                            <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
-                                                        </div>
-                                                        <div class="modal-body p-4 text-center">
-                                                            <img src="Photo/adminuser.png" alt="Engr. Md. Faruk Hossain" class="rounded-circle border border-success p-1 shadow-sm mb-3" style="width: 105px; height: 105px; object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
-                                                            <h4 class="font-weight-bold text-dark mb-1">Engr. Md. Faruk Hossain</h4>
-                                                            <p class="text-muted mb-2">Senior Software Engineer, Brain Station 23</p>
-                                                            <p class="mb-3">
-                                                                <span class="badge badge-upazila px-3 py-1 font-weight-bold"><i class="fas fa-map-marker-alt mr-1"></i> Chapainawabganj Sadar, চাঁপাইনবাবগঞ্জ</span>
-                                                                <span class="badge badge-session px-3 py-1 font-weight-bold">2014-15 সেশন</span>
-                                                            </p>
-
-                                                            <div class="text-left bg-light p-3 rounded" style="font-size: 14px; line-height: 1.8;">
-                                                                <p class="mb-1"><strong><i class="fas fa-id-badge text-primary mr-2"></i> স্টুডেন্ট আইডি:</strong> 140102</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-graduation-cap text-success mr-2"></i> বিভাগ:</strong> Computer Science and Engineering (CSE)</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-tint text-danger mr-2"></i> রক্তের গ্রুপ:</strong> A+</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-hotel text-warning mr-2"></i> হল / মেস:</strong> Bangabandhu Sheikh Mujibur Rahman Hall</p>
-                                                                <p class="mb-1"><strong><i class="fas fa-map-pin text-info mr-2"></i> বর্তমান ঠিকানা:</strong> Mirpur DOHS, Dhaka</p>
-                                                                <p class="mb-0"><strong><i class="fas fa-envelope text-secondary mr-2"></i> ইমেইল:</strong> faruk.cse@alumni.pust.ac.bd</p>
-                                                            </div>
-
-                                                            <div class="mt-4 d-flex justify-content-center">
-                                                                <a href="tel:+8801778901234" class="btn btn-success font-weight-bold mr-2 px-3">
-                                                                    <i class="fas fa-phone-alt mr-1"></i> কল করুন
-                                                                </a>
-                                                                <a href="https://wa.me/8801778901234" target="_blank" class="btn btn-outline-success font-weight-bold px-3">
-                                                                    <i class="fab fa-whatsapp mr-1"></i> হোয়াটসঅ্যাপ
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer bg-light py-2">
-                                                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">বন্ধ করুন</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        
+                                        <tr>
+                                            <td colspan="8" class="text-center py-5 text-muted">
+                                                <i class="fas fa-user-graduate fa-3x mb-3 text-secondary d-block"></i>
+                                                <h5>বর্তমানে কোনো শিক্ষার্থীর তথ্য তালিকাভুক্ত নেই।</h5>
+                                                <p class="small">চাঁপাইনবাবগঞ্জ জেলা সমিতির নতুন সদস্য হিসেবে আজই আপনার নাম ও তথ্য নিবন্ধন করুন।</p>
+                                                <a href="registration.html" class="btn btn-emerald btn-sm px-4 font-weight-bold shadow-sm">
+                                                    <i class="fas fa-user-plus mr-1"></i> সদস্য নিবন্ধন ফরম
+                                                </a>
+                                            </td>
+                                        </tr>
                                     
                                 </tbody>
                             </table>
@@ -764,27 +226,42 @@
 
 <script>
     $(document).ready(function() {
-        var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io');
+        var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.pathname.endsWith('.html');
         if (isStatic) {
+            var deletedIds = [];
+            try {
+                var delRaw = localStorage.getItem('chapainawabganj_deleted_ids');
+                if (delRaw) deletedIds = JSON.parse(delRaw);
+            } catch(e) {}
+
+            var overrides = {};
+            try {
+                var ovRaw = localStorage.getItem('chapainawabganj_status_overrides');
+                if (ovRaw) overrides = JSON.parse(ovRaw);
+            } catch(e) {}
+
             try {
                 var raw = localStorage.getItem('chapainawabganj_local_members');
                 if (raw) {
                     var local = JSON.parse(raw);
                     var datatable = $('.datatable').DataTable();
                     local.forEach(function(m) {
-                        // only show if active in directory
-                        if (m.status === 'Active') {
-                            var photo = m.profile_photo || 'Photo/fahim.png';
-                            datatable.row.add([
-                                '<div class="text-center"><img src="' + photo + '" class="rounded-circle border" style="width: 44px; height: 44px; object-fit: cover;" onerror="this.src=\'Photo/fahim.png\'" /></div>',
-                                '<strong>' + m.full_name + '</strong><br><small class="text-muted">' + (m.profession || '') + '</small>',
-                                '<span class="font-weight-bold text-primary">' + (m.student_id || m.roll_no) + '</span>',
-                                m.department,
-                                '<span class="badge badge-session">' + m.session + '</span>',
-                                '<span class="badge badge-upazila">' + m.upazila + '</span>',
-                                '<span class="badge badge-blood">' + (m.blood_group || 'N/A') + '</span>',
-                                '<button class="btn btn-outline-info btn-sm" onclick="alert(\'নাম: ' + m.full_name + '\\nমোবাইল: ' + m.contact_number + '\\nইমেইল: ' + m.email + '\\nঠিকানা: ' + m.present_address + '\')"><i class="fas fa-eye mr-1"></i> বিবরণ</button>'
-                            ]).draw(false);
+                        var mId = String(m.id || m.student_id);
+                        if (deletedIds.indexOf(mId) === -1) {
+                            var effectiveStatus = overrides[mId] || m.status;
+                            if (effectiveStatus === 'Active') {
+                                var photo = m.profile_photo || 'Photo/fahim.png';
+                                datatable.row.add([
+                                    '<div class="text-center"><img src="' + photo + '" class="rounded-circle border" style="width: 44px; height: 44px; object-fit: cover;" onerror="this.src=\'Photo/fahim.png\'" /></div>',
+                                    '<strong>' + m.full_name + '</strong><br><small class="text-muted">' + (m.profession || '') + '</small>',
+                                    '<span class="font-weight-bold text-primary">' + (m.student_id || m.roll_no) + '</span>',
+                                    m.department,
+                                    '<span class="badge badge-session">' + m.session + '</span>',
+                                    '<span class="badge badge-upazila">' + m.upazila + '</span>',
+                                    '<span class="badge badge-blood">' + (m.blood_group || 'N/A') + '</span>',
+                                    '<button class="btn btn-outline-info btn-sm" onclick="alert(\'নাম: ' + m.full_name + '\\nমোবাইল: ' + m.contact_number + '\\nইমেইল: ' + m.email + '\\nঠিকানা: ' + m.present_address + '\')"><i class="fas fa-eye mr-1"></i> বিবরণ</button>'
+                                ]).draw(false);
+                            }
                         }
                     });
                 }
@@ -845,8 +322,8 @@
                         </p>
                         <div class="pt-2 border-top border-secondary">
                             
-                                <a class="btn btn-warning btn-sm font-weight-bold btn-block" href="membermanagement.html">
-                                    <i class="fas fa-user-shield mr-1"></i> অ্যাডমিন ড্যাশবোর্ড
+                                <a id="LinkButton2" class="btn btn-outline-light btn-sm btn-block" href="adminlogin.html">
+                                    <i class="fas fa-lock mr-1"></i> অ্যাডমিন লগইন
                                 </a>
                             
                         </div>

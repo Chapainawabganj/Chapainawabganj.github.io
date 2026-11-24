@@ -143,8 +143,13 @@
                                         <% }); %>
                                     <% } else { %>
                                         <tr>
-                                            <td colspan="8" class="text-center py-4 text-muted">
-                                                কোনো শিক্ষার্থী বা সদস্যের তথ্য পাওয়া যায়নি।
+                                            <td colspan="8" class="text-center py-5 text-muted">
+                                                <i class="fas fa-user-graduate fa-3x mb-3 text-secondary d-block"></i>
+                                                <h5>বর্তমানে কোনো শিক্ষার্থীর তথ্য তালিকাভুক্ত নেই।</h5>
+                                                <p class="small">চাঁপাইনবাবগঞ্জ জেলা সমিতির নতুন সদস্য হিসেবে আজই আপনার নাম ও তথ্য নিবন্ধন করুন।</p>
+                                                <a href="/registration.aspx" class="btn btn-emerald btn-sm px-4 font-weight-bold shadow-sm">
+                                                    <i class="fas fa-user-plus mr-1"></i> সদস্য নিবন্ধন ফরম
+                                                </a>
                                             </td>
                                         </tr>
                                     <% } %>
@@ -164,27 +169,42 @@
 
 <script>
     $(document).ready(function() {
-        var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io');
+        var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.pathname.endsWith('.html');
         if (isStatic) {
+            var deletedIds = [];
+            try {
+                var delRaw = localStorage.getItem('chapainawabganj_deleted_ids');
+                if (delRaw) deletedIds = JSON.parse(delRaw);
+            } catch(e) {}
+
+            var overrides = {};
+            try {
+                var ovRaw = localStorage.getItem('chapainawabganj_status_overrides');
+                if (ovRaw) overrides = JSON.parse(ovRaw);
+            } catch(e) {}
+
             try {
                 var raw = localStorage.getItem('chapainawabganj_local_members');
                 if (raw) {
                     var local = JSON.parse(raw);
                     var datatable = $('.datatable').DataTable();
                     local.forEach(function(m) {
-                        // only show if active in directory
-                        if (m.status === 'Active') {
-                            var photo = m.profile_photo || 'Photo/fahim.png';
-                            datatable.row.add([
-                                '<div class="text-center"><img src="' + photo + '" class="rounded-circle border" style="width: 44px; height: 44px; object-fit: cover;" onerror="this.src=\'Photo/fahim.png\'" /></div>',
-                                '<strong>' + m.full_name + '</strong><br><small class="text-muted">' + (m.profession || '') + '</small>',
-                                '<span class="font-weight-bold text-primary">' + (m.student_id || m.roll_no) + '</span>',
-                                m.department,
-                                '<span class="badge badge-session">' + m.session + '</span>',
-                                '<span class="badge badge-upazila">' + m.upazila + '</span>',
-                                '<span class="badge badge-blood">' + (m.blood_group || 'N/A') + '</span>',
-                                '<button class="btn btn-outline-info btn-sm" onclick="alert(\'নাম: ' + m.full_name + '\\nমোবাইল: ' + m.contact_number + '\\nইমেইল: ' + m.email + '\\nঠিকানা: ' + m.present_address + '\')"><i class="fas fa-eye mr-1"></i> বিবরণ</button>'
-                            ]).draw(false);
+                        var mId = String(m.id || m.student_id);
+                        if (deletedIds.indexOf(mId) === -1) {
+                            var effectiveStatus = overrides[mId] || m.status;
+                            if (effectiveStatus === 'Active') {
+                                var photo = m.profile_photo || 'Photo/fahim.png';
+                                datatable.row.add([
+                                    '<div class="text-center"><img src="' + photo + '" class="rounded-circle border" style="width: 44px; height: 44px; object-fit: cover;" onerror="this.src=\'Photo/fahim.png\'" /></div>',
+                                    '<strong>' + m.full_name + '</strong><br><small class="text-muted">' + (m.profession || '') + '</small>',
+                                    '<span class="font-weight-bold text-primary">' + (m.student_id || m.roll_no) + '</span>',
+                                    m.department,
+                                    '<span class="badge badge-session">' + m.session + '</span>',
+                                    '<span class="badge badge-upazila">' + m.upazila + '</span>',
+                                    '<span class="badge badge-blood">' + (m.blood_group || 'N/A') + '</span>',
+                                    '<button class="btn btn-outline-info btn-sm" onclick="alert(\'নাম: ' + m.full_name + '\\nমোবাইল: ' + m.contact_number + '\\nইমেইল: ' + m.email + '\\nঠিকানা: ' + m.present_address + '\')"><i class="fas fa-eye mr-1"></i> বিবরণ</button>'
+                                ]).draw(false);
+                            }
                         }
                     });
                 }

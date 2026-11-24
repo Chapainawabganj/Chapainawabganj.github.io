@@ -44,15 +44,15 @@ fs.writeFileSync(path.join(DOCS_DIR, '.nojekyll'), '');
 function transformForGitHubPages(html) {
   return html
     // Transform asset URLs from absolute to relative
-    .replace(/(src|href)=["']\/CSS\//g, '$1="CSS/')
-    .replace(/(src|href)=["']\/Photo\//g, '$1="Photo/')
-    .replace(/(src|href)=["']\/ProfilePhoto\//g, '$1="ProfilePhoto/')
-    .replace(/(src|href)=["']\/DownloadDoc\//g, '$1="DownloadDoc/')
-    .replace(/(src|href)=["']\/NoticeDoc\//g, '$1="NoticeDoc/')
-    .replace(/(src|href)=["']\/uploads\//g, '$1="uploads/')
-    .replace(/(src|href)=["']\/CertPhoto\//g, '$1="CertPhoto/')
-    .replace(/(src|href)=["']\/PaymentPhoto\//g, '$1="PaymentPhoto/')
-    .replace(/(src|href)=["']\/DataTables\//g, '$1="DataTables/')
+    .replace(/(src|href)=(["'])\/CSS\//g, '$1=$2CSS/')
+    .replace(/(src|href)=(["'])\/Photo\//g, '$1=$2Photo/')
+    .replace(/(src|href)=(["'])\/ProfilePhoto\//g, '$1=$2ProfilePhoto/')
+    .replace(/(src|href)=(["'])\/DownloadDoc\//g, '$1=$2DownloadDoc/')
+    .replace(/(src|href)=(["'])\/NoticeDoc\//g, '$1=$2NoticeDoc/')
+    .replace(/(src|href)=(["'])\/uploads\//g, '$1=$2uploads/')
+    .replace(/(src|href)=(["'])\/CertPhoto\//g, '$1=$2CertPhoto/')
+    .replace(/(src|href)=(["'])\/PaymentPhoto\//g, '$1=$2PaymentPhoto/')
+    .replace(/(src|href)=(["'])\/DataTables\//g, '$1=$2DataTables/')
 
     // Specific anchors & queries
     .replace(/(href|action)=["']\/student_support\.aspx#mess["']/g, '$1="student_support.html#mess"')
@@ -84,19 +84,8 @@ function transformForGitHubPages(html) {
 
 // Default data for views
 const defaultData = {
-  currentUser: {
-    id: 'std_1',
-    student_id: '200101',
-    full_name: 'Md. Al-Emran',
-    email: 'emran.cse@s.pust.ac.bd',
-    profile_photo: 'Photo/fahim.png',
-    status: 'Active'
-  },
-  currentAdmin: {
-    username: 'admin',
-    name: 'Central Administrator',
-    role: 'admin'
-  },
+  currentUser: null,
+  currentAdmin: null,
   success_msg: null,
   error_msg: null
 };
@@ -193,16 +182,16 @@ const pages = [
       title: 'নিবন্ধন নিশ্চিতকরণ',
       activePage: 'registration',
       student: db.getActiveMembers()[0] || {
-        full_name: 'Md. Al-Emran',
-        department: 'Computer Science and Engineering (CSE)',
-        session: '2020-21',
-        student_id: '200101',
-        upazila: 'Shibganj',
-        blood_group: 'B+',
-        contact_number: '+8801712345678',
-        email: 'emran.cse@s.pust.ac.bd',
-        present_address: 'Bangabandhu Sheikh Mujibur Rahman Hall, Room 412, PUST',
-        is_blood_donor: true,
+        full_name: 'নিবন্ধিত শিক্ষার্থী',
+        department: 'বিভাগ (Department)',
+        session: 'সেশন',
+        student_id: 'Student ID',
+        upazila: 'চাঁপাইনবাবগঞ্জ',
+        blood_group: 'N/A',
+        contact_number: '+8801XXXXXXXXX',
+        email: 'student@s.pust.ac.bd',
+        present_address: 'পাবনা ক্যাম্পাস / হল / মেস',
+        is_blood_donor: false,
         profile_photo: 'Photo/fahim.png',
         created_at: new Date().toISOString()
       }
@@ -230,7 +219,7 @@ const pages = [
     data: {
       title: 'আমার প্রোফাইল ও আইডি কার্ড',
       activePage: 'profile',
-      member: db.getActiveMembers()[0]
+      member: null
     }
   },
   {
@@ -239,6 +228,7 @@ const pages = [
     data: {
       title: 'শিক্ষার্থী ভেরিফিকেশন ও ব্যবস্থাপনা',
       activePage: 'admin',
+      currentAdmin: { username: 'admin', name: 'Central Administrator', role: 'admin' },
       members: db.getMembers()
     }
   },
@@ -248,8 +238,9 @@ const pages = [
     data: {
       title: 'শিক্ষার্থী তথ্য আপডেট',
       activePage: 'admin',
-      member: db.getActiveMembers()[0],
-      searchedRoll: '200101'
+      currentAdmin: { username: 'admin', name: 'Central Administrator', role: 'admin' },
+      member: null,
+      searchedRoll: ''
     }
   },
   {
@@ -258,6 +249,7 @@ const pages = [
     data: {
       title: 'নোটিশ ও ডকুমেন্টস ব্যবস্থাপনা',
       activePage: 'admin',
+      currentAdmin: { username: 'admin', name: 'Central Administrator', role: 'admin' },
       notices: db.getNotices(),
       downloads: db.getDownloads()
     }

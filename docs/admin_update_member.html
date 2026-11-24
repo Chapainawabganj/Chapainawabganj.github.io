@@ -36,7 +36,7 @@
         <div class="container">
             <div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
                 <div class="mr-md-3 mb-2 mb-md-0">
-                    <img id="ImgLogo" src="Photo/me.png" alt="PUST Logo" style="height: 85px; width: auto;" onerror="this.src="Photo/me.png'">
+                    <img id="ImgLogo" src="Photo/me.png" alt="PUST Logo" style="height: 85px; width: auto;" onerror="this.src='Photo/me.png'">
                 </div>
                 <div class="text-center text-md-left">
                     <h2 class="brand-title-bn mb-0">পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়স্থ চাঁপাইনবাবগঞ্জ জেলা সমিতি</h2>
@@ -112,18 +112,8 @@
 
                     
                         <li class="nav-item d-flex align-items-center">
-                            <img src="Photo/fahim.png" class="rounded-circle mr-2 border border-success" alt="Md. Al-Emran" height="38" width="38" style="object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
-                            <div class="dropdown">
-                                <a class="nav-link dropdown-toggle font-weight-bold text-dark px-1" href="#" id="userDropdown" role="button" data-toggle="dropdown">
-                                    Md.
-                                    <span class="badge badge-success ml-1">সক্রিয়</span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right shadow border-0">
-                                    <a class="dropdown-item" href="my_profile.html"><i class="fas fa-id-card text-primary mr-2"></i> প্রোফাইল ও ডিজিটাল আইডি</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="index.html"><i class="fas fa-sign-out-alt mr-2"></i> লগআউট</a>
-                                </div>
-                            </div>
+                            <span class="badge badge-danger p-2 mr-2"><i class="fas fa-user-shield"></i> অ্যাডমিনিস্ট্রেটর</span>
+                            <a class="btn btn-outline-danger btn-sm" href="index.html">লগআউট</a>
                         </li>
                     
                 </ul>
@@ -154,7 +144,7 @@
                             <div class="row justify-content-center">
                                 <div class="col-md-6">
                                     <div class="input-group input-group-lg shadow-sm">
-                                        <input type="text" name="roll" value="200101" class="form-control" placeholder="স্টুডেন্ট আইডি বা রোল লিখুন (যেমন: 200101)" required />
+                                        <input type="text" name="roll" value="" class="form-control" placeholder="স্টুডেন্ট আইডি বা রোল লিখুন (যেমন: 200101)" required />
                                         <div class="input-group-append">
                                             <button class="btn btn-emerald font-weight-bold px-4" type="submit">
                                                 <i class="fas fa-search mr-1"></i> সার্চ করুন
@@ -166,102 +156,10 @@
                         </form>
 
                         
-                            <!-- Student Edit Form -->
-                            <form action="admin_update_member.html" method="POST">
-                                <input type="hidden" name="roll_no" value="240199" />
-
-                                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center border-bottom pb-2 mb-3">
-                                    <h5 class="font-weight-bold text-primary m-0">
-                                        <i class="fas fa-user-graduate mr-2"></i> এডিট করা হচ্ছে: Md. Sajjad Hossain (আইডি: 240199)
-                                    </h5>
-                                    <div class="mt-2 mt-md-0">
-                                        <label class="font-weight-bold mr-2 mb-0">ভেরিফিকেশন স্ট্যাটাস:</label>
-                                        <select name="status" class="form-control d-inline-block w-auto font-weight-bold">
-                                            <option value="Active" selected>সক্রিয় (Active)</option>
-                                            <option value="Pending" >পেন্ডিং ভেরিফিকেশন (Pending)</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label class="font-weight-bold">পূর্ণ নাম (Full Name)</label>
-                                        <input name="full_name" type="text" class="form-control" value="Md. Sajjad Hossain" required />
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label class="font-weight-bold">রক্তের গ্রুপ</label>
-                                        <input name="blood_group" type="text" class="form-control" value="O+" />
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label class="font-weight-bold">উপজেলা</label>
-                                        <select name="upazila" class="form-control">
-                                            <option value="Chapainawabganj Sadar" >চাঁপাইনবাবগঞ্জ সদর</option>
-                                            <option value="Shibganj" selected>শিবগঞ্জ</option>
-                                            <option value="Gomostapur" >গোমস্তাপুর</option>
-                                            <option value="Nachole" >নাচোল</option>
-                                            <option value="Bholahat" >ভোলাহাট</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label class="font-weight-bold">ইমেইল ঠিকানা</label>
-                                        <input name="email" type="email" class="form-control" value="sajjad.cse@s.pust.ac.bd" required />
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label class="font-weight-bold">মোবাইল নম্বর</label>
-                                        <input name="contact_number" type="text" class="form-control" value="+8801799887766" required />
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label class="font-weight-bold">বিভাগ (Department)</label>
-                                        <input name="department" type="text" class="form-control" value="Computer Science and Engineering (CSE)" required />
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label class="font-weight-bold">সেশন (Session)</label>
-                                        <input name="session" type="text" class="form-control" value="2024-25" required />
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label class="font-weight-bold">বর্তমান পেশা / অবস্থান</label>
-                                        <input name="profession" type="text" class="form-control" value="Current Student" />
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label class="font-weight-bold">পাবনায় হল / মেস</label>
-                                        <input name="hall" type="text" class="form-control" value="Bangabandhu Hall" />
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label class="font-weight-bold">বর্তমান পূর্ণ ঠিকানা</label>
-                                        <input name="present_address" type="text" class="form-control" value="Bangabandhu Hall, Room 102, PUST" />
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <div class="form-check mt-2">
-                                            <input class="form-check-input" type="checkbox" name="is_blood_donor" id="adminDonorCheck" value="yes" checked />
-                                            <label class="form-check-label font-weight-bold" for="adminDonorCheck">
-                                                জরুরি রক্তদাতা নেটওয়ার্কে অন্তর্ভুক্ত
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label class="font-weight-bold text-danger">পাসওয়ার্ড রিসেট (ঐচ্ছিক)</label>
-                                        <input name="new_password" type="text" class="form-control" placeholder="নতুন পাসওয়ার্ড দিন (অপরিবর্তিত রাখতে খালি রাখুন)" />
-                                    </div>
-                                </div>
-
-                                <div class="text-center mt-4">
-                                    <button type="submit" class="btn btn-emerald btn-lg px-5 shadow font-weight-bold">
-                                        <i class="fas fa-save mr-2"></i> তথ্য সংরক্ষণ ও আপডেট করুন
-                                    </button>
-                                </div>
-                            </form>
+                            <div class="text-center text-muted my-5">
+                                <i class="fas fa-search fa-3x mb-3 text-secondary"></i>
+                                <h5>উপরে শিক্ষার্থীর স্টুডেন্ট আইডি বা রোল লিখে সার্চ করুন এবং তথ্য সংশোধন করুন।</h5>
+                            </div>
                         
 
                     </div>

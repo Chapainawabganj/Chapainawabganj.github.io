@@ -1,5 +1,29 @@
 <%- include('partials/header', { title: 'আমার প্রোফাইল ও আইডি কার্ড (User Panel)', activePage: 'my_profile' }) %>
 
+<% 
+const currentMember = (typeof member !== 'undefined' && member) ? member : {
+    id: '',
+    full_name: 'শিক্ষার্থী প্রোফাইল',
+    gender: 'Male',
+    profile_photo: 'Photo/fahim.png',
+    department: 'বিভাগ নির্বাচন করা হয়নি',
+    session: '2024-25',
+    student_id: 'N/A',
+    roll_no: 'N/A',
+    contact_number: 'N/A',
+    email: 'N/A',
+    upazila: 'চাঁপাইনবাবগঞ্জ সদর',
+    profession: 'Current Student',
+    hall: 'N/A',
+    present_address: 'N/A',
+    blood_group: 'N/A',
+    is_blood_donor: false,
+    status: 'Pending',
+    membership_id: 'CP-PUST-XXXX'
+};
+var member = currentMember;
+%>
+
 <section class="content my-4">
     <div class="container-fluid px-lg-5">
         <div class="row">

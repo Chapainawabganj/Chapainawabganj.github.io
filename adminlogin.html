@@ -36,7 +36,7 @@
         <div class="container">
             <div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
                 <div class="mr-md-3 mb-2 mb-md-0">
-                    <img id="ImgLogo" src="Photo/me.png" alt="PUST Logo" style="height: 85px; width: auto;" onerror="this.src="Photo/me.png'">
+                    <img id="ImgLogo" src="Photo/me.png" alt="PUST Logo" style="height: 85px; width: auto;" onerror="this.src='Photo/me.png'">
                 </div>
                 <div class="text-center text-md-left">
                     <h2 class="brand-title-bn mb-0">পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়স্থ চাঁপাইনবাবগঞ্জ জেলা সমিতি</h2>
@@ -87,19 +87,6 @@
                     </li>
 
                     
-                    <li class="nav-item dropdown ml-lg-2">
-                        <a class="nav-link dropdown-toggle text-danger font-weight-bold" href="#" id="adminMenuDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-shield-alt"></i> অ্যাডমিন প্যানেল
-                        </a>
-                        <div class="dropdown-menu shadow border-0" aria-labelledby="adminMenuDropdown">
-                            <a class="dropdown-item" href="membermanagement.html"><i class="fas fa-user-check text-success mr-2"></i> শিক্ষার্থী ভেরিফিকেশন ও তালিকা</a>
-                            <a class="dropdown-item" href="admin_update_member.html"><i class="fas fa-user-edit text-primary mr-2"></i> তথ্য সংশোধন ও আপডেট</a>
-                            <a class="dropdown-item" href="admin_content.html"><i class="fas fa-bullhorn text-info mr-2"></i> নোটিশ ও ফাইল আপলোড</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="index.html"><i class="fas fa-sign-out-alt mr-2"></i> অ্যাডমিন লগআউট</a>
-                        </div>
-                    </li>
-                    
                 </ul>
 
                 <!-- Action Button & User Area -->
@@ -111,19 +98,10 @@
                     </li>
 
                     
-                        <li class="nav-item d-flex align-items-center">
-                            <img src="Photo/fahim.png" class="rounded-circle mr-2 border border-success" alt="Md. Al-Emran" height="38" width="38" style="object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
-                            <div class="dropdown">
-                                <a class="nav-link dropdown-toggle font-weight-bold text-dark px-1" href="#" id="userDropdown" role="button" data-toggle="dropdown">
-                                    Md.
-                                    <span class="badge badge-success ml-1">সক্রিয়</span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right shadow border-0">
-                                    <a class="dropdown-item" href="my_profile.html"><i class="fas fa-id-card text-primary mr-2"></i> প্রোফাইল ও ডিজিটাল আইডি</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="index.html"><i class="fas fa-sign-out-alt mr-2"></i> লগআউট</a>
-                                </div>
-                            </div>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-primary btn-sm px-3 font-weight-bold" href="login.html">
+                                <i class="fas fa-sign-in-alt mr-1"></i> লগইন
+                            </a>
                         </li>
                     
                 </ul>
@@ -145,9 +123,13 @@
                 <div class="card shadow border-0 rounded-lg" style="overflow: hidden;">
 
                     <div class="p-4 text-white text-center" style="background: linear-gradient(135deg, var(--navy-blue) 0%, #0f172a 100%);">
-                        <img src="Photo/adminuser.png" alt="Admin" class="rounded-circle border p-1 shadow-sm mb-2" style="width: 75px; height: 75px; object-fit: cover;" onerror="this.src="Photo/fahim.png'" />
-                        <h4 class="font-weight-bold mb-0">কেন্দ্রীয় অ্যাডমিন পোর্টাল</h4>
-                        <small class="text-light">পাবিপ্রবি চাঁপাইনবাবগঞ্জ জেলা সমিতি</small>
+                        <div class="admin-avatar-container mb-3 d-inline-block">
+                            <img src="Photo/admin_crest.png" alt="Admin Emblem" class="rounded-circle shadow" style="width: 82px; height: 82px; object-fit: contain; padding: 2px; border: 3px solid #f59e0b; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4) !important;" onerror="this.onerror=null; this.src='Photo/adminuser.png';" />
+                        </div>
+                        <h4 class="font-weight-bold mb-1" style="letter-spacing: 0.5px;">কেন্দ্রীয় অ্যাডমিন পোর্টাল</h4>
+                        <small class="text-warning font-weight-bold">
+                            <i class="fas fa-shield-alt mr-1"></i> পাবিপ্রবি চাঁপাইনবাবগঞ্জ জেলা সমিতি
+                        </small>
                     </div>
 
                     <div class="card-body p-4 p-md-5">
@@ -253,8 +235,8 @@ $('form').on('submit', function(e) {
                         </p>
                         <div class="pt-2 border-top border-secondary">
                             
-                                <a class="btn btn-warning btn-sm font-weight-bold btn-block" href="membermanagement.html">
-                                    <i class="fas fa-user-shield mr-1"></i> অ্যাডমিন ড্যাশবোর্ড
+                                <a id="LinkButton2" class="btn btn-outline-light btn-sm btn-block" href="adminlogin.html">
+                                    <i class="fas fa-lock mr-1"></i> অ্যাডমিন লগইন
                                 </a>
                             
                         </div>

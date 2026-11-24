@@ -27,25 +27,25 @@
                 <div class="row my-4">
                     <div class="col-md-3 col-6 mb-2">
                         <div class="card p-3 text-center rounded border-0 text-white shadow-sm" style="background-color: var(--navy-blue);">
-                            <h3 class="font-weight-bold m-0"><%= members.length %></h3>
+                            <h3 class="font-weight-bold m-0" id="statTotal"><%= members.length %></h3>
                             <small>মোট নিবন্ধিত শিক্ষার্থী</small>
                         </div>
                     </div>
                     <div class="col-md-3 col-6 mb-2">
                         <div class="card bg-success text-white p-3 text-center rounded border-0 shadow-sm">
-                            <h3 class="font-weight-bold m-0"><%= members.filter(m => m.status === 'Active').length %></h3>
+                            <h3 class="font-weight-bold m-0" id="statActive"><%= members.filter(m => m.status === 'Active').length %></h3>
                             <small>সক্রিয় ও অনুমোদিত (Active)</small>
                         </div>
                     </div>
                     <div class="col-md-3 col-6 mb-2">
                         <div class="card bg-warning text-dark p-3 text-center rounded border-0 shadow-sm">
-                            <h3 class="font-weight-bold m-0"><%= members.filter(m => m.status === 'Pending').length %></h3>
+                            <h3 class="font-weight-bold m-0" id="statPending"><%= members.filter(m => m.status === 'Pending').length %></h3>
                             <small>ভেরিফিকেশন অপেক্ষমান (Pending)</small>
                         </div>
                     </div>
                     <div class="col-md-3 col-6 mb-2">
                         <div class="card bg-danger text-white p-3 text-center rounded border-0 shadow-sm">
-                            <h3 class="font-weight-bold m-0"><%= members.filter(m => m.is_blood_donor).length %></h3>
+                            <h3 class="font-weight-bold m-0" id="statDonors"><%= members.filter(m => m.is_blood_donor).length %></h3>
                             <small>জরুরি রক্তদাতা (Blood Donors)</small>
                         </div>
                     </div>
@@ -167,26 +167,75 @@
 <script>
     var serverMembers = <%- JSON.stringify(members) %>;
 
+    function getDeletedIds() {
+        try {
+            var raw = localStorage.getItem('chapainawabganj_deleted_ids');
+            return raw ? JSON.parse(raw) : [];
+        } catch(e) {
+            return [];
+        }
+    }
+
+    function getStatusOverrides() {
+        try {
+            var raw = localStorage.getItem('chapainawabganj_status_overrides');
+            return raw ? JSON.parse(raw) : {};
+        } catch(e) {
+            return {};
+        }
+    }
+
     function getAllCurrentMembers() {
+        var deletedIds = getDeletedIds();
+        var overrides = getStatusOverrides();
         var local = [];
         try {
             var raw = localStorage.getItem('chapainawabganj_local_members');
             if (raw) local = JSON.parse(raw);
         } catch(e) {}
+
         var map = {};
+        // Process serverMembers first
         serverMembers.forEach(function(m) {
-            var key = m.student_id || m.roll_no || m.id;
-            map[key] = m;
+            var key = String(m.id || m.student_id || m.roll_no);
+            if (deletedIds.indexOf(key) === -1 && deletedIds.indexOf(String(m.id)) === -1 && deletedIds.indexOf(String(m.student_id)) === -1) {
+                var copy = Object.assign({}, m);
+                if (overrides[key] || overrides[String(m.id)]) {
+                    copy.status = overrides[key] || overrides[String(m.id)];
+                }
+                map[key] = copy;
+            }
         });
+
+        // Local registrations override or add
         local.forEach(function(m) {
-            var key = m.student_id || m.roll_no || m.id;
-            map[key] = m;
+            var key = String(m.id || m.student_id || m.roll_no);
+            if (deletedIds.indexOf(key) === -1 && deletedIds.indexOf(String(m.id)) === -1 && deletedIds.indexOf(String(m.student_id)) === -1) {
+                var copy = Object.assign({}, m);
+                if (overrides[key] || overrides[String(m.id)]) {
+                    copy.status = overrides[key] || overrides[String(m.id)];
+                }
+                map[key] = copy;
+            }
         });
+
         var list = [];
         for (var k in map) {
             if (map.hasOwnProperty(k)) list.push(map[k]);
         }
         return list;
+    }
+
+    function updateStatsCounters() {
+        var all = getAllCurrentMembers();
+        var activeCount = all.filter(function(m) { return m.status === 'Active'; }).length;
+        var pendingCount = all.filter(function(m) { return m.status === 'Pending'; }).length;
+        var donorCount = all.filter(function(m) { return m.is_blood_donor; }).length;
+
+        $('#statTotal').text(all.length);
+        $('#statActive').text(activeCount);
+        $('#statPending').text(pendingCount);
+        $('#statDonors').text(donorCount);
     }
 
     function exportToCSV(members) {
@@ -261,7 +310,7 @@
     }
 
     $(document).ready(function() {
-        var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io');
+        var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.pathname.endsWith('.html');
 
         $('#btnExportCSV').on('click', function(e) {
             if (isStatic) {
@@ -277,24 +326,162 @@
             }
         });
 
+        function handleToggleStatus(form) {
+            var id = String(form.find('input[name="id"]').val());
+            var raw = localStorage.getItem('chapainawabganj_local_members');
+            var list = raw ? JSON.parse(raw) : [];
+            var found = false;
+            for (var i = 0; i < list.length; i++) {
+                if (String(list[i].id) === id || String(list[i].student_id) === id) {
+                    list[i].status = list[i].status === 'Active' ? 'Pending' : 'Active';
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                localStorage.setItem('chapainawabganj_local_members', JSON.stringify(list));
+            } else {
+                var overrides = getStatusOverrides();
+                var curr = overrides[id] || 'Pending';
+                serverMembers.forEach(function(sm) {
+                    if (String(sm.id) === id || String(sm.student_id) === id) {
+                        curr = overrides[id] || sm.status;
+                    }
+                });
+                overrides[id] = curr === 'Active' ? 'Pending' : 'Active';
+                localStorage.setItem('chapainawabganj_status_overrides', JSON.stringify(overrides));
+            }
+
+            alert('শিক্ষার্থীর ভেরিফিকেশন স্ট্যাটাস সফলভাবে পরিবর্তন করা হয়েছে!');
+            location.reload();
+        }
+
+        function handleDeleteMember(form) {
+            if (!confirm('আপনি কি নিশ্চিত যে এই শিক্ষার্থীর তথ্য ডিলিট করতে চান?')) {
+                return false;
+            }
+            var id = String(form.find('input[name="id"]').val());
+
+            var raw = localStorage.getItem('chapainawabganj_local_members');
+            var list = raw ? JSON.parse(raw) : [];
+            list = list.filter(function(item) {
+                return String(item.id) !== id && String(item.student_id) !== id;
+            });
+            localStorage.setItem('chapainawabganj_local_members', JSON.stringify(list));
+
+            var deletedIds = getDeletedIds();
+            if (deletedIds.indexOf(id) === -1) {
+                deletedIds.push(id);
+            }
+            localStorage.setItem('chapainawabganj_deleted_ids', JSON.stringify(deletedIds));
+
+            alert('শিক্ষার্থীর তথ্য সফলভাবে মুছে ফেলা হয়েছে!');
+            location.reload();
+        }
+
+        // Intercept ALL toggle_status forms (Approve / Pending) on static host
+        $(document).on('submit', 'form[action*="toggle_status"]', function(e) {
+            if (isStatic) {
+                e.preventDefault();
+                e.stopPropagation();
+                handleToggleStatus($(this));
+                return false;
+            }
+        });
+
+        $(document).on('click', 'form[action*="toggle_status"] button', function(e) {
+            if (isStatic) {
+                e.preventDefault();
+                e.stopPropagation();
+                handleToggleStatus($(this).closest('form'));
+                return false;
+            }
+        });
+
+        // Intercept ALL delete_member forms on static host
+        $(document).on('submit', 'form[action*="delete_member"]', function(e) {
+            if (isStatic) {
+                e.preventDefault();
+                e.stopPropagation();
+                handleDeleteMember($(this));
+                return false;
+            }
+        });
+
+        $(document).on('click', 'form[action*="delete_member"] button', function(e) {
+            if (isStatic) {
+                e.preventDefault();
+                e.stopPropagation();
+                handleDeleteMember($(this).closest('form'));
+                return false;
+            }
+        });
+
         if (isStatic) {
+            // Clean out any old mock seed IDs from previous tests
             try {
+                var oldSeedIds = ['std_1', 'std_2', 'std_3', 'std_4', 'std_5', 'std_6', 'std_7', 'std_1795425604943', '200101', '190215', '210512', '160308', '220914', '230405', '140102', '240199'];
+                var rawMem = localStorage.getItem('chapainawabganj_local_members');
+                if (rawMem) {
+                    var curList = JSON.parse(rawMem);
+                    var cleanList = curList.filter(function(item) {
+                        return oldSeedIds.indexOf(String(item.id)) === -1 && oldSeedIds.indexOf(String(item.student_id)) === -1;
+                    });
+                    localStorage.setItem('chapainawabganj_local_members', JSON.stringify(cleanList));
+                }
+            } catch(e) {}
+
+            updateStatsCounters();
+
+            try {
+                var deletedIds = getDeletedIds();
+                var overrides = getStatusOverrides();
+
+                // If table rows are from serverMembers, remove deleted ones or apply overrides
+                $('tbody tr').each(function() {
+                    var toggleForm = $(this).find('form[action*="toggle_status"]');
+                    if (toggleForm.length) {
+                        var rowId = String(toggleForm.find('input[name="id"]').val());
+                        if (deletedIds.indexOf(rowId) !== -1) {
+                            $(this).remove();
+                        } else if (overrides[rowId]) {
+                            var newSt = overrides[rowId];
+                            var statusCell = $(this).find('td:nth-child(7)');
+                            var btn = toggleForm.find('button');
+                            if (newSt === 'Active') {
+                                statusCell.html('<span class="badge badge-success px-2 py-1"><i class="fas fa-check-circle mr-1"></i> সক্রিয় (Active)</span>');
+                                btn.removeClass('btn-success').addClass('btn-warning').attr('title', 'পেন্ডিং করুন').html('<i class="fas fa-pause"></i>');
+                            } else {
+                                statusCell.html('<span class="badge badge-warning px-2 py-1"><i class="fas fa-clock mr-1"></i> ভেরিফিকেশন পেন্ডিং</span>');
+                                btn.removeClass('btn-warning').addClass('btn-success').attr('title', 'ভেরিফাই ও অনুমোদন দিন').html('<i class="fas fa-check"></i> অনুমোদন');
+                            }
+                        }
+                    }
+                });
+
+                // Populate local registrations into DataTables
                 var raw = localStorage.getItem('chapainawabganj_local_members');
                 if (raw) {
                     var local = JSON.parse(raw);
                     var datatable = $('.datatable').DataTable();
                     local.forEach(function(m) {
-                        var exists = false;
-                        serverMembers.forEach(function(sm) {
-                            if (sm.id === m.id || sm.student_id === m.student_id) exists = true;
-                        });
-                        if (!exists) {
+                        var mId = String(m.id || m.student_id);
+                        if (deletedIds.indexOf(mId) === -1) {
                             var photo = m.profile_photo || 'Photo/fahim.png';
-                            var statusBadge = m.status === 'Active' 
+                            var effectiveStatus = overrides[mId] || m.status;
+                            var statusBadge = effectiveStatus === 'Active' 
                                 ? '<span class="badge badge-success px-2 py-1"><i class="fas fa-check-circle mr-1"></i> সক্রিয় (Active)</span>'
                                 : '<span class="badge badge-warning px-2 py-1"><i class="fas fa-clock mr-1"></i> ভেরিফিকেশন পেন্ডিং</span>';
 
-                            var toggleBtn = '<button class="btn btn-sm btn-success font-weight-bold btn-toggle-local" data-id="' + m.id + '" title="অনুমোদন করুন"><i class="fas fa-check"></i></button>';
+                            var toggleBtn = effectiveStatus === 'Active'
+                                ? '<button type="submit" class="btn btn-warning" title="পেন্ডিং করুন"><i class="fas fa-pause"></i></button>'
+                                : '<button type="submit" class="btn btn-success font-weight-bold px-2" title="ভেরিফাই ও অনুমোদন দিন"><i class="fas fa-check"></i> অনুমোদন</button>';
+
+                            var actionHtml = '<div class="btn-group btn-group-sm">' +
+                                '<form action="/admin/toggle_status" method="POST" style="display:inline;"><input type="hidden" name="id" value="' + m.id + '" />' + toggleBtn + '</form>' +
+                                '<a href="admin_update_member.html?roll=' + (m.student_id || m.roll_no) + '" class="btn btn-primary" title="এডিট করুন"><i class="fas fa-edit"></i></a>' +
+                                '<form action="/admin/delete_member" method="POST" style="display:inline;"><input type="hidden" name="id" value="' + m.id + '" /><button type="submit" class="btn btn-danger" title="ডিলিট করুন"><i class="fas fa-trash-alt"></i></button></form>' +
+                                '</div>';
 
                             datatable.row.add([
                                 '<div class="text-center"><img src="' + photo + '" class="rounded-circle border" style="width: 44px; height: 44px; object-fit: cover;" onerror="this.src=\'Photo/fahim.png\'" /></div>',
@@ -304,31 +491,14 @@
                                 '<span class="badge badge-upazila">' + m.upazila + '</span><br><small class="text-muted">' + m.profession + '</small>',
                                 '<span class="badge badge-blood">' + (m.blood_group || 'N/A') + '</span>',
                                 statusBadge,
-                                '<div class="btn-group btn-group-sm">' + toggleBtn + '</div>'
+                                actionHtml
                             ]).draw(false);
                         }
                     });
                 }
             } catch(e) {
-                console.warn('Error loading local registrations:', e);
+                console.warn('Error syncing member data:', e);
             }
-
-            $(document).on('click', '.btn-toggle-local', function(e) {
-                e.preventDefault();
-                var id = $(this).data('id');
-                var raw = localStorage.getItem('chapainawabganj_local_members');
-                if (raw) {
-                    var list = JSON.parse(raw);
-                    list.forEach(function(item) {
-                        if (item.id === id) {
-                            item.status = item.status === 'Active' ? 'Pending' : 'Active';
-                        }
-                    });
-                    localStorage.setItem('chapainawabganj_local_members', JSON.stringify(list));
-                    alert('স্ট্যাটাস পরিবর্তন সফল হয়েছে!');
-                    location.reload();
-                }
-            });
         }
     });
 </script>
