@@ -68,24 +68,36 @@ $('form').on('submit', function(e) {
     if (isStatic) {
         e.preventDefault();
         var id = ($('input[name="email"]').val() || '').trim();
-        
+        var enteredPass = ($('input[name="password"]').val() || '').trim();
+
         var localRaw = localStorage.getItem('chapainawabganj_local_members');
         var list = localRaw ? JSON.parse(localRaw) : [];
         var found = null;
         for (var i = 0; i < list.length; i++) {
             var m = list[i];
-            if (String(m.student_id) === id || String(m.roll_no) === id || String(m.email).toLowerCase() === id.toLowerCase() || String(m.contact_number) === id) {
+            if (String(m.student_id) === id || String(m.roll_no) === id ||
+                String(m.email).toLowerCase() === id.toLowerCase() ||
+                String(m.contact_number) === id) {
                 found = m;
                 break;
             }
         }
-        
+
+        if (!found) {
+            alert('কোনো অ্যাকাউন্ট পাওয়া যায়নি! অনুগ্রহ করে সঠিক স্টুডেন্ট আইডি, ইমেইল বা মোবাইল নম্বর দিন।');
+            return;
+        }
+
+        // Password check: if student has stored password, verify it; otherwise allow login
+        if (found.password && found.password.length > 0 && found.password !== enteredPass) {
+            alert('পাসওয়ার্ড সঠিক নয়! অনুগ্রহ করে আপনার সঠিক পাসওয়ার্ড দিন।');
+            return;
+        }
+
         sessionStorage.setItem('chapainawabganj_user_logged_in', id);
         localStorage.setItem('chapainawabganj_user_logged_in', id);
-        if (found) {
-            sessionStorage.setItem('chapainawabganj_current_user', JSON.stringify(found));
-            localStorage.setItem('chapainawabganj_current_user', JSON.stringify(found));
-        }
+        sessionStorage.setItem('chapainawabganj_current_user', JSON.stringify(found));
+        localStorage.setItem('chapainawabganj_current_user', JSON.stringify(found));
         window.location.href = 'my_profile.html';
     }
 });

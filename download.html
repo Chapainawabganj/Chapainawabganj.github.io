@@ -273,7 +273,7 @@
                         </div>
 
                         <div class="table-responsive mt-4">
-                            <table class="table table-hover table-bordered datatable" style="width: 100%;">
+                            <table class="table table-hover table-bordered datatable" id="downloadMainTable" style="width: 100%;">
                                 <thead style="background-color: var(--navy-blue); color: white;">
                                     <tr>
                                         <th class="align-middle">ডকুমেন্ট ও ফাইলের নাম</th>
@@ -281,7 +281,7 @@
                                         <th class="text-center align-middle" style="width: 180px;">ডাউনলোড অ্যাকশন</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="downloadTableBody">
                                     
                                         
                                             <tr>
@@ -326,6 +326,33 @@
         </div>
     </div>
 </section>
+
+<script>
+$(document).ready(function() {
+    // Load downloads from localStorage (added by admin via admin_content page)
+    var stored = [];
+    try {
+        var raw = localStorage.getItem('chapainawabganj_downloads');
+        if (raw) stored = JSON.parse(raw);
+        if (!Array.isArray(stored)) stored = [];
+    } catch(e) { stored = []; }
+
+    if (stored.length > 0) {
+        $('#noDownloadRow').remove();
+        stored.forEach(function(d) {
+            var fileLink = d.file_url
+                ? '<a href="' + d.file_url + '" class="btn btn-emerald btn-sm px-3 shadow-sm font-weight-bold" target="_blank" download><i class="fas fa-download mr-1"></i> ডাউনলোড করুন</a>'
+                : '<span class="text-muted small">ফাইল নেই</span>';
+            var row = '<tr>'
+                + '<td class="align-middle font-weight-bold text-dark"><i class="fas fa-file-pdf text-danger mr-2"></i>' + $('<span>').text(d.title).html() + '</td>'
+                + '<td class="text-center align-middle text-muted">' + (d.date || 'N/A') + '</td>'
+                + '<td class="text-center align-middle">' + fileLink + '</td>'
+                + '</tr>';
+            $('#downloadTableBody').prepend(row);
+        });
+    }
+});
+</script>
 
     <!-- Footer -->
     <footer class="mt-5">

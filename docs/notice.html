@@ -269,11 +269,11 @@
                     <div class="card-body p-4 p-md-5">
 
                         <div class="page-title-banner" style="background: linear-gradient(135deg, var(--navy-blue) 0%, #0284c7 100%);">
-                            <i class="fas fa-bullhorn mr-2"></i> অফিসিয়াল নোটিশ বোর্ড - চাঁপাইনবাবগঞ্জ জেলা সমিতি, পাবিপ্রবি
+                            <i class="fas fa-bullhorn mr-2"></i> অফিসিয়াল নোটিশ বোর্ড - চাঁপাইনবাবগঞ্জ জেলা সমিতি, পাবিপ্রবি
                         </div>
 
                         <div class="table-responsive mt-4">
-                            <table class="table table-hover table-bordered datatable" style="width: 100%;">
+                            <table class="table table-hover table-bordered datatable" id="noticeMainTable" style="width: 100%;">
                                 <thead style="background-color: var(--navy-blue); color: white;">
                                     <tr>
                                         <th class="align-middle">নোটিশের শিরোনাম</th>
@@ -281,7 +281,7 @@
                                         <th class="text-center align-middle" style="width: 180px;">নোটিশ ফাইল</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="noticeTableBody">
                                     
                                         
                                             <tr>
@@ -326,6 +326,36 @@
         </div>
     </div>
 </section>
+
+<script>
+$(document).ready(function() {
+    // Load notices from localStorage (added by admin via admin_content page)
+    var stored = [];
+    try {
+        var raw = localStorage.getItem('chapainawabganj_notices');
+        if (raw) stored = JSON.parse(raw);
+        if (!Array.isArray(stored)) stored = [];
+    } catch(e) { stored = []; }
+
+    if (stored.length > 0) {
+        // Remove static "no notice" row if present
+        $('#noNoticeRow').remove();
+        // Also clear any build-time static rows that may show stale data
+        // (keep them, localStorage notices are prepended at top)
+        stored.forEach(function(n) {
+            var fileLink = n.file_url
+                ? '<a href="' + n.file_url + '" class="btn btn-outline-danger btn-sm px-3 shadow-sm font-weight-bold" target="_blank"><i class="fas fa-file-pdf mr-1"></i> নোটিশ দেখুন</a>'
+                : '<span class="text-muted small">ফাইল নেই</span>';
+            var row = '<tr>'
+                + '<td class="align-middle font-weight-bold text-dark"><i class="fas fa-bell text-warning mr-2"></i>' + $('<span>').text(n.title).html() + '</td>'
+                + '<td class="text-center align-middle text-muted">' + (n.date || 'N/A') + '</td>'
+                + '<td class="text-center align-middle">' + fileLink + '</td>'
+                + '</tr>';
+            $('#noticeTableBody').prepend(row);
+        });
+    }
+});
+</script>
 
     <!-- Footer -->
     <footer class="mt-5">

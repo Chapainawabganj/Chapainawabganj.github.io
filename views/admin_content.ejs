@@ -18,14 +18,15 @@
                             </div>
                             <div class="card-body">
                                 <h6 class="font-weight-bold text-dark border-bottom pb-2">নতুন নোটিশ প্রকাশ করুন</h6>
-                                <form action="/admin/add_notice" method="POST" enctype="multipart/form-data" class="mb-4">
+                                <form id="addNoticeForm" class="mb-4">
                                     <div class="form-group">
                                         <label class="font-weight-bold">নোটিশের শিরোনাম</label>
-                                        <input type="text" name="title" class="form-control" placeholder="যেমন: বার্ষিক সাধারণ সভা ও নবীনবরণ নোটিশ" required />
+                                        <input type="text" name="notice_title" id="noticeTitle" class="form-control" placeholder="যেমন: বার্ষিক সাধারণ সভা ও নবীনবরণ নোটিশ" required />
                                     </div>
                                     <div class="form-group">
-                                        <label class="font-weight-bold">সংযুক্তি ফাইল (PDF / ছবি)</label>
-                                        <input type="file" name="notice_file" class="form-control-file" required />
+                                        <label class="font-weight-bold">নোটিশ ফাইল লিঙ্ক (URL/Google Drive)</label>
+                                        <input type="url" name="notice_url" id="noticeUrl" class="form-control" placeholder="https://drive.google.com/file/... অথবা যেকোনো লিঙ্ক" />
+                                        <small class="text-muted">Google Drive লিঙ্ক, PDF URL, বা যেকোনো ডাউনলোডযোগ্য লিঙ্ক দিন</small>
                                     </div>
                                     <button type="submit" class="btn btn-danger btn-sm font-weight-bold">
                                         <i class="fas fa-upload mr-1"></i> নোটিশ প্রকাশ করুন
@@ -42,19 +43,8 @@
                                                 <th style="width: 80px;" class="text-center">মুছুন</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <% notices.forEach(function(n) { %>
-                                                <tr>
-                                                    <td><a href="/<%= n.file_url %>" target="_blank"><%= n.title %></a></td>
-                                                    <td><small class="text-muted"><%= n.date %></small></td>
-                                                    <td class="text-center">
-                                                        <form action="/admin/delete_notice" method="POST" onsubmit="return confirm('এই নোটিশটি মুছে ফেলতে চান?');">
-                                                            <input type="hidden" name="id" value="<%= n.id %>" />
-                                                            <button type="submit" class="btn btn-outline-danger btn-sm py-0 px-2"><i class="fas fa-trash"></i></button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            <% }); %>
+                                        <tbody id="storedNoticesBody">
+                                            <tr><td colspan="3" class="text-center text-muted">লোড হচ্ছে...</td></tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -65,22 +55,23 @@
                     <!-- Manage Downloads Section -->
                     <div class="col-lg-6 mb-4">
                         <div class="card border h-100 shadow-sm">
-                            <div class="card-header bg-navy text-white font-weight-bold" style="background-color: var(--navy-blue);">
+                            <div class="card-header font-weight-bold text-white" style="background-color: var(--navy-blue);">
                                 <i class="fas fa-download mr-2"></i> ডাউনলোড ফাইল ব্যবস্থাপনা (Downloads)
                             </div>
                             <div class="card-body">
                                 <h6 class="font-weight-bold text-dark border-bottom pb-2">নতুন ফরম বা ফাইল আপলোড করুন</h6>
-                                <form action="/admin/add_download" method="POST" enctype="multipart/form-data" class="mb-4">
+                                <form id="addDownloadForm" class="mb-4">
                                     <div class="form-group">
                                         <label class="font-weight-bold">ডকুমেন্টের শিরোনাম</label>
-                                        <input type="text" name="title" class="form-control" placeholder="যেমন: জেলা সমিতি গঠনতন্ত্র ও সদস্য নির্দেশিকা" required />
+                                        <input type="text" name="download_title" id="downloadTitle" class="form-control" placeholder="যেমন: জেলা সমিতি গঠনতন্ত্র ও সদস্য নির্দেশিকা" required />
                                     </div>
                                     <div class="form-group">
-                                        <label class="font-weight-bold">ফাইল (PDF, DOCX, ছবি)</label>
-                                        <input type="file" name="download_file" class="form-control-file" required />
+                                        <label class="font-weight-bold">ফাইল লিঙ্ক (URL/Google Drive)</label>
+                                        <input type="url" name="download_url" id="downloadUrl" class="form-control" placeholder="https://drive.google.com/file/... অথবা যেকোনো লিঙ্ক" />
+                                        <small class="text-muted">Google Drive, PDF URL বা যেকোনো ডাউনলোডযোগ্য লিঙ্ক দিন</small>
                                     </div>
                                     <button type="submit" class="btn btn-primary btn-sm font-weight-bold">
-                                        <i class="fas fa-upload mr-1"></i> ফাইল আপলোড করুন
+                                        <i class="fas fa-upload mr-1"></i> ফাইল সংরক্ষণ করুন
                                     </button>
                                 </form>
 
@@ -94,19 +85,8 @@
                                                 <th style="width: 80px;" class="text-center">মুছুন</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <% downloads.forEach(function(d) { %>
-                                                <tr>
-                                                    <td><a href="/<%= d.file_url %>" target="_blank"><%= d.title %></a></td>
-                                                    <td><small class="text-muted"><%= d.date %></small></td>
-                                                    <td class="text-center">
-                                                        <form action="/admin/delete_download" method="POST" onsubmit="return confirm('এই ফাইলটি মুছে ফেলতে চান?');">
-                                                            <input type="hidden" name="id" value="<%= d.id %>" />
-                                                            <button type="submit" class="btn btn-outline-danger btn-sm py-0 px-2"><i class="fas fa-trash"></i></button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            <% }); %>
+                                        <tbody id="storedDownloadsBody">
+                                            <tr><td colspan="3" class="text-center text-muted">লোড হচ্ছে...</td></tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -117,7 +97,7 @@
 
             </div>
             <div class="card-footer bg-white border-0 pb-4 pl-4">
-                <a href="/membermanagement.aspx" class="text-primary font-weight-bold">&lt;&lt; সদস্য ব্যবস্থাপনায় ফিরে যান</a>
+                <a href="membermanagement.html" class="text-primary font-weight-bold">&lt;&lt; সদস্য ব্যবস্থাপনায় ফিরে যান</a>
             </div>
         </div>
     </div>
@@ -125,34 +105,110 @@
 
 <script>
 $(document).ready(function() {
-    var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.pathname.endsWith('.html');
-    if (isStatic) {
-        $('form[action*="add_notice"]').on('submit', function(e) {
-            e.preventDefault();
-            var title = ($('input[name="title"]').val() || '').trim();
-            alert('নোটিশ "' + title + '" সফলভাবে তৈরি ও সংরক্ষণ করা হয়েছে!');
-            location.reload();
-        });
 
-        $('form[action*="delete_notice"]').on('submit', function(e) {
-            e.preventDefault();
-            $(this).closest('tr').remove();
-            alert('নোটিশটি সফলভাবে মুছে ফেলা হয়েছে!');
-        });
+    // ---- Helper: get current date in Bengali ----
+    function getToday() {
+        return new Date().toLocaleDateString('bn-BD', {year:'numeric', month:'long', day:'numeric'});
+    }
 
-        $('form[action*="add_download"]').on('submit', function(e) {
-            e.preventDefault();
-            var title = ($('form[action*="add_download"] input[name="title"]').val() || '').trim();
-            alert('ডাউনলোড ফাইল "' + title + '" সফলভাবে সংরক্ষিত হয়েছে!');
-            location.reload();
-        });
-
-        $('form[action*="delete_download"]').on('submit', function(e) {
-            e.preventDefault();
-            $(this).closest('tr').remove();
-            alert('ফাইলটি সফলভাবে মুছে ফেলা হয়েছে!');
+    // ---- Render stored notices ----
+    function renderNotices() {
+        var list = [];
+        try { var r = localStorage.getItem('chapainawabganj_notices'); if(r) list = JSON.parse(r); } catch(e){}
+        var tbody = $('#storedNoticesBody');
+        tbody.empty();
+        if (!list.length) {
+            tbody.append('<tr><td colspan="3" class="text-center text-muted py-3">কোনো নোটিশ প্রকাশিত হয়নি।</td></tr>');
+            return;
+        }
+        list.forEach(function(n, idx) {
+            var titleHtml = $('<span>').text(n.title).html();
+            var link = n.file_url ? '<a href="'+n.file_url+'" target="_blank" class="text-primary font-weight-bold">'+titleHtml+'</a>' : '<span>'+titleHtml+'</span>';
+            tbody.append('<tr><td>'+link+'</td><td><small class="text-muted">'+n.date+'</small></td>'
+                +'<td class="text-center"><button class="btn btn-outline-danger btn-sm py-0 px-2 btn-del-notice" data-idx="'+idx+'"><i class="fas fa-trash"></i></button></td></tr>');
         });
     }
+
+    // ---- Render stored downloads ----
+    function renderDownloads() {
+        var list = [];
+        try { var r = localStorage.getItem('chapainawabganj_downloads'); if(r) list = JSON.parse(r); } catch(e){}
+        var tbody = $('#storedDownloadsBody');
+        tbody.empty();
+        if (!list.length) {
+            tbody.append('<tr><td colspan="3" class="text-center text-muted py-3">কোনো ডাউনলোড ফাইল নেই।</td></tr>');
+            return;
+        }
+        list.forEach(function(d, idx) {
+            var titleHtml = $('<span>').text(d.title).html();
+            var link = d.file_url ? '<a href="'+d.file_url+'" target="_blank" class="text-primary font-weight-bold">'+titleHtml+'</a>' : '<span>'+titleHtml+'</span>';
+            tbody.append('<tr><td>'+link+'</td><td><small class="text-muted">'+d.date+'</small></td>'
+                +'<td class="text-center"><button class="btn btn-outline-danger btn-sm py-0 px-2 btn-del-download" data-idx="'+idx+'"><i class="fas fa-trash"></i></button></td></tr>');
+        });
+    }
+
+    renderNotices();
+    renderDownloads();
+
+    // ---- Add Notice ----
+    $('#addNoticeForm').on('submit', function(e) {
+        e.preventDefault();
+        var title = ($('#noticeTitle').val() || '').trim();
+        var file_url = ($('#noticeUrl').val() || '').trim();
+        if (!title) { alert('নোটিশের শিরোনাম দিন!'); return; }
+        var list = [];
+        try { var r = localStorage.getItem('chapainawabganj_notices'); if(r) list = JSON.parse(r); } catch(e){}
+        list.unshift({ id: 'n_' + Date.now(), title: title, date: getToday(), file_url: file_url });
+        localStorage.setItem('chapainawabganj_notices', JSON.stringify(list));
+        if(window.addActivityLog) window.addActivityLog('নতুন নোটিশ প্রকাশ: ' + title, 'admin');
+        $('#noticeTitle').val('');
+        $('#noticeUrl').val('');
+        renderNotices();
+        alert('নোটিশ "' + title + '" সফলভাবে প্রকাশ করা হয়েছে! এখন notice.html পেজে দেখা যাবে।');
+    });
+
+    // ---- Add Download ----
+    $('#addDownloadForm').on('submit', function(e) {
+        e.preventDefault();
+        var title = ($('#downloadTitle').val() || '').trim();
+        var file_url = ($('#downloadUrl').val() || '').trim();
+        if (!title) { alert('ডকুমেন্টের শিরোনাম দিন!'); return; }
+        var list = [];
+        try { var r = localStorage.getItem('chapainawabganj_downloads'); if(r) list = JSON.parse(r); } catch(e){}
+        list.unshift({ id: 'd_' + Date.now(), title: title, date: getToday(), file_url: file_url });
+        localStorage.setItem('chapainawabganj_downloads', JSON.stringify(list));
+        if(window.addActivityLog) window.addActivityLog('নতুন ডাউনলোড ফাইল যোগ: ' + title, 'admin');
+        $('#downloadTitle').val('');
+        $('#downloadUrl').val('');
+        renderDownloads();
+        alert('ফাইল "' + title + '" সফলভাবে সংরক্ষিত হয়েছে! এখন download.html পেজে দেখা যাবে।');
+    });
+
+    // ---- Delete Notice ----
+    $(document).on('click', '.btn-del-notice', function() {
+        var idx = parseInt($(this).data('idx'));
+        if (!confirm('এই নোটিশটি মুছে ফেলতে চান?')) return;
+        var list = [];
+        try { var r = localStorage.getItem('chapainawabganj_notices'); if(r) list = JSON.parse(r); } catch(e){}
+        list.splice(idx, 1);
+        localStorage.setItem('chapainawabganj_notices', JSON.stringify(list));
+        if(window.addActivityLog) window.addActivityLog('নোটিশ মুছে ফেলা হয়েছে।', 'admin');
+        renderNotices();
+        alert('নোটিশটি সফলভাবে মুছে ফেলা হয়েছে!');
+    });
+
+    // ---- Delete Download ----
+    $(document).on('click', '.btn-del-download', function() {
+        var idx = parseInt($(this).data('idx'));
+        if (!confirm('এই ফাইলটি মুছে ফেলতে চান?')) return;
+        var list = [];
+        try { var r = localStorage.getItem('chapainawabganj_downloads'); if(r) list = JSON.parse(r); } catch(e){}
+        list.splice(idx, 1);
+        localStorage.setItem('chapainawabganj_downloads', JSON.stringify(list));
+        if(window.addActivityLog) window.addActivityLog('ডাউনলোড ফাইল মুছে ফেলা হয়েছে।', 'admin');
+        renderDownloads();
+        alert('ফাইলটি সফলভাবে মুছে ফেলা হয়েছে!');
+    });
 });
 </script>
 
