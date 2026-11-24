@@ -140,6 +140,12 @@
             var userAreaContainer = document.getElementById('userAreaContainer');
 
             if (isAdmin) {
+                var adminRole = sessionStorage.getItem('chapainawabganj_admin_role') || localStorage.getItem('chapainawabganj_admin_role') || 'Super Admin';
+                var isMod = (adminRole === 'Moderator' || adminRole === 'Content Editor' || adminRole === 'Coordinator');
+                var roleTitle = isMod ? (adminRole === 'Content Editor' ? 'এডিটর' : 'মডারেটর') : 'অ্যাডমিনিস্ট্রেটর';
+                var roleBadgeClass = isMod ? 'badge-success' : 'badge-danger';
+                var roleIcon = isMod ? 'fa-user-check' : 'fa-user-shield';
+
                 // Ensure Admin Dropdown is present in main navigation menu
                 if (!document.getElementById('adminNavDropdown') && mainNavList) {
                     var adminLi = document.createElement('li');
@@ -154,7 +160,9 @@
                         '<div class="dropdown-menu shadow border-0" aria-labelledby="adminMenuDropdown">' +
                             '<a class="dropdown-item" href="' + linkPrefix + 'membermanagement' + ext + '"><i class="fas fa-user-check text-success mr-2"></i> শিক্ষার্থী ভেরিফিকেশন ও তালিকা</a>' +
                             '<a class="dropdown-item" href="' + linkPrefix + 'admin_update_member' + ext + '"><i class="fas fa-user-edit text-primary mr-2"></i> তথ্য সংশোধন ও আপডেট</a>' +
+                            '<a class="dropdown-item" href="' + linkPrefix + 'admin_page_settings' + ext + '"><i class="fas fa-sliders-h text-warning mr-2"></i> ওয়েবসাইট পেজ তথ্য এডিটর</a>' +
                             '<a class="dropdown-item" href="' + linkPrefix + 'admin_content' + ext + '"><i class="fas fa-bullhorn text-info mr-2"></i> নোটিশ ও ফাইল আপলোড</a>' +
+                            '<a class="dropdown-item" href="' + linkPrefix + 'admin_roles' + ext + '"><i class="fas fa-user-shield text-danger mr-2"></i> মডারেটর ও রোল ব্যবস্থাপনা</a>' +
                             '<div class="dropdown-divider"></div>' +
                             '<a class="dropdown-item text-danger btn-logout-action" href="#" style="cursor:pointer;"><i class="fas fa-sign-out-alt mr-2"></i> অ্যাডমিন লগআউট</a>' +
                         '</div>';
@@ -167,7 +175,7 @@
                     var ext = isStatic ? '.html' : '.aspx';
                     userAreaContainer.innerHTML = 
                         '<div class="d-flex align-items-center">' +
-                            '<a href="' + linkPrefix + 'membermanagement' + ext + '" class="badge badge-danger p-2 mr-2 text-white text-decoration-none shadow-sm"><i class="fas fa-user-shield mr-1"></i> অ্যাডমিনিস্ট্রেটর</a>' +
+                            '<a href="' + linkPrefix + 'membermanagement' + ext + '" class="badge ' + roleBadgeClass + ' p-2 mr-2 text-white text-decoration-none shadow-sm"><i class="fas ' + roleIcon + ' mr-1"></i> ' + roleTitle + '</a>' +
                             '<button type="button" class="btn btn-outline-danger btn-sm font-weight-bold btn-logout-action shadow-sm"><i class="fas fa-sign-out-alt mr-1"></i> লগআউট</button>' +
                         '</div>';
                 }
@@ -318,13 +326,44 @@ $('form').on('submit', function(e) {
         e.preventDefault();
         var u = ($('input[name="username"]').val() || '').trim();
         var p = ($('input[name="password"]').val() || '').trim();
-        if ((u.toLowerCase() === 'admin' || u.toLowerCase() === 'chapainawabganj') && 
-            (p === 'admin' || p === 'admin123' || p === 'EsB19832001' || p === 'Chapai@Admin2026')) {
+        var isDefaultAdmin = (u.toLowerCase() === 'admin' || u.toLowerCase() === 'chapainawabganj') && 
+            (p === 'admin' || p === 'admin123' || p === 'EsB19832001' || p === 'Chapai@Admin2026');
+
+        var matchedUser = null;
+        if (!isDefaultAdmin) {
+            try {
+                var rawUsers = localStorage.getItem('chapainawabganj_admin_users');
+                if (rawUsers) {
+                    var usersList = JSON.parse(rawUsers);
+                    for (var i = 0; i < usersList.length; i++) {
+                        var usr = usersList[i];
+                        if (usr.username.toLowerCase() === u.toLowerCase() && usr.password === p) {
+                            matchedUser = usr;
+                            break;
+                        }
+                    }
+                }
+            } catch(e) {}
+        }
+
+        if (isDefaultAdmin || matchedUser) {
+            var role = matchedUser ? matchedUser.role : 'Super Admin';
+            var username = matchedUser ? matchedUser.username : 'admin';
+            var permissions = matchedUser ? matchedUser.permissions : { approve: true, edit: true, delete: true, content: true, roles: true };
+
             sessionStorage.setItem('chapainawabganj_admin_logged_in', 'true');
+            sessionStorage.setItem('chapainawabganj_admin_role', role);
+            sessionStorage.setItem('chapainawabganj_admin_username', username);
+            sessionStorage.setItem('chapainawabganj_admin_permissions', JSON.stringify(permissions));
+
             localStorage.setItem('chapainawabganj_admin_logged_in', 'true');
+            localStorage.setItem('chapainawabganj_admin_role', role);
+            localStorage.setItem('chapainawabganj_admin_username', username);
+            localStorage.setItem('chapainawabganj_admin_permissions', JSON.stringify(permissions));
+
             window.location.href = 'membermanagement.html';
         } else {
-            alert('ভুল অ্যাডমিনিস্ট্রেটর ক্রেডেনশিয়াল! ইউজারনেম: admin এবং সঠিক পাসওয়ার্ড প্রদান করুন।');
+            alert('ভুল অ্যাডমিন বা মডারেটর ক্রেডেনশিয়াল! সঠিক ইউজারনেম ও পাসওয়ার্ড প্রদান করুন।');
         }
     }
 });

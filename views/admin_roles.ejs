@@ -1,0 +1,459 @@
+<%- include('partials/header', { title: 'অ্যাডমিন ও মডারেটর অ্যাক্সেস কন্ট্রোল (Admin & Moderator Roles)', activePage: 'admin_roles' }) %>
+
+<section class="content my-4">
+    <div class="container-fluid px-lg-5">
+        <div class="card shadow border-0">
+            <div class="card-body p-4 p-md-5">
+
+                <div class="page-title-banner" style="background: linear-gradient(135deg, var(--navy-blue) 0%, #0369a1 100%);">
+                    <i class="fas fa-user-shield mr-2"></i> অ্যাডমিন ও মডারেটর অ্যাক্সেস কন্ট্রোল (Admin & Moderator Management)
+                </div>
+
+                <!-- Stats Overview Row -->
+                <div class="row text-white mb-4">
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="card bg-navy p-3 text-center shadow-sm" style="background-color: var(--navy-blue);">
+                            <h6 class="text-uppercase small font-weight-bold">মোট অ্যাডমিন ও মডারেটর</h6>
+                            <h3 class="font-weight-bold m-0" id="statTotalRoles">1</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="card bg-danger p-3 text-center shadow-sm">
+                            <h6 class="text-uppercase small font-weight-bold">সুপার অ্যাডমিনিস্ট্রেটর</h6>
+                            <h3 class="font-weight-bold m-0" id="statSuperAdmins">1</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-emerald p-3 text-center shadow-sm" style="background-color: var(--emerald-green);">
+                            <h6 class="text-uppercase small font-weight-bold">দায়িত্বপ্রাপ্ত মডারেটরগণ</h6>
+                            <h3 class="font-weight-bold m-0" id="statModerators">0</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Left Column: Add New Moderator / Promote Form -->
+                    <div class="col-lg-5 mb-4">
+                        <!-- Tab Navigation for Creation Method -->
+                        <ul class="nav nav-pills mb-3 nav-justified" id="createRoleTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active font-weight-bold" id="new-user-tab" data-toggle="pill" href="#newUserPane" role="tab">
+                                    <i class="fas fa-user-plus mr-1"></i> নতুন মডারেটর যোগ
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link font-weight-bold" id="promote-tab" data-toggle="pill" href="#promotePane" role="tab">
+                                    <i class="fas fa-user-graduate mr-1"></i> সদস্য থেকে নিয়োগ
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content border rounded p-4 bg-light shadow-sm">
+                            <!-- Tab 1: Create New Moderator From Scratch -->
+                            <div class="tab-pane fade show active" id="newUserPane" role="tabpanel">
+                                <h5 class="font-weight-bold text-dark border-bottom pb-2 mb-3">
+                                    <i class="fas fa-id-badge text-primary mr-1"></i> মডারেটরের তথ্য ও রোল নির্ধারণ
+                                </h5>
+                                <form id="formAddModerator">
+                                    <div class="form-group mb-2">
+                                        <label class="font-weight-bold small text-dark">পূর্ণ নাম (Full Name)</label>
+                                        <input type="text" name="full_name" class="form-control form-control-sm" placeholder="যেমন: মো: আবদুল্লাহ আল মামুন" required />
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 form-group mb-2">
+                                            <label class="font-weight-bold small text-dark">ইউজারনেম (Username)</label>
+                                            <input type="text" name="username" class="form-control form-control-sm" placeholder="লগইন ইউজারনেম" required />
+                                        </div>
+                                        <div class="col-md-6 form-group mb-2">
+                                            <label class="font-weight-bold small text-dark">মোবাইল নম্বর</label>
+                                            <input type="text" name="phone" class="form-control form-control-sm" placeholder="যেমন: 01700000000" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 form-group mb-2">
+                                            <label class="font-weight-bold small text-dark">বিভাগ (Dept)</label>
+                                            <input type="text" name="department" class="form-control form-control-sm" placeholder="যেমন: EEE" />
+                                        </div>
+                                        <div class="col-md-6 form-group mb-2">
+                                            <label class="font-weight-bold small text-dark">সেশন (Session)</label>
+                                            <input type="text" name="session" class="form-control form-control-sm" placeholder="যেমন: 2020-21" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-2">
+                                        <label class="font-weight-bold small text-dark">ইমেইল ঠিকানা</label>
+                                        <input type="email" name="email" class="form-control form-control-sm" placeholder="mod@pust.chapai.org" required />
+                                    </div>
+
+                                    <div class="form-group mb-2">
+                                        <label class="font-weight-bold small text-danger">লগইন পাসওয়ার্ড</label>
+                                        <input type="password" name="password" class="form-control form-control-sm" placeholder="কমপক্ষে ৪ অক্ষরের পাসওয়ার্ড" minlength="4" required />
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label class="font-weight-bold small text-dark">ভূমিকা / রোল নির্বাচন (Role)</label>
+                                        <select name="role" class="form-control form-control-sm font-weight-bold text-primary">
+                                            <option value="Moderator" selected>মডারেটর (Moderator) - সদস্য অনুমোদন ও তথ্য আপডেট</option>
+                                            <option value="Super Admin">সুপার অ্যাডমিন (Super Admin) - পূর্ণ নিয়ন্ত্রণ ক্ষমতা</option>
+                                            <option value="Content Editor">কনটেন্ট এডিটর (Editor) - নোটিশ ও পেজ তথ্য এডিটর</option>
+                                            <option value="Coordinator">ছাত্রকল্যাণ সমন্বয়ক (Student Welfare Coordinator)</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Permissions Checkboxes -->
+                                    <div class="p-3 bg-white rounded border mb-3">
+                                        <label class="font-weight-bold small text-dark d-block border-bottom pb-1 mb-2">
+                                            <i class="fas fa-key text-warning mr-1"></i> প্রদত্ত পারমিশনসমূহ (Permissions):
+                                        </label>
+                                        <div class="form-check mb-1">
+                                            <input class="form-check-input" type="checkbox" id="permApprove" name="perm_approve" checked />
+                                            <label class="form-check-label small font-weight-bold" for="permApprove">
+                                                শিক্ষার্থী নিবন্ধন অনুমোদন ও স্ট্যাটাস পরিবর্তন
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-1">
+                                            <input class="form-check-input" type="checkbox" id="permEdit" name="perm_edit" checked />
+                                            <label class="form-check-label small font-weight-bold" for="permEdit">
+                                                শিক্ষার্থীর প্রোফাইল তথ্য সংশোধন ও আপডেট
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-1">
+                                            <input class="form-check-input" type="checkbox" id="permContent" name="perm_content" checked />
+                                            <label class="form-check-label small font-weight-bold" for="permContent">
+                                                ওয়েবসাইট পেজ কনটেন্ট, কমিটি ও নোটিশ এডিট
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-1">
+                                            <input class="form-check-input" type="checkbox" id="permDelete" name="perm_delete" />
+                                            <label class="form-check-label small text-danger font-weight-bold" for="permDelete">
+                                                শিক্ষার্থী তথ্য স্থায়ীভাবে ডিলিট করার ক্ষমতা
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="permRoles" name="perm_roles" />
+                                            <label class="form-check-label small text-danger font-weight-bold" for="permRoles">
+                                                নতুন মডারেটর নিয়োগ ও পারমিশন কন্ট্রোল
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-emerald btn-sm btn-block font-weight-bold shadow-sm py-2">
+                                        <i class="fas fa-check-circle mr-1"></i> মডারেটর অ্যাকাউন্ট তৈরি করুন
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- Tab 2: Promote from Registered Members -->
+                            <div class="tab-pane fade" id="promotePane" role="tabpanel">
+                                <h5 class="font-weight-bold text-dark border-bottom pb-2 mb-3">
+                                    <i class="fas fa-user-check text-success mr-1"></i> নিবন্ধিত শিক্ষার্থী নির্বাচন করুন
+                                </h5>
+                                <form id="formPromoteMember">
+                                    <div class="form-group mb-3">
+                                        <label class="font-weight-bold small text-dark">নিবন্ধিত শিক্ষার্থী তালিকা</label>
+                                        <select id="selectMemberToPromote" class="form-control form-control-sm" required>
+                                            <option value="">-- শিক্ষার্থী নির্বাচন করুন --</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label class="font-weight-bold small text-dark">অ্যাডমিন ইউজারনেম (Login Username)</label>
+                                        <input type="text" id="promoteUsername" class="form-control form-control-sm" placeholder="যেমন: mamun.mod" required />
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label class="font-weight-bold small text-danger">মডারেটর পাসওয়ার্ড</label>
+                                        <input type="password" id="promotePassword" class="form-control form-control-sm" placeholder="লগইন পাসওয়ার্ড নির্ধারণ করুন" minlength="4" required />
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label class="font-weight-bold small text-dark">রোল নির্বাচন (Role)</label>
+                                        <select id="promoteRole" class="form-control form-control-sm font-weight-bold text-primary">
+                                            <option value="Moderator" selected>মডারেটর (Moderator) - অনুমোদন ও তথ্য এডিট</option>
+                                            <option value="Content Editor">কনটেন্ট এডিটর (Editor)</option>
+                                            <option value="Super Admin">সুপার অ্যাডমিন (Super Admin)</option>
+                                        </select>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary btn-sm btn-block font-weight-bold shadow-sm py-2">
+                                        <i class="fas fa-award mr-1"></i> মডারেটরে রূপান্তর করুন
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Current Admins & Moderators Table -->
+                    <div class="col-lg-7 mb-4">
+                        <div class="card border shadow-sm h-100">
+                            <div class="card-header bg-white font-weight-bold d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-users-cog text-primary mr-1"></i> দায়িত্বপ্রাপ্ত অ্যাডমিন ও মডারেটর তালিকা</span>
+                                <span class="badge badge-primary px-2 py-1" id="badgeActiveCount">1 জন সক্রিয়</span>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped table-bordered m-0" id="tableRoles">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="align-middle">নাম ও ইউজারনেম</th>
+                                                <th class="align-middle text-center" style="width: 130px;">রোল (Role)</th>
+                                                <th class="align-middle">পারমিশনস (Permissions)</th>
+                                                <th class="align-middle text-center" style="width: 100px;">অ্যাকশন</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="rolesTableBody">
+                                            <!-- Injected via JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-light small text-muted">
+                                <i class="fas fa-shield-alt text-success mr-1"></i> সুপার অ্যাডমিন বা যেকোনো মডারেটর তাদের ইউজারনেম ও পাসওয়ার্ড দিয়ে <strong>adminlogin.html</strong> পেজ থেকে সরাসরি লগইন করতে পারবেন।
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-footer bg-white border-0 pb-4 pl-4">
+                <a href="/membermanagement.aspx" class="text-primary font-weight-bold">&lt;&lt; সদস্য ব্যবস্থাপনায় ফিরে যান</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+$(document).ready(function() {
+    var defaultRoles = [
+        {
+            id: 'admin_1',
+            username: 'admin',
+            full_name: 'সেন্ট্রাল অ্যাডমিনিস্ট্রেটর',
+            email: 'admin@pust.chapai.org',
+            department: 'Central Administration',
+            session: 'Super Admin',
+            role: 'Super Admin',
+            status: 'Active',
+            permissions: {
+                approve: true,
+                edit: true,
+                delete: true,
+                content: true,
+                roles: true
+            },
+            created_at: '2026-01-01'
+        }
+    ];
+
+    function getAdminUsers() {
+        try {
+            var raw = localStorage.getItem('chapainawabganj_admin_users');
+            if (raw) {
+                var parsed = JSON.parse(raw);
+                if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+            }
+        } catch(e) {}
+        return defaultRoles;
+    }
+
+    function saveAdminUsers(users) {
+        localStorage.setItem('chapainawabganj_admin_users', JSON.stringify(users));
+        renderRolesTable();
+        populatePromoteDropdown();
+    }
+
+    function renderRolesTable() {
+        var users = getAdminUsers();
+        var tbody = $('#rolesTableBody');
+        tbody.empty();
+
+        var superAdminCount = 0;
+        var modCount = 0;
+
+        users.forEach(function(u) {
+            if (u.role === 'Super Admin') superAdminCount++;
+            else modCount++;
+
+            var roleBadgeClass = 'badge-primary';
+            if (u.role === 'Super Admin') roleBadgeClass = 'badge-danger';
+            else if (u.role === 'Moderator') roleBadgeClass = 'badge-success';
+            else if (u.role === 'Content Editor') roleBadgeClass = 'badge-info';
+            else if (u.role === 'Coordinator') roleBadgeClass = 'badge-warning';
+
+            var permBadges = [];
+            if (u.permissions.approve) permBadges.push('<span class="badge badge-light border text-success mr-1 mb-1"><i class="fas fa-check mr-1"></i>অনুমোদন</span>');
+            if (u.permissions.edit) permBadges.push('<span class="badge badge-light border text-primary mr-1 mb-1"><i class="fas fa-edit mr-1"></i>এডিট</span>');
+            if (u.permissions.content) permBadges.push('<span class="badge badge-light border text-info mr-1 mb-1"><i class="fas fa-sliders-h mr-1"></i>কনটেন্ট</span>');
+            if (u.permissions.delete) permBadges.push('<span class="badge badge-light border text-danger mr-1 mb-1"><i class="fas fa-trash-alt mr-1"></i>ডিলিট</span>');
+            if (u.permissions.roles) permBadges.push('<span class="badge badge-light border text-dark mr-1 mb-1"><i class="fas fa-user-shield mr-1"></i>রোল</span>');
+
+            var actionBtn = '';
+            if (u.username === 'admin') {
+                actionBtn = '<span class="badge badge-secondary py-1 px-2">ডিফল্ট অ্যাডমিন</span>';
+            } else {
+                actionBtn = '<div class="btn-group btn-group-sm">' +
+                    '<button class="btn btn-outline-danger btn-delete-role" data-id="' + u.id + '" title="অ্যাক্সেস বাতিল করুন"><i class="fas fa-user-times"></i> মুছুন</button>' +
+                    '</div>';
+            }
+
+            var tr = $('<tr></tr>');
+            tr.html(
+                '<td class="align-middle">' +
+                    '<strong>' + u.full_name + '</strong><br>' +
+                    '<span class="badge badge-secondary mr-1"><i class="fas fa-user mr-1"></i>' + u.username + '</span>' +
+                    '<small class="text-muted">' + (u.department ? u.department + ' (' + u.session + ')' : u.email) + '</small>' +
+                '</td>' +
+                '<td class="align-middle text-center">' +
+                    '<span class="badge ' + roleBadgeClass + ' px-2 py-1 font-weight-bold">' + u.role + '</span>' +
+                '</td>' +
+                '<td class="align-middle">' +
+                    permBadges.join('') +
+                '</td>' +
+                '<td class="align-middle text-center">' +
+                    actionBtn +
+                '</td>'
+            );
+            tbody.append(tr);
+        });
+
+        $('#statTotalRoles').text(users.length);
+        $('#statSuperAdmins').text(superAdminCount);
+        $('#statModerators').text(modCount);
+        $('#badgeActiveCount').text(users.length + ' জন সক্রিয়');
+    }
+
+    function populatePromoteDropdown() {
+        var select = $('#selectMemberToPromote');
+        select.find('option:not(:first)').remove();
+
+        try {
+            var raw = localStorage.getItem('chapainawabganj_local_members');
+            var list = raw ? JSON.parse(raw) : [];
+            list.forEach(function(m) {
+                var roll = m.student_id || m.roll_no;
+                var opt = $('<option></option>').val(m.id || roll).text(m.full_name + ' (' + roll + ' - ' + m.department + ')');
+                opt.data('member', m);
+                select.append(opt);
+            });
+        } catch(e) {}
+    }
+
+    $('#selectMemberToPromote').on('change', function() {
+        var opt = $(this).find('option:selected');
+        var m = opt.data('member');
+        if (m) {
+            var roll = m.student_id || m.roll_no;
+            var suggestedUser = (m.full_name.split(' ')[0].toLowerCase().replace(/[^a-z0-9]/g, '') || 'mod') + '.' + roll;
+            $('#promoteUsername').val(suggestedUser);
+        }
+    });
+
+    // Form 1: Add New Moderator
+    $('#formAddModerator').on('submit', function(e) {
+        e.preventDefault();
+        var username = ($('input[name="username"]').val() || '').trim().toLowerCase();
+        var users = getAdminUsers();
+
+        for (var i = 0; i < users.length; i++) {
+            if (users[i].username.toLowerCase() === username) {
+                alert('এই ইউজারনেমটি ইতিমধ্যে ব্যবহৃত হয়েছে! অনুগ্রহ করে অন্য ইউজারনেম দিন।');
+                return;
+            }
+        }
+
+        var newMod = {
+            id: 'mod_' + Date.now(),
+            username: username,
+            password: $('input[name="password"]').val().trim(),
+            full_name: $('input[name="full_name"]').val().trim(),
+            email: $('input[name="email"]').val().trim(),
+            phone: $('input[name="phone"]').val().trim(),
+            department: $('input[name="department"]').val().trim(),
+            session: $('input[name="session"]').val().trim(),
+            role: $('select[name="role"]').val(),
+            status: 'Active',
+            permissions: {
+                approve: $('#permApprove').is(':checked'),
+                edit: $('#permEdit').is(':checked'),
+                content: $('#permContent').is(':checked'),
+                delete: $('#permDelete').is(':checked'),
+                roles: $('#permRoles').is(':checked')
+            },
+            created_at: new Date().toISOString().split('T')[0]
+        };
+
+        users.push(newMod);
+        saveAdminUsers(users);
+        alert('মডারেটর "' + newMod.full_name + '" সফলভাবে যুক্ত হয়েছেন!\nইউজারনেম: ' + newMod.username);
+        $('#formAddModerator')[0].reset();
+    });
+
+    // Form 2: Promote Member
+    $('#formPromoteMember').on('submit', function(e) {
+        e.preventDefault();
+        var opt = $('#selectMemberToPromote').find('option:selected');
+        var m = opt.data('member');
+        if (!m) {
+            alert('অনুগ্রহ করে একজন শিক্ষার্থী নির্বাচন করুন!');
+            return;
+        }
+
+        var username = ($('#promoteUsername').val() || '').trim().toLowerCase();
+        var users = getAdminUsers();
+
+        for (var i = 0; i < users.length; i++) {
+            if (users[i].username.toLowerCase() === username) {
+                alert('এই ইউজারনেমটি ইতিমধ্যে ব্যবহৃত হয়েছে! অন্য ইউজারনেম দিন।');
+                return;
+            }
+        }
+
+        var newMod = {
+            id: 'mod_' + (m.id || Date.now()),
+            username: username,
+            password: $('#promotePassword').val().trim(),
+            full_name: m.full_name,
+            email: m.email || (username + '@pust.chapai.org'),
+            phone: m.contact_number,
+            department: m.department,
+            session: m.session,
+            role: $('#promoteRole').val(),
+            status: 'Active',
+            permissions: {
+                approve: true,
+                edit: true,
+                content: true,
+                delete: false,
+                roles: false
+            },
+            created_at: new Date().toISOString().split('T')[0]
+        };
+
+        users.push(newMod);
+        saveAdminUsers(users);
+        alert('শিক্ষার্থী "' + m.full_name + '" সফলভাবে ' + newMod.role + ' হিসেবে নিয়োগপ্রাপ্ত হয়েছেন!\nলগইন ইউজারনেম: ' + newMod.username);
+        $('#formPromoteMember')[0].reset();
+    });
+
+    // Delete Role
+    $(document).on('click', '.btn-delete-role', function(e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        if (!confirm('আপনি কি নিশ্চিত যে এই মডারেটরের অ্যাক্সেস বাতিল করতে চান?')) {
+            return;
+        }
+
+        var users = getAdminUsers();
+        users = users.filter(function(u) { return String(u.id) !== String(id); });
+        saveAdminUsers(users);
+        alert('মডারেটরের অ্যাক্সেস সফলভাবে বাতিল করা হয়েছে!');
+    });
+
+    renderRolesTable();
+    populatePromoteDropdown();
+});
+</script>
+
+<%- include('partials/footer') %>

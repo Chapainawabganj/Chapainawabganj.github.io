@@ -75,6 +75,8 @@ function transformForGitHubPages(html) {
     .replace(/(href|action)=["']\/my_profile(\.aspx)?([?#][^"']*)?["']/g, '$1="my_profile.html$3"')
     .replace(/(href|action)=["']\/membermanagement(\.aspx)?([?#][^"']*)?["']/g, '$1="membermanagement.html$3"')
     .replace(/(href|action)=["']\/admin_update_member(\.aspx)?([?#][^"']*)?["']/g, '$1="admin_update_member.html$3"')
+    .replace(/(href|action)=["']\/admin_page_settings(\.aspx)?([?#][^"']*)?["']/g, '$1="admin_page_settings.html$3"')
+    .replace(/(href|action)=["']\/admin_roles(\.aspx)?([?#][^"']*)?["']/g, '$1="admin_roles.html$3"')
     .replace(/(href|action)=["']\/admin_content(\.aspx)?([?#][^"']*)?["']/g, '$1="admin_content.html$3"')
     .replace(/(href|action)=["']\/logout(\.aspx)?["']/g, '$1="index.html"')
 
@@ -252,6 +254,24 @@ const pages = [
       currentAdmin: { username: 'admin', name: 'Central Administrator', role: 'admin' },
       notices: db.getNotices(),
       downloads: db.getDownloads()
+    }
+  },
+  {
+    template: 'admin_page_settings.ejs',
+    output: 'admin_page_settings.html',
+    data: {
+      title: 'ওয়েবসাইট পেজ তথ্য ও কনটেন্ট নিয়ন্ত্রণ',
+      activePage: 'admin_page_settings',
+      currentAdmin: { username: 'admin', name: 'Central Administrator', role: 'admin' }
+    }
+  },
+  {
+    template: 'admin_roles.ejs',
+    output: 'admin_roles.html',
+    data: {
+      title: 'অ্যাডমিন ও মডারেটর অ্যাক্সেস কন্ট্রোল',
+      activePage: 'admin_roles',
+      currentAdmin: { username: 'admin', name: 'Central Administrator', role: 'admin' }
     }
   }
 ];

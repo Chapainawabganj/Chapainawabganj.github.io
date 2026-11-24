@@ -140,6 +140,12 @@
             var userAreaContainer = document.getElementById('userAreaContainer');
 
             if (isAdmin) {
+                var adminRole = sessionStorage.getItem('chapainawabganj_admin_role') || localStorage.getItem('chapainawabganj_admin_role') || 'Super Admin';
+                var isMod = (adminRole === 'Moderator' || adminRole === 'Content Editor' || adminRole === 'Coordinator');
+                var roleTitle = isMod ? (adminRole === 'Content Editor' ? 'এডিটর' : 'মডারেটর') : 'অ্যাডমিনিস্ট্রেটর';
+                var roleBadgeClass = isMod ? 'badge-success' : 'badge-danger';
+                var roleIcon = isMod ? 'fa-user-check' : 'fa-user-shield';
+
                 // Ensure Admin Dropdown is present in main navigation menu
                 if (!document.getElementById('adminNavDropdown') && mainNavList) {
                     var adminLi = document.createElement('li');
@@ -154,7 +160,9 @@
                         '<div class="dropdown-menu shadow border-0" aria-labelledby="adminMenuDropdown">' +
                             '<a class="dropdown-item" href="' + linkPrefix + 'membermanagement' + ext + '"><i class="fas fa-user-check text-success mr-2"></i> শিক্ষার্থী ভেরিফিকেশন ও তালিকা</a>' +
                             '<a class="dropdown-item" href="' + linkPrefix + 'admin_update_member' + ext + '"><i class="fas fa-user-edit text-primary mr-2"></i> তথ্য সংশোধন ও আপডেট</a>' +
+                            '<a class="dropdown-item" href="' + linkPrefix + 'admin_page_settings' + ext + '"><i class="fas fa-sliders-h text-warning mr-2"></i> ওয়েবসাইট পেজ তথ্য এডিটর</a>' +
                             '<a class="dropdown-item" href="' + linkPrefix + 'admin_content' + ext + '"><i class="fas fa-bullhorn text-info mr-2"></i> নোটিশ ও ফাইল আপলোড</a>' +
+                            '<a class="dropdown-item" href="' + linkPrefix + 'admin_roles' + ext + '"><i class="fas fa-user-shield text-danger mr-2"></i> মডারেটর ও রোল ব্যবস্থাপনা</a>' +
                             '<div class="dropdown-divider"></div>' +
                             '<a class="dropdown-item text-danger btn-logout-action" href="#" style="cursor:pointer;"><i class="fas fa-sign-out-alt mr-2"></i> অ্যাডমিন লগআউট</a>' +
                         '</div>';
@@ -167,7 +175,7 @@
                     var ext = isStatic ? '.html' : '.aspx';
                     userAreaContainer.innerHTML = 
                         '<div class="d-flex align-items-center">' +
-                            '<a href="' + linkPrefix + 'membermanagement' + ext + '" class="badge badge-danger p-2 mr-2 text-white text-decoration-none shadow-sm"><i class="fas fa-user-shield mr-1"></i> অ্যাডমিনিস্ট্রেটর</a>' +
+                            '<a href="' + linkPrefix + 'membermanagement' + ext + '" class="badge ' + roleBadgeClass + ' p-2 mr-2 text-white text-decoration-none shadow-sm"><i class="fas ' + roleIcon + ' mr-1"></i> ' + roleTitle + '</a>' +
                             '<button type="button" class="btn btn-outline-danger btn-sm font-weight-bold btn-logout-action shadow-sm"><i class="fas fa-sign-out-alt mr-1"></i> লগআউট</button>' +
                         '</div>';
                 }
@@ -269,11 +277,11 @@
                         </span>
                     </div>
 
-                    <h1 class="font-weight-bold display-4 mb-2" style="font-size: clamp(1.8rem, 4.5vw, 2.9rem); text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
+                    <h1 class="font-weight-bold display-4 mb-2" id="heroTitle" style="font-size: clamp(1.8rem, 4.5vw, 2.9rem); text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
                         পাবিপ্রবি চাঁপাইনবাবগঞ্জ জেলা সমিতি
                     </h1>
                     
-                    <h5 class="font-weight-normal mb-4 text-light" style="font-size: clamp(1rem, 2.5vw, 1.35rem); text-shadow: 0 1px 4px rgba(0,0,0,0.4); max-width: 800px; margin-left: auto; margin-right: auto;">
+                    <h5 class="font-weight-normal mb-4 text-light" id="heroSubtitle" style="font-size: clamp(1rem, 2.5vw, 1.35rem); text-shadow: 0 1px 4px rgba(0,0,0,0.4); max-width: 800px; margin-left: auto; margin-right: auto;">
                         ঐক্য, ভ্রাতৃত্ব ও প্রগতির সেতুবন্ধন &bull; চাঁপাইনবাবগঞ্জের সকল শিক্ষার্থী ও গ্র্যাজুয়েটদের অভিন্ন প্ল্যাটফর্ম
                     </h5>
                     
@@ -298,10 +306,10 @@
     <section class="container text-center my-5">
         <div class="row justify-content-center">
             <div class="col-lg-10">
-                <h3 class="font-weight-bold text-dark mb-3">
+                <h3 class="font-weight-bold text-dark mb-3" id="welcomeHeading">
                     স্বাগতম! পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়স্থ চাঁপাইনবাবগঞ্জ জেলা সমিতিতে
                 </h3>
-                <p class="lead text-muted" style="line-height: 1.8; font-size: 1.15rem;">
+                <p class="lead text-muted" id="welcomeText" style="line-height: 1.8; font-size: 1.15rem;">
                     পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়ে (পাবিপ্রবি) অধ্যয়নরত আম্রকানন ও রেশমের দেশ চাঁপাইনবাবগঞ্জের সকল শিক্ষার্থী এবং প্রাক্তন গ্র্যাজুয়েটদের অভিন্ন প্ল্যাটফর্মে আন্তরিক স্বাগতম। 
                     আমাদের এই সমিতি পাবনা ক্যাম্পাসে চাঁপাইনবাবগঞ্জের শিক্ষার্থীদের পারস্পরিক ঐক্য, মেস ও আবাসন সংকট সমাধান, ভর্তিচ্ছুদের দিকনির্দেশনা, জরুরি রক্তদান এবং ক্যারিয়ার গঠনে একটি সক্রিয় পরিবার হিসেবে নিরলস কাজ করে যাচ্ছে।
                 </p>
@@ -464,6 +472,26 @@
             </div>
         </div>
     </section>
+
+    <script>
+    $(document).ready(function() {
+        var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.pathname.endsWith('.html');
+        if (isStatic) {
+            try {
+                var raw = localStorage.getItem('chapainawabganj_site_settings');
+                if (raw) {
+                    var s = JSON.parse(raw);
+                    if (s.home) {
+                        if (s.home.hero_title) $('#heroTitle').text(s.home.hero_title);
+                        if (s.home.hero_subtitle) $('#heroSubtitle').text(s.home.hero_subtitle);
+                        if (s.home.welcome_heading) $('#welcomeHeading').text(s.home.welcome_heading);
+                        if (s.home.welcome_text) $('#welcomeText').text(s.home.welcome_text);
+                    }
+                }
+            } catch(e) {}
+        }
+    });
+    </script>
 
     <!-- Footer -->
     <footer class="mt-5">

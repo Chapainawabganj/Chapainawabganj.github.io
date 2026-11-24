@@ -140,6 +140,12 @@
             var userAreaContainer = document.getElementById('userAreaContainer');
 
             if (isAdmin) {
+                var adminRole = sessionStorage.getItem('chapainawabganj_admin_role') || localStorage.getItem('chapainawabganj_admin_role') || 'Super Admin';
+                var isMod = (adminRole === 'Moderator' || adminRole === 'Content Editor' || adminRole === 'Coordinator');
+                var roleTitle = isMod ? (adminRole === 'Content Editor' ? 'এডিটর' : 'মডারেটর') : 'অ্যাডমিনিস্ট্রেটর';
+                var roleBadgeClass = isMod ? 'badge-success' : 'badge-danger';
+                var roleIcon = isMod ? 'fa-user-check' : 'fa-user-shield';
+
                 // Ensure Admin Dropdown is present in main navigation menu
                 if (!document.getElementById('adminNavDropdown') && mainNavList) {
                     var adminLi = document.createElement('li');
@@ -154,7 +160,9 @@
                         '<div class="dropdown-menu shadow border-0" aria-labelledby="adminMenuDropdown">' +
                             '<a class="dropdown-item" href="' + linkPrefix + 'membermanagement' + ext + '"><i class="fas fa-user-check text-success mr-2"></i> শিক্ষার্থী ভেরিফিকেশন ও তালিকা</a>' +
                             '<a class="dropdown-item" href="' + linkPrefix + 'admin_update_member' + ext + '"><i class="fas fa-user-edit text-primary mr-2"></i> তথ্য সংশোধন ও আপডেট</a>' +
+                            '<a class="dropdown-item" href="' + linkPrefix + 'admin_page_settings' + ext + '"><i class="fas fa-sliders-h text-warning mr-2"></i> ওয়েবসাইট পেজ তথ্য এডিটর</a>' +
                             '<a class="dropdown-item" href="' + linkPrefix + 'admin_content' + ext + '"><i class="fas fa-bullhorn text-info mr-2"></i> নোটিশ ও ফাইল আপলোড</a>' +
+                            '<a class="dropdown-item" href="' + linkPrefix + 'admin_roles' + ext + '"><i class="fas fa-user-shield text-danger mr-2"></i> মডারেটর ও রোল ব্যবস্থাপনা</a>' +
                             '<div class="dropdown-divider"></div>' +
                             '<a class="dropdown-item text-danger btn-logout-action" href="#" style="cursor:pointer;"><i class="fas fa-sign-out-alt mr-2"></i> অ্যাডমিন লগআউট</a>' +
                         '</div>';
@@ -167,7 +175,7 @@
                     var ext = isStatic ? '.html' : '.aspx';
                     userAreaContainer.innerHTML = 
                         '<div class="d-flex align-items-center">' +
-                            '<a href="' + linkPrefix + 'membermanagement' + ext + '" class="badge badge-danger p-2 mr-2 text-white text-decoration-none shadow-sm"><i class="fas fa-user-shield mr-1"></i> অ্যাডমিনিস্ট্রেটর</a>' +
+                            '<a href="' + linkPrefix + 'membermanagement' + ext + '" class="badge ' + roleBadgeClass + ' p-2 mr-2 text-white text-decoration-none shadow-sm"><i class="fas ' + roleIcon + ' mr-1"></i> ' + roleTitle + '</a>' +
                             '<button type="button" class="btn btn-outline-danger btn-sm font-weight-bold btn-logout-action shadow-sm"><i class="fas fa-sign-out-alt mr-1"></i> লগআউট</button>' +
                         '</div>';
                 }
@@ -265,7 +273,7 @@
                         </div>
 
                         <div class="text-center mb-5">
-                            <h4 class="font-weight-bold text-dark">
+                            <h4 class="font-weight-bold text-dark" id="committeeHeading">
                                 কার্যনির্বাহী পরিষদ ২০২৫-২০২৬
                             </h4>
                             <p class="text-muted">
@@ -273,7 +281,7 @@
                             </p>
                         </div>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center" id="committeeGrid">
                             
                                 <div class="col-md-4 mb-4">
                                     <div class="card h-100 text-center p-4 border shadow-sm feature-box">
@@ -432,6 +440,57 @@
         </div>
     </div>
 </section>
+
+<script>
+$(document).ready(function() {
+    var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.pathname.endsWith('.html');
+    if (isStatic) {
+        var savedSession = localStorage.getItem('chapainawabganj_committee_session');
+        if (savedSession) {
+            $('#committeeHeading').text('কার্যনির্বাহী পরিষদ ' + savedSession);
+        }
+
+        try {
+            var raw = localStorage.getItem('chapainawabganj_committee_data');
+            if (raw) {
+                var list = JSON.parse(raw);
+                if (Array.isArray(list) && list.length > 0) {
+                    var grid = $('#committeeGrid');
+                    grid.empty();
+                    list.forEach(function(m) {
+                        var col = $('<div class="col-md-4 mb-4"></div>');
+                        col.html(
+                            '<div class="card h-100 text-center p-4 border shadow-sm feature-box">' +
+                                '<div class="mb-3">' +
+                                    '<img src="Photo/fahim.png" alt="' + m.name + '" class="rounded-circle border p-1 shadow-sm" style="width: 90px; height: 90px; object-fit: cover;" onerror="this.src=\'Photo/fahim.png\'" />' +
+                                '</div>' +
+                                '<h5 class="font-weight-bold text-dark mb-1">' + m.name + '</h5>' +
+                                '<div class="mb-2">' +
+                                    '<span class="badge badge-emerald text-white font-weight-bold px-3 py-1">' +
+                                        m.role +
+                                    '</span>' +
+                                '</div>' +
+                                '<p class="text-muted small mb-1">' +
+                                    '<strong>বিভাগ:</strong> ' + m.department + ' | <strong>সেশন:</strong> ' + m.session +
+                                '</p>' +
+                                '<p class="text-muted small mb-3">' +
+                                    '<i class="fas fa-map-marker-alt text-danger mr-1"></i> উপজেলা: <strong>' + m.upazila + '</strong>' +
+                                '</p>' +
+                                '<div class="mt-auto">' +
+                                    '<a href="tel:' + m.phone + '" class="btn btn-outline-success btn-sm btn-block font-weight-bold">' +
+                                        '<i class="fas fa-phone mr-1"></i> ' + m.phone +
+                                    '</a>' +
+                                '</div>' +
+                            '</div>'
+                        );
+                        grid.append(col);
+                    });
+                }
+            }
+        } catch(e) {}
+    }
+});
+</script>
 
     <!-- Footer -->
     <footer class="mt-5">

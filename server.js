@@ -589,6 +589,22 @@ app.get(['/admin_content', '/admin_content.aspx'], requireAdmin, (req, res) => {
   });
 });
 
+// Admin Page Settings & Content CMS
+app.get(['/admin_page_settings', '/admin_page_settings.aspx'], requireAdmin, (req, res) => {
+  res.render('admin_page_settings', {
+    title: 'ওয়েবসাইট পেজ তথ্য ও কনটেন্ট নিয়ন্ত্রণ',
+    activePage: 'admin_page_settings'
+  });
+});
+
+// Admin & Moderator Roles Manager
+app.get(['/admin_roles', '/admin_roles.aspx'], requireAdmin, (req, res) => {
+  res.render('admin_roles', {
+    title: 'অ্যাডমিন ও মডারেটর অ্যাক্সেস কন্ট্রোল',
+    activePage: 'admin_roles'
+  });
+});
+
 app.post('/admin/add_notice', requireAdmin, upload.single('notice_file'), (req, res) => {
   const { title } = req.body;
   if (!req.file || !title) {

@@ -65,13 +65,44 @@ $('form').on('submit', function(e) {
         e.preventDefault();
         var u = ($('input[name="username"]').val() || '').trim();
         var p = ($('input[name="password"]').val() || '').trim();
-        if ((u.toLowerCase() === 'admin' || u.toLowerCase() === 'chapainawabganj') && 
-            (p === 'admin' || p === 'admin123' || p === 'EsB19832001' || p === 'Chapai@Admin2026')) {
+        var isDefaultAdmin = (u.toLowerCase() === 'admin' || u.toLowerCase() === 'chapainawabganj') && 
+            (p === 'admin' || p === 'admin123' || p === 'EsB19832001' || p === 'Chapai@Admin2026');
+
+        var matchedUser = null;
+        if (!isDefaultAdmin) {
+            try {
+                var rawUsers = localStorage.getItem('chapainawabganj_admin_users');
+                if (rawUsers) {
+                    var usersList = JSON.parse(rawUsers);
+                    for (var i = 0; i < usersList.length; i++) {
+                        var usr = usersList[i];
+                        if (usr.username.toLowerCase() === u.toLowerCase() && usr.password === p) {
+                            matchedUser = usr;
+                            break;
+                        }
+                    }
+                }
+            } catch(e) {}
+        }
+
+        if (isDefaultAdmin || matchedUser) {
+            var role = matchedUser ? matchedUser.role : 'Super Admin';
+            var username = matchedUser ? matchedUser.username : 'admin';
+            var permissions = matchedUser ? matchedUser.permissions : { approve: true, edit: true, delete: true, content: true, roles: true };
+
             sessionStorage.setItem('chapainawabganj_admin_logged_in', 'true');
+            sessionStorage.setItem('chapainawabganj_admin_role', role);
+            sessionStorage.setItem('chapainawabganj_admin_username', username);
+            sessionStorage.setItem('chapainawabganj_admin_permissions', JSON.stringify(permissions));
+
             localStorage.setItem('chapainawabganj_admin_logged_in', 'true');
+            localStorage.setItem('chapainawabganj_admin_role', role);
+            localStorage.setItem('chapainawabganj_admin_username', username);
+            localStorage.setItem('chapainawabganj_admin_permissions', JSON.stringify(permissions));
+
             window.location.href = 'membermanagement.html';
         } else {
-            alert('ভুল অ্যাডমিনিস্ট্রেটর ক্রেডেনশিয়াল! ইউজারনেম: admin এবং সঠিক পাসওয়ার্ড প্রদান করুন।');
+            alert('ভুল অ্যাডমিন বা মডারেটর ক্রেডেনশিয়াল! সঠিক ইউজারনেম ও পাসওয়ার্ড প্রদান করুন।');
         }
     }
 });
