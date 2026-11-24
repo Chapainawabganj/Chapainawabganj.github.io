@@ -315,6 +315,9 @@
         $('#btnExportCSV').on('click', function(e) {
             if (isStatic) {
                 e.preventDefault();
+                if (window.addActivityLog) {
+                    window.addActivityLog('তথ্য ডাউনলোড', 'সকল রেজিস্টার্ড সদস্য তালিকা CSV ফরম্যাটে ডাউনলোড করা হয়েছে');
+                }
                 exportToCSV(getAllCurrentMembers());
             }
         });
@@ -322,6 +325,9 @@
         $('#btnExportJSON').on('click', function(e) {
             if (isStatic) {
                 e.preventDefault();
+                if (window.addActivityLog) {
+                    window.addActivityLog('তথ্য ব্যাকআপ', 'সকল রেজিস্টার্ড সদস্য তালিকা JSON ফরম্যাটে ব্যাকআপ নেওয়া হয়েছে');
+                }
                 exportToJSON(getAllCurrentMembers());
             }
         });
@@ -331,9 +337,11 @@
             var raw = localStorage.getItem('chapainawabganj_local_members');
             var list = raw ? JSON.parse(raw) : [];
             var found = false;
+            var updatedStatus = 'Active';
             for (var i = 0; i < list.length; i++) {
                 if (String(list[i].id) === id || String(list[i].student_id) === id) {
                     list[i].status = list[i].status === 'Active' ? 'Pending' : 'Active';
+                    updatedStatus = list[i].status;
                     found = true;
                     break;
                 }
@@ -349,7 +357,13 @@
                     }
                 });
                 overrides[id] = curr === 'Active' ? 'Pending' : 'Active';
+                updatedStatus = overrides[id];
                 localStorage.setItem('chapainawabganj_status_overrides', JSON.stringify(overrides));
+            }
+
+            if (window.addActivityLog) {
+                var statusText = updatedStatus === 'Active' ? 'অনুমোদন (সক্রিয়)' : 'পেন্ডিং (স্থগিত)';
+                window.addActivityLog('সদস্য ভেরিফিকেশন পরিবর্তন', 'সদস্য আইডি ' + id + ' এর স্ট্যাটাস ' + statusText + ' করা হয়েছে');
             }
 
             alert('শিক্ষার্থীর ভেরিফিকেশন স্ট্যাটাস সফলভাবে পরিবর্তন করা হয়েছে!');
@@ -374,6 +388,10 @@
                 deletedIds.push(id);
             }
             localStorage.setItem('chapainawabganj_deleted_ids', JSON.stringify(deletedIds));
+
+            if (window.addActivityLog) {
+                window.addActivityLog('সদস্য অপসারণ', 'শিক্ষার্থী আইডি ' + id + ' এর তথ্য ডিলিট করা হয়েছে', 'সতর্কতা');
+            }
 
             alert('শিক্ষার্থীর তথ্য সফলভাবে মুছে ফেলা হয়েছে!');
             location.reload();

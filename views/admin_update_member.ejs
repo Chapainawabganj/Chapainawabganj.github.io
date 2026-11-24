@@ -284,6 +284,11 @@ $(document).ready(function() {
                 localStorage.setItem('chapainawabganj_status_overrides', JSON.stringify(ov));
             } catch(e) {}
 
+            if (window.addActivityLog) {
+                var sName = $('input[name="full_name"]').val();
+                window.addActivityLog('শিক্ষার্থী তথ্য এডিট', 'শিক্ষার্থী ' + sName + ' (আইডি: ' + rollNo + ') এর তথ্য হালনাগাদ করা হয়েছে');
+            }
+
             alert('শিক্ষার্থীর তথ্য সফলভাবে সংরক্ষণ ও আপডেট করা হয়েছে!');
             window.location.href = 'membermanagement.html';
         });

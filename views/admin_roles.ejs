@@ -386,6 +386,9 @@ $(document).ready(function() {
 
         users.push(newMod);
         saveAdminUsers(users);
+        if (window.addActivityLog) {
+            window.addActivityLog('মডারেটর নিয়োগ', newMod.full_name + ' কে ' + newMod.role + ' হিসেবে নিয়োগ দেওয়া হয়েছে (ইউজারনেম: ' + newMod.username + ')');
+        }
         alert('মডারেটর "' + newMod.full_name + '" সফলভাবে যুক্ত হয়েছেন!\nইউজারনেম: ' + newMod.username);
         $('#formAddModerator')[0].reset();
     });
@@ -433,6 +436,9 @@ $(document).ready(function() {
 
         users.push(newMod);
         saveAdminUsers(users);
+        if (window.addActivityLog) {
+            window.addActivityLog('শিক্ষার্থী প্রমোশন', m.full_name + ' কে ' + newMod.role + ' হিসেবে নিয়োগ দেওয়া হয়েছে (ইউজারনেম: ' + newMod.username + ')');
+        }
         alert('শিক্ষার্থী "' + m.full_name + '" সফলভাবে ' + newMod.role + ' হিসেবে নিয়োগপ্রাপ্ত হয়েছেন!\nলগইন ইউজারনেম: ' + newMod.username);
         $('#formPromoteMember')[0].reset();
     });
@@ -448,6 +454,9 @@ $(document).ready(function() {
         var users = getAdminUsers();
         users = users.filter(function(u) { return String(u.id) !== String(id); });
         saveAdminUsers(users);
+        if (window.addActivityLog) {
+            window.addActivityLog('মডারেটর অ্যাক্সেস বাতিল', 'মডারেটর আইডি ' + id + ' এর অ্যাক্সেস প্রত্যাহার করা হয়েছে', 'সতর্কতা');
+        }
         alert('মডারেটরের অ্যাক্সেস সফলভাবে বাতিল করা হয়েছে!');
     });
 

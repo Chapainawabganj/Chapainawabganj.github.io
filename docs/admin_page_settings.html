@@ -317,6 +317,11 @@
                             <i class="fas fa-hands-helping text-danger mr-1"></i> শিক্ষার্থী সহায়তা
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="logs-tab" data-toggle="tab" href="#logsPane" role="tab">
+                            <i class="fas fa-history text-secondary mr-1"></i> অ্যাক্টিভিটি ও অডিট লগ
+                        </a>
+                    </li>
                 </ul>
 
                 <!-- Tab Panes -->
@@ -342,18 +347,18 @@
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label class="font-weight-bold">কেন্দ্রীয় হেল্পলাইন মোবাইল নম্বর</label>
-                                    <input type="text" name="contact_phone" class="form-control" value="+8801712345678" required />
+                                    <input type="text" name="contact_phone" class="form-control" value="01778332062" required />
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label class="font-weight-bold">অফিসিয়াল ইমেইল ঠিকানা</label>
-                                    <input type="email" name="contact_email" class="form-control" value="pust.chapai@gmail.com" required />
+                                    <input type="email" name="contact_email" class="form-control" value="alemranak13@gmail.com" required />
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label class="font-weight-bold">জরুরি রক্তের হটলাইন</label>
-                                    <input type="text" name="blood_hotline" class="form-control" value="+8801712345678" />
+                                    <input type="text" name="blood_hotline" class="form-control" value="01778332062" />
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label class="font-weight-bold">অফিসিয়াল ফেসবুক গ্রুপ বা পেজ লিঙ্ক</label>
@@ -510,6 +515,47 @@
                                 <i class="fas fa-save mr-1"></i> সহায়তা সেবাসমূহ সংরক্ষণ করুন
                             </button>
                         </form>
+                    </div>
+
+                    <!-- Tab 6: Activity & Audit Logs -->
+                    <div class="tab-pane fade" id="logsPane" role="tabpanel">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center border-bottom pb-3 mb-3">
+                            <div>
+                                <h5 class="font-weight-bold text-dark m-0">
+                                    <i class="fas fa-history text-secondary mr-2"></i> অ্যাডমিন ও মডারেটর অ্যাক্টিভিটি হিস্ট্রি / অডিট লগ
+                                </h5>
+                                <small class="text-muted">সকল অ্যাডমিন ও মডারেটরের সম্পাদিত কাজের সময়ভিত্তিক রেকর্ড</small>
+                            </div>
+                            <div class="mt-2 mt-md-0">
+                                <button type="button" class="btn btn-outline-success btn-sm font-weight-bold mr-1" id="btnExportLogsCSV">
+                                    <i class="fas fa-file-csv mr-1"></i> লগ এক্সপোর্ট (CSV)
+                                </button>
+                                <button type="button" class="btn btn-outline-danger btn-sm font-weight-bold mr-1" id="btnClearLogs">
+                                    <i class="fas fa-trash-alt mr-1"></i> লগ মুছুন
+                                </button>
+                                <button type="button" class="btn btn-light btn-sm border" id="btnRefreshLogs">
+                                    <i class="fas fa-sync-alt mr-1"></i> রিফ্রেশ
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover text-center" style="font-size: 13px;">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th style="width: 70px;">আইডি</th>
+                                        <th style="width: 180px;">সময় ও তারিখ</th>
+                                        <th style="width: 150px;">ব্যবহারকারী ও পদবী</th>
+                                        <th style="width: 180px;">অ্যাকশন টাইপ</th>
+                                        <th class="text-left">বিবরণ / বিস্তারিত</th>
+                                        <th style="width: 130px;">স্ট্যাটাস</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="activityLogsTableBody">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                 </div>
@@ -710,17 +756,40 @@ $(document).ready(function() {
     $('#formGeneralSettings').on('submit', function(e) {
         e.preventDefault();
         var current = getSiteSettings() || {};
+        var phone = $('input[name="contact_phone"]').val().trim();
+        var email = $('input[name="contact_email"]').val().trim();
+        var title = $('input[name="site_title"]').val().trim();
+        var tagline = $('input[name="site_tagline"]').val().trim();
+        var hotline = $('input[name="blood_hotline"]').val().trim();
+        var fb = $('input[name="facebook_url"]').val().trim();
+        var address = $('textarea[name="office_address"]').val().trim();
+
         current.general = {
-            site_title: $('input[name="site_title"]').val(),
-            site_tagline: $('input[name="site_tagline"]').val(),
-            contact_phone: $('input[name="contact_phone"]').val(),
-            contact_email: $('input[name="contact_email"]').val(),
-            blood_hotline: $('input[name="blood_hotline"]').val(),
-            facebook_url: $('input[name="facebook_url"]').val(),
-            office_address: $('textarea[name="office_address"]').val()
+            site_title: title,
+            site_tagline: tagline,
+            contact_phone: phone,
+            contact_email: email,
+            blood_hotline: hotline,
+            facebook_url: fb,
+            office_address: address
         };
+        // Also save flat keys for maximum cross-compatibility
+        current.contact_phone = phone;
+        current.contact_email = email;
+        current.samity_name = title;
+        current.samity_tagline = tagline;
+
         localStorage.setItem('chapainawabganj_site_settings', JSON.stringify(current));
-        alert('সাধারণ ও যোগাযোগের তথ্য সফলভাবে সংরক্ষিত হয়েছে!');
+
+        if (window.addActivityLog) {
+            window.addActivityLog('সাধারণ তথ্য পরিবর্তন', 'হেল্পলাইন: ' + phone + ', অফিসিয়াল ইমেইল: ' + email + ' ও যোগাযোগের তথ্য আপডেট করা হয়েছে');
+        }
+        if (window.syncGlobalSiteContent) {
+            window.syncGlobalSiteContent();
+        }
+
+        renderActivityLogsTable();
+        alert('সাধারণ ও যোগাযোগের তথ্য সফলভাবে স্থায়ীভাবে সংরক্ষিত হয়েছে!');
     });
 
     // Save Home Page Settings
@@ -734,6 +803,15 @@ $(document).ready(function() {
             welcome_text: $('textarea[name="welcome_text"]').val()
         };
         localStorage.setItem('chapainawabganj_site_settings', JSON.stringify(current));
+
+        if (window.addActivityLog) {
+            window.addActivityLog('হোম পেজ ব্যানার আপডেট', 'ব্যানার শিরোনাম: ' + current.home.hero_title);
+        }
+        if (window.syncGlobalSiteContent) {
+            window.syncGlobalSiteContent();
+        }
+
+        renderActivityLogsTable();
         alert('হোম পেজ ও ব্যানারের তথ্য সফলভাবে সংরক্ষিত হয়েছে!');
     });
 
@@ -747,6 +825,15 @@ $(document).ready(function() {
             about_objectives: $('textarea[name="about_objectives"]').val()
         };
         localStorage.setItem('chapainawabganj_site_settings', JSON.stringify(current));
+
+        if (window.addActivityLog) {
+            window.addActivityLog('পরিচিতি ও ইতিহাস পরিবর্তন', 'পরিচিতি শিরোনাম: ' + current.about.about_title);
+        }
+        if (window.syncGlobalSiteContent) {
+            window.syncGlobalSiteContent();
+        }
+
+        renderActivityLogsTable();
         alert('পরিচিতি ও ইতিহাসের তথ্য সফলভাবে সংরক্ষিত হয়েছে!');
     });
 
@@ -762,6 +849,12 @@ $(document).ready(function() {
             service_5: $('textarea[name="support_service_5"]').val()
         };
         localStorage.setItem('chapainawabganj_site_settings', JSON.stringify(current));
+
+        if (window.addActivityLog) {
+            window.addActivityLog('শিক্ষার্থী সহায়তা সেবা আপডেট', 'শিক্ষার্থী সহায়তা ৫টি সেবার তথ্য সংরক্ষণ করা হয়েছে');
+        }
+
+        renderActivityLogsTable();
         alert('শিক্ষার্থী সহায়তা সেবাসমূহ সফলভাবে সংরক্ষিত হয়েছে!');
     });
 
@@ -773,6 +866,10 @@ $(document).ready(function() {
         var ses = $('#inputCommitteeSession').val().trim();
         if (ses) {
             localStorage.setItem('chapainawabganj_committee_session', ses);
+            if (window.addActivityLog) {
+                window.addActivityLog('কমিটি সেশন পরিবর্তন', 'কমিটির সেশন হালনাগাদ করা হয়েছে: ' + ses);
+            }
+            renderActivityLogsTable();
             alert('কমিটির মেয়াদ/সেশন "' + ses + '" আপডেট হয়েছে!');
         }
     });
@@ -794,9 +891,15 @@ $(document).ready(function() {
 
         if (editIdx >= 0 && editIdx < list.length) {
             list[editIdx] = memberObj;
+            if (window.addActivityLog) {
+                window.addActivityLog('কমিটি সদস্য এডিট', memberObj.name + ' (' + memberObj.role + ') এর তথ্য পরিবর্তন করা হয়েছে');
+            }
             alert('কমিটি সদস্য "' + memberObj.name + '" এর তথ্য আপডেট হয়েছে!');
         } else {
             list.push(memberObj);
+            if (window.addActivityLog) {
+                window.addActivityLog('নতুন কমিটি সদস্য যোগ', memberObj.name + ' (' + memberObj.role + ') কে কমিটিতে যুক্ত করা হয়েছে');
+            }
             alert('নতুন কমিটি সদস্য "' + memberObj.name + '" যুক্ত করা হয়েছে!');
         }
 
@@ -805,6 +908,7 @@ $(document).ready(function() {
         $('#formCommitteeMemberModal')[0].reset();
         $('#committeeEditIndex').val('-1');
         $('#modalCommitteeTitle').html('<i class="fas fa-user-plus mr-1"></i> নতুন কমিটি সদস্য যোগ করুন');
+        renderActivityLogsTable();
     });
 
     // Click Edit on Committee Member
@@ -833,11 +937,94 @@ $(document).ready(function() {
         if (m && confirm('আপনি কি নিশ্চিত যে ' + m.name + ' কে কমিটি থেকে বাদ দিতে চান?')) {
             list.splice(idx, 1);
             saveCommitteeMembers(list);
+            if (window.addActivityLog) {
+                window.addActivityLog('কমিটি সদস্য অপসারণ', m.name + ' (' + m.role + ') কে কার্যনির্বাহী কমিটি থেকে অপসারণ করা হয়েছে', 'সতর্কতা');
+            }
+            renderActivityLogsTable();
             alert('কমিটি সদস্যকে তালিকা থেকে বাদ দেওয়া হয়েছে!');
         }
     });
 
+    // Activity Logs Table Renderer
+    function renderActivityLogsTable() {
+        var logs = (window.getActivityLogs) ? window.getActivityLogs() : [];
+        var tbody = $('#activityLogsTableBody');
+        tbody.empty();
+
+        if (!logs.length) {
+            tbody.append('<tr><td colspan="6" class="text-muted p-4"><i class="fas fa-info-circle mr-1"></i> এখনো কোনো অ্যাক্টিভিটি লগ পাওয়া যায়নি।</td></tr>');
+            return;
+        }
+
+        logs.forEach(function(l, idx) {
+            var tr = $('<tr></tr>');
+            var roleBadge = (l.role && l.role.includes('মডারেটর')) ? 'badge-success' : 'badge-danger';
+            var statusBadge = (l.status && l.status.includes('সতর্কতা')) ? 'badge-warning text-dark' : 'badge-success';
+            tr.html(
+                '<td class="align-middle font-weight-bold text-secondary">#' + (logs.length - idx) + '</td>' +
+                '<td class="align-middle text-muted small"><i class="far fa-clock mr-1"></i>' + (l.timestamp || '') + '</td>' +
+                '<td class="align-middle"><strong>' + (l.user || 'admin') + '</strong><br><span class="badge ' + roleBadge + ' px-2 py-1 font-weight-bold">' + (l.role || 'অ্যাডমিন') + '</span></td>' +
+                '<td class="align-middle font-weight-bold text-primary">' + (l.action || '') + '</td>' +
+                '<td class="align-middle text-left">' + (l.description || '') + '</td>' +
+                '<td class="align-middle"><span class="badge ' + statusBadge + ' px-2 py-1">' + (l.status || 'সফল (Success)') + '</span></td>'
+            );
+            tbody.append(tr);
+        });
+    }
+
+    // Export Logs to CSV
+    $('#btnExportLogsCSV').on('click', function() {
+        var logs = (window.getActivityLogs) ? window.getActivityLogs() : [];
+        if (!logs.length) {
+            alert('এক্সপোর্ট করার মতো কোনো লগ পাওয়া যায়নি!');
+            return;
+        }
+        var csvContent = "\uFEFF"; // UTF-8 BOM for Bengali support
+        csvContent += "আইডি,সময় ও তারিখ,ইউজার,রোল,অ্যাকশন টাইপ,বিবরণ,স্ট্যাটাস\n";
+        logs.forEach(function(l) {
+            var row = [
+                '"' + (l.id || '') + '"',
+                '"' + (l.timestamp || '') + '"',
+                '"' + (l.user || '') + '"',
+                '"' + (l.role || '') + '"',
+                '"' + (l.action || '') + '"',
+                '"' + (l.description || '').replace(/"/g, '""') + '"',
+                '"' + (l.status || '') + '"'
+            ];
+            csvContent += row.join(",") + "\n";
+        });
+
+        var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        var link = document.createElement("a");
+        var url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", "chapainawabganj_audit_logs_" + Date.now() + ".csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+
+    // Clear Logs
+    $('#btnClearLogs').on('click', function() {
+        if (confirm('আপনি কি নিশ্চিত যে সকল অ্যাক্টিভিটি হিস্ট্রি লগ মুছে ফেলতে চান?')) {
+            localStorage.setItem('chapainawabganj_activity_logs', JSON.stringify([]));
+            renderActivityLogsTable();
+            alert('সকল অ্যাক্টিভিটি লগ মুছে ফেলা হয়েছে!');
+        }
+    });
+
+    // Refresh Logs
+    $('#btnRefreshLogs').on('click', function() {
+        renderActivityLogsTable();
+    });
+
+    // When clicking logs tab, refresh table
+    $('#logs-tab').on('shown.bs.tab', function() {
+        renderActivityLogsTable();
+    });
+
     renderCommitteeTable();
+    renderActivityLogsTable();
 });
 </script>
 
@@ -854,9 +1041,9 @@ $(document).ready(function() {
                         <p class="text-light" style="font-size: 14px; line-height: 1.8;">
                             পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়ে অধ্যয়নরত ও প্রাক্তন চাঁপাইনবাবগঞ্জ জেলার শিক্ষার্থীদের পারস্পরিক ভ্রাতৃত্ব, ঐক্য, শিক্ষা সহায়তা ও কল্যাণে নিয়োজিত একটি অরাজনৈতিক স্বেচ্ছাসেবী সংগঠন।
                         </p>
-                        <div class="mt-3">
-                            <span class="badge badge-light p-2 mr-1"><i class="fas fa-phone-alt text-success mr-1"></i> হেল্পলাইন: +8801712345678</span>
-                            <span class="badge badge-light p-2"><i class="fas fa-envelope text-primary mr-1"></i> pust.chapai@gmail.com</span>
+                        <div class="mt-3" id="footerContactArea">
+                            <span class="badge badge-light p-2 mr-1" id="footerHelpline"><i class="fas fa-phone-alt text-success mr-1"></i> হেল্পলাইন: <span class="footer-phone-text">01778332062</span></span>
+                            <span class="badge badge-light p-2" id="footerEmail"><i class="fas fa-envelope text-primary mr-1"></i> <span class="footer-email-text">alemranak13@gmail.com</span></span>
                         </div>
                     </div>
 
@@ -903,9 +1090,135 @@ $(document).ready(function() {
         </div>
     </footer>
 
-    <!-- Initializer for DataTables -->
+    <!-- Global Content Synchronizer & Audit Activity Logger -->
     <script>
+        // Global Activity Logger
+        window.addActivityLog = function(actionType, description, status) {
+            try {
+                var user = sessionStorage.getItem('chapainawabganj_admin_username') || localStorage.getItem('chapainawabganj_admin_username') || 'অ্যাডমিন';
+                var role = sessionStorage.getItem('chapainawabganj_admin_role') || localStorage.getItem('chapainawabganj_admin_role') || 'অ্যাডমিনিস্ট্রেটর';
+                var logs = [];
+                try {
+                    var raw = localStorage.getItem('chapainawabganj_activity_logs');
+                    if (raw) logs = JSON.parse(raw);
+                } catch(e) {}
+
+                var now = new Date();
+                var dateStr = now.toLocaleDateString('bn-BD', { day: 'numeric', month: 'short', year: 'numeric' });
+                var timeStr = now.toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+
+                var logEntry = {
+                    id: 'LOG-' + Date.now(),
+                    timestamp: dateStr + ', ' + timeStr,
+                    iso: now.toISOString(),
+                    user: user,
+                    role: role,
+                    action: actionType || 'সাধারণ কার্যক্রম',
+                    description: description || 'কার্যক্রম সম্পন্ন',
+                    status: status || 'সফল (Success)'
+                };
+
+                logs.unshift(logEntry);
+                if (logs.length > 500) logs = logs.slice(0, 500);
+                localStorage.setItem('chapainawabganj_activity_logs', JSON.stringify(logs));
+                return logEntry;
+            } catch(err) {
+                console.error('Activity log error:', err);
+            }
+        };
+
+        window.getActivityLogs = function() {
+            try {
+                var raw = localStorage.getItem('chapainawabganj_activity_logs');
+                if (raw) {
+                    var parsed = JSON.parse(raw);
+                    if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+                }
+            } catch(e) {}
+            return [
+                {
+                    id: 'LOG-INIT-1',
+                    timestamp: '২৪ নভেম্বর ২০২৬, ০১:৩০ অপরাহ্ন',
+                    iso: '2026-11-24T07:30:00.000Z',
+                    user: 'admin',
+                    role: 'অ্যাডমিনিস্ট্রেটর',
+                    action: 'সাধারণ সেটিংস আপডেট',
+                    description: 'হেল্পলাইন: 01778332062 এবং ইমেইল: alemranak13@gmail.com সেট করা হয়েছে।',
+                    status: 'সফল (Success)'
+                },
+                {
+                    id: 'LOG-INIT-2',
+                    timestamp: '২৪ নভেম্বর ২০২৬, ১২:০০ অপরাহ্ন',
+                    iso: '2026-11-24T06:00:00.000Z',
+                    user: 'admin',
+                    role: 'অ্যাডমিনিস্ট্রেটর',
+                    action: 'সিস্টেম সক্রিয়করণ',
+                    description: 'পাবিপ্রবি চাঁপাইনবাবগঞ্জ জেলা সমিতি ওয়েব পোর্টাল ও অ্যাডমিন প্যানেল সক্রিয় করা হয়েছে।',
+                    status: 'সফল (Success)'
+                }
+            ];
+        };
+
+        // Universal Site Content Synchronizer
+        window.syncGlobalSiteContent = function() {
+            try {
+                var raw = localStorage.getItem('chapainawabganj_site_settings');
+                if (!raw) return;
+                var s = JSON.parse(raw);
+                var gen = s.general || s;
+
+                // Sync Phone & Helpline
+                var phone = gen.contact_phone || '01778332062';
+                $('.footer-phone-text').text(phone);
+                $('#contactHotline').text(phone).attr('href', 'tel:' + phone);
+                $('.site-phone').text(phone).attr('href', 'tel:' + phone);
+
+                // Sync Email
+                var email = gen.contact_email || 'alemranak13@gmail.com';
+                $('.footer-email-text').text(email);
+                $('#contactEmail').text(email).attr('href', 'mailto:' + email);
+                $('.site-email').text(email).attr('href', 'mailto:' + email);
+
+                // Sync Address
+                if (gen.office_address) {
+                    $('#contactAddress').text(gen.office_address);
+                    $('.site-address').text(gen.office_address);
+                }
+
+                // Sync Samity Name & Tagline
+                if (gen.site_title) {
+                    $('.samity-name-text').text(gen.site_title);
+                }
+                if (gen.site_tagline) {
+                    $('.samity-tagline-text').text(gen.site_tagline);
+                }
+
+                // Sync Blood Hotline
+                if (gen.blood_hotline) {
+                    $('.blood-hotline-text').text(gen.blood_hotline);
+                }
+
+                // Home banner if elements present
+                if (s.home) {
+                    if (s.home.hero_title && $('#heroTitle').length) $('#heroTitle').text(s.home.hero_title);
+                    if (s.home.hero_subtitle && $('#heroSubtitle').length) $('#heroSubtitle').text(s.home.hero_subtitle);
+                    if (s.home.welcome_heading && $('#welcomeHeading').length) $('#welcomeHeading').text(s.home.welcome_heading);
+                    if (s.home.welcome_text && $('#welcomeText').length) $('#welcomeText').text(s.home.welcome_text);
+                }
+
+                // About section if elements present
+                if (s.about) {
+                    if (s.about.about_title && $('#aboutTitle').length) $('#aboutTitle').text(s.about.about_title);
+                    if (s.about.about_history && $('#aboutHistory').length) $('#aboutHistory').text(s.about.about_history);
+                }
+            } catch(e) {
+                console.warn('Sync global site content warning:', e);
+            }
+        };
+
         $(document).ready(function () {
+            window.syncGlobalSiteContent();
+
             if ($('.datatable').length) {
                 $('.datatable').DataTable({
                     "pageLength": 10,

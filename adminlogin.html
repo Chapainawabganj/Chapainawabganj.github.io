@@ -382,9 +382,9 @@ $('form').on('submit', function(e) {
                         <p class="text-light" style="font-size: 14px; line-height: 1.8;">
                             পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়ে অধ্যয়নরত ও প্রাক্তন চাঁপাইনবাবগঞ্জ জেলার শিক্ষার্থীদের পারস্পরিক ভ্রাতৃত্ব, ঐক্য, শিক্ষা সহায়তা ও কল্যাণে নিয়োজিত একটি অরাজনৈতিক স্বেচ্ছাসেবী সংগঠন।
                         </p>
-                        <div class="mt-3">
-                            <span class="badge badge-light p-2 mr-1"><i class="fas fa-phone-alt text-success mr-1"></i> হেল্পলাইন: +8801712345678</span>
-                            <span class="badge badge-light p-2"><i class="fas fa-envelope text-primary mr-1"></i> pust.chapai@gmail.com</span>
+                        <div class="mt-3" id="footerContactArea">
+                            <span class="badge badge-light p-2 mr-1" id="footerHelpline"><i class="fas fa-phone-alt text-success mr-1"></i> হেল্পলাইন: <span class="footer-phone-text">01778332062</span></span>
+                            <span class="badge badge-light p-2" id="footerEmail"><i class="fas fa-envelope text-primary mr-1"></i> <span class="footer-email-text">alemranak13@gmail.com</span></span>
                         </div>
                     </div>
 
@@ -431,9 +431,135 @@ $('form').on('submit', function(e) {
         </div>
     </footer>
 
-    <!-- Initializer for DataTables -->
+    <!-- Global Content Synchronizer & Audit Activity Logger -->
     <script>
+        // Global Activity Logger
+        window.addActivityLog = function(actionType, description, status) {
+            try {
+                var user = sessionStorage.getItem('chapainawabganj_admin_username') || localStorage.getItem('chapainawabganj_admin_username') || 'অ্যাডমিন';
+                var role = sessionStorage.getItem('chapainawabganj_admin_role') || localStorage.getItem('chapainawabganj_admin_role') || 'অ্যাডমিনিস্ট্রেটর';
+                var logs = [];
+                try {
+                    var raw = localStorage.getItem('chapainawabganj_activity_logs');
+                    if (raw) logs = JSON.parse(raw);
+                } catch(e) {}
+
+                var now = new Date();
+                var dateStr = now.toLocaleDateString('bn-BD', { day: 'numeric', month: 'short', year: 'numeric' });
+                var timeStr = now.toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+
+                var logEntry = {
+                    id: 'LOG-' + Date.now(),
+                    timestamp: dateStr + ', ' + timeStr,
+                    iso: now.toISOString(),
+                    user: user,
+                    role: role,
+                    action: actionType || 'সাধারণ কার্যক্রম',
+                    description: description || 'কার্যক্রম সম্পন্ন',
+                    status: status || 'সফল (Success)'
+                };
+
+                logs.unshift(logEntry);
+                if (logs.length > 500) logs = logs.slice(0, 500);
+                localStorage.setItem('chapainawabganj_activity_logs', JSON.stringify(logs));
+                return logEntry;
+            } catch(err) {
+                console.error('Activity log error:', err);
+            }
+        };
+
+        window.getActivityLogs = function() {
+            try {
+                var raw = localStorage.getItem('chapainawabganj_activity_logs');
+                if (raw) {
+                    var parsed = JSON.parse(raw);
+                    if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+                }
+            } catch(e) {}
+            return [
+                {
+                    id: 'LOG-INIT-1',
+                    timestamp: '২৪ নভেম্বর ২০২৬, ০১:৩০ অপরাহ্ন',
+                    iso: '2026-11-24T07:30:00.000Z',
+                    user: 'admin',
+                    role: 'অ্যাডমিনিস্ট্রেটর',
+                    action: 'সাধারণ সেটিংস আপডেট',
+                    description: 'হেল্পলাইন: 01778332062 এবং ইমেইল: alemranak13@gmail.com সেট করা হয়েছে।',
+                    status: 'সফল (Success)'
+                },
+                {
+                    id: 'LOG-INIT-2',
+                    timestamp: '২৪ নভেম্বর ২০২৬, ১২:০০ অপরাহ্ন',
+                    iso: '2026-11-24T06:00:00.000Z',
+                    user: 'admin',
+                    role: 'অ্যাডমিনিস্ট্রেটর',
+                    action: 'সিস্টেম সক্রিয়করণ',
+                    description: 'পাবিপ্রবি চাঁপাইনবাবগঞ্জ জেলা সমিতি ওয়েব পোর্টাল ও অ্যাডমিন প্যানেল সক্রিয় করা হয়েছে।',
+                    status: 'সফল (Success)'
+                }
+            ];
+        };
+
+        // Universal Site Content Synchronizer
+        window.syncGlobalSiteContent = function() {
+            try {
+                var raw = localStorage.getItem('chapainawabganj_site_settings');
+                if (!raw) return;
+                var s = JSON.parse(raw);
+                var gen = s.general || s;
+
+                // Sync Phone & Helpline
+                var phone = gen.contact_phone || '01778332062';
+                $('.footer-phone-text').text(phone);
+                $('#contactHotline').text(phone).attr('href', 'tel:' + phone);
+                $('.site-phone').text(phone).attr('href', 'tel:' + phone);
+
+                // Sync Email
+                var email = gen.contact_email || 'alemranak13@gmail.com';
+                $('.footer-email-text').text(email);
+                $('#contactEmail').text(email).attr('href', 'mailto:' + email);
+                $('.site-email').text(email).attr('href', 'mailto:' + email);
+
+                // Sync Address
+                if (gen.office_address) {
+                    $('#contactAddress').text(gen.office_address);
+                    $('.site-address').text(gen.office_address);
+                }
+
+                // Sync Samity Name & Tagline
+                if (gen.site_title) {
+                    $('.samity-name-text').text(gen.site_title);
+                }
+                if (gen.site_tagline) {
+                    $('.samity-tagline-text').text(gen.site_tagline);
+                }
+
+                // Sync Blood Hotline
+                if (gen.blood_hotline) {
+                    $('.blood-hotline-text').text(gen.blood_hotline);
+                }
+
+                // Home banner if elements present
+                if (s.home) {
+                    if (s.home.hero_title && $('#heroTitle').length) $('#heroTitle').text(s.home.hero_title);
+                    if (s.home.hero_subtitle && $('#heroSubtitle').length) $('#heroSubtitle').text(s.home.hero_subtitle);
+                    if (s.home.welcome_heading && $('#welcomeHeading').length) $('#welcomeHeading').text(s.home.welcome_heading);
+                    if (s.home.welcome_text && $('#welcomeText').length) $('#welcomeText').text(s.home.welcome_text);
+                }
+
+                // About section if elements present
+                if (s.about) {
+                    if (s.about.about_title && $('#aboutTitle').length) $('#aboutTitle').text(s.about.about_title);
+                    if (s.about.about_history && $('#aboutHistory').length) $('#aboutHistory').text(s.about.about_history);
+                }
+            } catch(e) {
+                console.warn('Sync global site content warning:', e);
+            }
+        };
+
         $(document).ready(function () {
+            window.syncGlobalSiteContent();
+
             if ($('.datatable').length) {
                 $('.datatable').DataTable({
                     "pageLength": 10,
