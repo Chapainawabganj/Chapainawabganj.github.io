@@ -191,12 +191,25 @@
 
                 <!-- Students & Members Verification Table -->
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center border-bottom pb-2 mb-3">
-                    <h4 class="font-weight-bold text-dark m-0">
-                        <i class="fas fa-user-check text-success mr-2"></i> শিক্ষার্থী নিবন্ধন ও ভেরিফিকেশন তালিকা
-                    </h4>
-                    <span class="text-muted small">
-                        পেন্ডিং শিক্ষার্থীদের নামের পাশে <span class="badge badge-success"><i class="fas fa-check"></i></span> বাটনে ক্লিক করে তাৎক্ষণিক অনুমোদন দিন
-                    </span>
+                    <div>
+                        <h4 class="font-weight-bold text-dark m-0">
+                            <i class="fas fa-user-check text-success mr-2"></i> শিক্ষার্থী নিবন্ধন ও ভেরিফিকেশন তালিকা
+                        </h4>
+                        <span class="text-muted small">
+                            পেন্ডিং শিক্ষার্থীদের নামের পাশে <span class="badge badge-success"><i class="fas fa-check"></i></span> বাটনে ক্লিক করে তাৎক্ষণিক অনুমোদন দিন
+                        </span>
+                    </div>
+                    <div class="mt-2 mt-md-0 d-flex flex-wrap">
+                        <a href="/admin/export_csv" id="btnExportCSV" class="btn btn-success btn-sm font-weight-bold shadow-sm mr-2 mb-1">
+                            <i class="fas fa-file-excel mr-1"></i> এক্সেল / CSV ডাউনলোড
+                        </a>
+                        <a href="/admin/export_json" id="btnExportJSON" class="btn btn-navy btn-sm font-weight-bold shadow-sm mr-2 mb-1">
+                            <i class="fas fa-file-code mr-1"></i> JSON ব্যাকআপ ডাউনলোড
+                        </a>
+                        <button onclick="window.print()" class="btn btn-outline-secondary btn-sm font-weight-bold shadow-sm mb-1">
+                            <i class="fas fa-print mr-1"></i> প্রিন্ট তালিকা
+                        </button>
+                    </div>
                 </div>
 
                 <div class="table-responsive">
@@ -256,7 +269,7 @@
                                             </form>
                                             
                                             <!-- Edit Member Profile -->
-                                            <a href="/admin_update_member.aspx?roll=240199" class="btn btn-primary" title="সম্পূর্ণ তথ্য এডিট করুন">
+                                            <a href="admin_update_member.html?roll=240199" class="btn btn-primary" title="সম্পূর্ণ তথ্য এডিট করুন">
                                                 <i class="fas fa-edit"></i>
                                             </a>
 
@@ -312,7 +325,7 @@
                                             </form>
                                             
                                             <!-- Edit Member Profile -->
-                                            <a href="/admin_update_member.aspx?roll=200101" class="btn btn-primary" title="সম্পূর্ণ তথ্য এডিট করুন">
+                                            <a href="admin_update_member.html?roll=200101" class="btn btn-primary" title="সম্পূর্ণ তথ্য এডিট করুন">
                                                 <i class="fas fa-edit"></i>
                                             </a>
 
@@ -368,7 +381,7 @@
                                             </form>
                                             
                                             <!-- Edit Member Profile -->
-                                            <a href="/admin_update_member.aspx?roll=190215" class="btn btn-primary" title="সম্পূর্ণ তথ্য এডিট করুন">
+                                            <a href="admin_update_member.html?roll=190215" class="btn btn-primary" title="সম্পূর্ণ তথ্য এডিট করুন">
                                                 <i class="fas fa-edit"></i>
                                             </a>
 
@@ -424,7 +437,7 @@
                                             </form>
                                             
                                             <!-- Edit Member Profile -->
-                                            <a href="/admin_update_member.aspx?roll=210512" class="btn btn-primary" title="সম্পূর্ণ তথ্য এডিট করুন">
+                                            <a href="admin_update_member.html?roll=210512" class="btn btn-primary" title="সম্পূর্ণ তথ্য এডিট করুন">
                                                 <i class="fas fa-edit"></i>
                                             </a>
 
@@ -480,7 +493,7 @@
                                             </form>
                                             
                                             <!-- Edit Member Profile -->
-                                            <a href="/admin_update_member.aspx?roll=160308" class="btn btn-primary" title="সম্পূর্ণ তথ্য এডিট করুন">
+                                            <a href="admin_update_member.html?roll=160308" class="btn btn-primary" title="সম্পূর্ণ তথ্য এডিট করুন">
                                                 <i class="fas fa-edit"></i>
                                             </a>
 
@@ -536,7 +549,7 @@
                                             </form>
                                             
                                             <!-- Edit Member Profile -->
-                                            <a href="/admin_update_member.aspx?roll=220914" class="btn btn-primary" title="সম্পূর্ণ তথ্য এডিট করুন">
+                                            <a href="admin_update_member.html?roll=220914" class="btn btn-primary" title="সম্পূর্ণ তথ্য এডিট করুন">
                                                 <i class="fas fa-edit"></i>
                                             </a>
 
@@ -592,7 +605,7 @@
                                             </form>
                                             
                                             <!-- Edit Member Profile -->
-                                            <a href="/admin_update_member.aspx?roll=230405" class="btn btn-primary" title="সম্পূর্ণ তথ্য এডিট করুন">
+                                            <a href="admin_update_member.html?roll=230405" class="btn btn-primary" title="সম্পূর্ণ তথ্য এডিট করুন">
                                                 <i class="fas fa-edit"></i>
                                             </a>
 
@@ -648,7 +661,7 @@
                                             </form>
                                             
                                             <!-- Edit Member Profile -->
-                                            <a href="/admin_update_member.aspx?roll=140102" class="btn btn-primary" title="সম্পূর্ণ তথ্য এডিট করুন">
+                                            <a href="admin_update_member.html?roll=140102" class="btn btn-primary" title="সম্পূর্ণ তথ্য এডিট করুন">
                                                 <i class="fas fa-edit"></i>
                                             </a>
 
@@ -674,6 +687,175 @@
         </div>
     </div>
 </section>
+
+<script>
+    var serverMembers = [{"id":"std_1795425604943","full_name":"Md. Sajjad Hossain","gender":"Male","email":"sajjad.cse@s.pust.ac.bd","contact_number":"+8801799887766","blood_group":"O+","department":"Computer Science and Engineering (CSE)","session":"2024-25","student_id":"240199","roll_no":"240199","home_district":"Chapainawabganj","upazila":"Shibganj","profession":"Current Student","hall":"Bangabandhu Hall","present_address":"Bangabandhu Hall, Room 102, PUST","is_blood_donor":true,"profile_photo":"Photo/fahim.png","passwordHash":"$2b$10$anVi/Vh2R73QOHRtBkKebOh.PZtvwuAwSiBHgjI8vhMtt1jhW9eHy","status":"Active","membership_id":"CP-PUST-240199","created_at":"2026-11-23T09:20:04.943Z","updated_at":"2026-11-23T09:20:05.734Z"},{"id":"std_1","full_name":"Md. Al-Emran","profile_photo":"Photo/fahim.png","department":"Computer Science and Engineering (CSE)","session":"2020-21","student_id":"200101","roll_no":"200101","contact_number":"+8801712345678","email":"emran.cse@s.pust.ac.bd","home_district":"Chapainawabganj","upazila":"Shibganj","profession":"Current Student","present_address":"Bangabandhu Sheikh Mujibur Rahman Hall, Room 412, PUST","hall":"Bangabandhu Sheikh Mujibur Rahman Hall","blood_group":"B+","is_blood_donor":true,"membership_id":"CP-PUST-200101","status":"Active","passwordHash":"$2b$10$1RGGPY8GvYmC3S37gsf2X.ZBfROy8ewPFxUrxGeY9n1XV0JlyR/bu","created_at":"2024-01-15T10:00:00.000Z"},{"id":"std_2","full_name":"Tanzim Ahmed Shiblu","profile_photo":"ProfilePhoto/Navil090205.png","department":"Electrical and Electronic Engineering (EEE)","session":"2019-20","student_id":"190215","roll_no":"190215","contact_number":"+8801723456789","email":"tanzim.eee@s.pust.ac.bd","home_district":"Chapainawabganj","upazila":"Chapainawabganj Sadar","profession":"Current Student","present_address":"Sheikh Rasel Hall, Room 205, PUST","hall":"Sheikh Rasel Hall","blood_group":"O+","is_blood_donor":true,"membership_id":"CP-PUST-190215","status":"Active","passwordHash":"$2b$10$OJn1vmxLX1WyXB5WQScOxuxqmiqGWW/giQu2XN14IHQOen9ceGaT2","created_at":"2024-01-16T11:30:00.000Z"},{"id":"std_3","full_name":"Nusrat Jahan Mim","profile_photo":"Photo/fahim.png","department":"Pharmacy","session":"2021-22","student_id":"210512","roll_no":"210512","contact_number":"+8801734567890","email":"mim.pharmacy@s.pust.ac.bd","home_district":"Chapainawabganj","upazila":"Gomostapur","profession":"Current Student","present_address":"Sheikh Hasina Hall, Room 310, PUST","hall":"Sheikh Hasina Hall","blood_group":"A+","is_blood_donor":true,"membership_id":"CP-PUST-210512","status":"Active","passwordHash":"$2b$10$TENX5jfGD21E6kbqnjNsBOo.XQfdOKE8kTITmWaw/wP8irbTjuM9q","created_at":"2024-02-10T09:15:00.000Z"},{"id":"std_4","full_name":"Md. Tariqul Islam","profile_photo":"ProfilePhoto/Amir.jpg","department":"Civil Engineering (CE)","session":"2016-17","student_id":"160308","roll_no":"160308","contact_number":"+8801745678901","email":"tariqul.ce@alumni.pust.ac.bd","home_district":"Chapainawabganj","upazila":"Nachole","profession":"Assistant Engineer (RHD)","present_address":"Tejgaon, Dhaka","hall":"Bangabandhu Sheikh Mujibur Rahman Hall","blood_group":"AB+","is_blood_donor":false,"membership_id":"CP-PUST-160308","status":"Active","passwordHash":"$2b$10$tm98RCzcyejWQGkRrQkeyO/9k7zFODZaxo6E5vNa1Rdn7YYqypzT6","created_at":"2023-11-20T14:45:00.000Z"},{"id":"std_5","full_name":"Mahmudul Hasan Shanto","profile_photo":"Photo/fahim.png","department":"Business Administration (BBA)","session":"2022-23","student_id":"220914","roll_no":"220914","contact_number":"+8801756789012","email":"shanto.bba@s.pust.ac.bd","home_district":"Chapainawabganj","upazila":"Bholahat","profession":"Current Student","present_address":"Radhanagar Student Mess, Pabna","hall":"Off-Campus Mess","blood_group":"O-","is_blood_donor":true,"membership_id":"CP-PUST-220914","status":"Active","passwordHash":"$2b$10$56ZJ3llD5n5Eyrsmc93dNOqljTT0FhKViC/vIimwWIB1gCpxUV8Vm","created_at":"2024-03-01T12:00:00.000Z"},{"id":"std_6","full_name":"Sabrina Sultana Ritu","profile_photo":"Photo/fahim.png","department":"Information and Communication Engineering (ICE)","session":"2023-24","student_id":"230405","roll_no":"230405","contact_number":"+8801767890123","email":"ritu.ice@s.pust.ac.bd","home_district":"Chapainawabganj","upazila":"Shibganj","profession":"Current Student","present_address":"Pritilata Hall, PUST","hall":"Pritilata Hall","blood_group":"B-","is_blood_donor":true,"membership_id":"CP-PUST-230405","status":"Pending","passwordHash":"$2b$10$JeO0z5eLBmj0NC492bbqHedDUAr2KM6YMf2SroLHzNkGcf7emctPG","created_at":"2024-04-12T16:20:00.000Z"},{"id":"std_7","full_name":"Engr. Md. Faruk Hossain","profile_photo":"Photo/adminuser.png","department":"Computer Science and Engineering (CSE)","session":"2014-15","student_id":"140102","roll_no":"140102","contact_number":"+8801778901234","email":"faruk.cse@alumni.pust.ac.bd","home_district":"Chapainawabganj","upazila":"Chapainawabganj Sadar","profession":"Senior Software Engineer, Brain Station 23","present_address":"Mirpur DOHS, Dhaka","hall":"Bangabandhu Sheikh Mujibur Rahman Hall","blood_group":"A+","is_blood_donor":true,"membership_id":"CP-PUST-140102","status":"Active","passwordHash":"$2b$10$u5.78e/.XzR81vx1gyLT0uMONMXKMKciyLmUn0z.zf6dw0NYnDjIO","created_at":"2023-10-05T08:30:00.000Z"}];
+
+    function getAllCurrentMembers() {
+        var local = [];
+        try {
+            var raw = localStorage.getItem('chapainawabganj_local_members');
+            if (raw) local = JSON.parse(raw);
+        } catch(e) {}
+        var map = {};
+        serverMembers.forEach(function(m) {
+            var key = m.student_id || m.roll_no || m.id;
+            map[key] = m;
+        });
+        local.forEach(function(m) {
+            var key = m.student_id || m.roll_no || m.id;
+            map[key] = m;
+        });
+        var list = [];
+        for (var k in map) {
+            if (map.hasOwnProperty(k)) list.push(map[k]);
+        }
+        return list;
+    }
+
+    function exportToCSV(members) {
+        var headers = [
+            "আইডি (ID)",
+            "মেম্বারশিপ কোড (Membership Code)",
+            "শিক্ষার্থীর পূর্ণ নাম (Full Name)",
+            "লিঙ্গ (Gender)",
+            "বিভাগ (Department)",
+            "সেশন (Academic Session)",
+            "স্টুডেন্ট আইডি / রোল (Student ID)",
+            "মোবাইল নম্বর (Contact Mobile)",
+            "ইমেইল ঠিকানা (Email)",
+            "নিজ উপজেলা (Home Upazila)",
+            "রক্তের গ্রুপ (Blood Group)",
+            "জরুরি রক্তদাতা (Blood Donor)",
+            "বর্তমান পেশা (Current Profession)",
+            "হল / মেস (Residential Hall/Mess)",
+            "বর্তমান পূর্ণ ঠিকানা (Present Address)",
+            "ভেরিফিকেশন স্ট্যাটাস (Verification Status)",
+            "নিবন্ধনের তারিখ (Registration Date)"
+        ];
+
+        var csv = "\uFEFF"; // UTF-8 BOM for Excel
+        csv += headers.map(function(h) { return '"' + h.replace(/"/g, '""') + '"'; }).join(",") + "\r\n";
+
+        members.forEach(function(m) {
+            var row = [
+                m.id || "",
+                m.membership_id || ("CP-PUST-" + (m.student_id || m.roll_no || "")),
+                m.full_name || "",
+                m.gender || "Male",
+                m.department || "",
+                m.session || "",
+                m.student_id || m.roll_no || "",
+                m.contact_number || "",
+                m.email || "",
+                m.upazila || "",
+                m.blood_group || "",
+                m.is_blood_donor ? "হ্যাঁ (Yes)" : "না (No)",
+                m.profession || "",
+                m.hall || "",
+                m.present_address || "",
+                m.status || "Pending",
+                m.created_at || ""
+            ];
+            csv += row.map(function(val) { return '"' + String(val).replace(/"/g, '""') + '"'; }).join(",") + "\r\n";
+        });
+
+        var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement("a");
+        var dateStr = new Date().toISOString().split("T")[0];
+        link.setAttribute("href", url);
+        link.setAttribute("download", "chapainawabganj_pust_students_" + dateStr + ".csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    function exportToJSON(members) {
+        var str = JSON.stringify(members, null, 2);
+        var blob = new Blob([str], { type: "application/json;charset=utf-8;" });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement("a");
+        var dateStr = new Date().toISOString().split("T")[0];
+        link.setAttribute("href", url);
+        link.setAttribute("download", "chapainawabganj_pust_members_backup_" + dateStr + ".json");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    $(document).ready(function() {
+        var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io');
+
+        $('#btnExportCSV').on('click', function(e) {
+            if (isStatic) {
+                e.preventDefault();
+                exportToCSV(getAllCurrentMembers());
+            }
+        });
+
+        $('#btnExportJSON').on('click', function(e) {
+            if (isStatic) {
+                e.preventDefault();
+                exportToJSON(getAllCurrentMembers());
+            }
+        });
+
+        if (isStatic) {
+            try {
+                var raw = localStorage.getItem('chapainawabganj_local_members');
+                if (raw) {
+                    var local = JSON.parse(raw);
+                    var datatable = $('.datatable').DataTable();
+                    local.forEach(function(m) {
+                        var exists = false;
+                        serverMembers.forEach(function(sm) {
+                            if (sm.id === m.id || sm.student_id === m.student_id) exists = true;
+                        });
+                        if (!exists) {
+                            var photo = m.profile_photo || 'Photo/fahim.png';
+                            var statusBadge = m.status === 'Active' 
+                                ? '<span class="badge badge-success px-2 py-1"><i class="fas fa-check-circle mr-1"></i> সক্রিয় (Active)</span>'
+                                : '<span class="badge badge-warning px-2 py-1"><i class="fas fa-clock mr-1"></i> ভেরিফিকেশন পেন্ডিং</span>';
+
+                            var toggleBtn = '<button class="btn btn-sm btn-success font-weight-bold btn-toggle-local" data-id="' + m.id + '" title="অনুমোদন করুন"><i class="fas fa-check"></i></button>';
+
+                            datatable.row.add([
+                                '<div class="text-center"><img src="' + photo + '" class="rounded-circle border" style="width: 44px; height: 44px; object-fit: cover;" onerror="this.src=\'Photo/fahim.png\'" /></div>',
+                                '<strong>' + m.full_name + '</strong><br><small class="text-muted"><i class="fas fa-phone mr-1 text-success"></i> ' + m.contact_number + '</small><br><small class="text-muted"><i class="fas fa-envelope mr-1 text-primary"></i> ' + m.email + '</small>',
+                                '<span class="font-weight-bold text-primary">' + (m.student_id || m.roll_no) + '</span>',
+                                '<strong>' + m.department + '</strong><br><span class="badge badge-session">' + m.session + ' সেশন</span>',
+                                '<span class="badge badge-upazila">' + m.upazila + '</span><br><small class="text-muted">' + m.profession + '</small>',
+                                '<span class="badge badge-blood">' + (m.blood_group || 'N/A') + '</span>',
+                                statusBadge,
+                                '<div class="btn-group btn-group-sm">' + toggleBtn + '</div>'
+                            ]).draw(false);
+                        }
+                    });
+                }
+            } catch(e) {
+                console.warn('Error loading local registrations:', e);
+            }
+
+            $(document).on('click', '.btn-toggle-local', function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                var raw = localStorage.getItem('chapainawabganj_local_members');
+                if (raw) {
+                    var list = JSON.parse(raw);
+                    list.forEach(function(item) {
+                        if (item.id === id) {
+                            item.status = item.status === 'Active' ? 'Pending' : 'Active';
+                        }
+                    });
+                    localStorage.setItem('chapainawabganj_local_members', JSON.stringify(list));
+                    alert('স্ট্যাটাস পরিবর্তন সফল হয়েছে!');
+                    location.reload();
+                }
+            });
+        }
+    });
+</script>
 
     <!-- Footer -->
     <footer class="mt-5">
@@ -702,7 +884,7 @@
                         <ul class="list-unstyled text-light" style="font-size: 14px; line-height: 2;">
                             <li><a href="blood_donation.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> জরুরি রক্তদাতা খুঁজুন</a></li>
                             <li><a href="student_support.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> নতুন ভর্তিচ্ছু শিক্ষার্থীদের সহায়তা</a></li>
-                            <li><a href="/student_support.aspx#mess" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> মেস ও আবাসন পরামর্শ</a></li>
+                            <li><a href="student_support.html#mess" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> মেস ও আবাসন পরামর্শ</a></li>
                             <li><a href="alumnilist.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> শিক্ষার্থী ও অ্যালামনাই ডিরেক্টরি</a></li>
                             <li><a href="registration.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> সদস্য হিসেবে নিবন্ধন করুন</a></li>
                         </ul>

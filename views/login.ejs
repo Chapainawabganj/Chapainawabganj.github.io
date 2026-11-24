@@ -62,4 +62,16 @@
     </div>
 </section>
 
+<script>
+$('form').on('submit', function(e) {
+    var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io');
+    if (isStatic) {
+        e.preventDefault();
+        var id = ($('input[name="email"]').val() || '').trim();
+        sessionStorage.setItem('chapainawabganj_user_logged_in', id);
+        window.location.href = 'my_profile.html';
+    }
+});
+</script>
+
 <%- include('partials/footer') %>

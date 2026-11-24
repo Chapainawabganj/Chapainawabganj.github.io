@@ -151,7 +151,7 @@
 
                         <!-- Top Search & Upazila Filter Pills -->
                         <div class="mb-4">
-                            <form action="/alumnilist.aspx" method="GET" class="mb-3">
+                            <form action="alumnilist.html" method="GET" class="mb-3">
                                 <div class="row justify-content-center">
                                     <div class="col-md-8">
                                         <div class="input-group input-group-lg shadow-sm">
@@ -176,27 +176,27 @@
                                         সকল উপজেলা
                                     </a>
                                 
-                                    <a href="/alumnilist.aspx?upazila=Chapainawabganj%20Sadar" 
+                                    <a href="alumnilist.html?upazila=Chapainawabganj%20Sadar" 
                                        class="upazila-pill ">
                                         চাঁপাইনবাবগঞ্জ সদর
                                     </a>
                                 
-                                    <a href="/alumnilist.aspx?upazila=Shibganj" 
+                                    <a href="alumnilist.html?upazila=Shibganj" 
                                        class="upazila-pill ">
                                         শিবগঞ্জ
                                     </a>
                                 
-                                    <a href="/alumnilist.aspx?upazila=Gomostapur" 
+                                    <a href="alumnilist.html?upazila=Gomostapur" 
                                        class="upazila-pill ">
                                         গোমস্তাপুর
                                     </a>
                                 
-                                    <a href="/alumnilist.aspx?upazila=Nachole" 
+                                    <a href="alumnilist.html?upazila=Nachole" 
                                        class="upazila-pill ">
                                         নাচোল
                                     </a>
                                 
-                                    <a href="/alumnilist.aspx?upazila=Bholahat" 
+                                    <a href="alumnilist.html?upazila=Bholahat" 
                                        class="upazila-pill ">
                                         ভোলাহাট
                                     </a>
@@ -762,6 +762,46 @@
     </div>
 </section>
 
+<script>
+    $(document).ready(function() {
+        var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io');
+        if (isStatic) {
+            try {
+                var raw = localStorage.getItem('chapainawabganj_local_members');
+                if (raw) {
+                    var local = JSON.parse(raw);
+                    var datatable = $('.datatable').DataTable();
+                    local.forEach(function(m) {
+                        // only show if active in directory
+                        if (m.status === 'Active') {
+                            var photo = m.profile_photo || 'Photo/fahim.png';
+                            datatable.row.add([
+                                '<div class="text-center"><img src="' + photo + '" class="rounded-circle border" style="width: 44px; height: 44px; object-fit: cover;" onerror="this.src=\'Photo/fahim.png\'" /></div>',
+                                '<strong>' + m.full_name + '</strong><br><small class="text-muted">' + (m.profession || '') + '</small>',
+                                '<span class="font-weight-bold text-primary">' + (m.student_id || m.roll_no) + '</span>',
+                                m.department,
+                                '<span class="badge badge-session">' + m.session + '</span>',
+                                '<span class="badge badge-upazila">' + m.upazila + '</span>',
+                                '<span class="badge badge-blood">' + (m.blood_group || 'N/A') + '</span>',
+                                '<button class="btn btn-outline-info btn-sm" onclick="alert(\'নাম: ' + m.full_name + '\\nমোবাইল: ' + m.contact_number + '\\nইমেইল: ' + m.email + '\\nঠিকানা: ' + m.present_address + '\')"><i class="fas fa-eye mr-1"></i> বিবরণ</button>'
+                            ]).draw(false);
+                        }
+                    });
+                }
+            } catch(e) {}
+
+            var urlParams = new URLSearchParams(window.location.search);
+            var upazila = urlParams.get('upazila');
+            var q = urlParams.get('q');
+            if (upazila && upazila !== 'All') {
+                $('.datatable').DataTable().search(upazila).draw();
+            } else if (q) {
+                $('.datatable').DataTable().search(q).draw();
+            }
+        }
+    });
+</script>
+
     <!-- Footer -->
     <footer class="mt-5">
         <div id="footer1">
@@ -789,7 +829,7 @@
                         <ul class="list-unstyled text-light" style="font-size: 14px; line-height: 2;">
                             <li><a href="blood_donation.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> জরুরি রক্তদাতা খুঁজুন</a></li>
                             <li><a href="student_support.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> নতুন ভর্তিচ্ছু শিক্ষার্থীদের সহায়তা</a></li>
-                            <li><a href="/student_support.aspx#mess" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> মেস ও আবাসন পরামর্শ</a></li>
+                            <li><a href="student_support.html#mess" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> মেস ও আবাসন পরামর্শ</a></li>
                             <li><a href="alumnilist.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> শিক্ষার্থী ও অ্যালামনাই ডিরেক্টরি</a></li>
                             <li><a href="registration.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> সদস্য হিসেবে নিবন্ধন করুন</a></li>
                         </ul>

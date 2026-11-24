@@ -175,42 +175,42 @@
                                     সকল গ্রুপ
                                 </a>
                             
-                                <a href="/blood_donation.aspx?group=A%2B" 
+                                <a href="blood_donation.html?group=A%2B" 
                                    class="btn btn-sm m-1 font-weight-bold btn-outline-danger">
                                     A+
                                 </a>
                             
-                                <a href="/blood_donation.aspx?group=A-" 
+                                <a href="blood_donation.html?group=A-" 
                                    class="btn btn-sm m-1 font-weight-bold btn-outline-danger">
                                     A-
                                 </a>
                             
-                                <a href="/blood_donation.aspx?group=B%2B" 
+                                <a href="blood_donation.html?group=B%2B" 
                                    class="btn btn-sm m-1 font-weight-bold btn-outline-danger">
                                     B+
                                 </a>
                             
-                                <a href="/blood_donation.aspx?group=B-" 
+                                <a href="blood_donation.html?group=B-" 
                                    class="btn btn-sm m-1 font-weight-bold btn-outline-danger">
                                     B-
                                 </a>
                             
-                                <a href="/blood_donation.aspx?group=O%2B" 
+                                <a href="blood_donation.html?group=O%2B" 
                                    class="btn btn-sm m-1 font-weight-bold btn-outline-danger">
                                     O+
                                 </a>
                             
-                                <a href="/blood_donation.aspx?group=O-" 
+                                <a href="blood_donation.html?group=O-" 
                                    class="btn btn-sm m-1 font-weight-bold btn-outline-danger">
                                     O-
                                 </a>
                             
-                                <a href="/blood_donation.aspx?group=AB%2B" 
+                                <a href="blood_donation.html?group=AB%2B" 
                                    class="btn btn-sm m-1 font-weight-bold btn-outline-danger">
                                     AB+
                                 </a>
                             
-                                <a href="/blood_donation.aspx?group=AB-" 
+                                <a href="blood_donation.html?group=AB-" 
                                    class="btn btn-sm m-1 font-weight-bold btn-outline-danger">
                                     AB-
                                 </a>
@@ -480,6 +480,41 @@
     </div>
 </section>
 
+<script>
+    $(document).ready(function() {
+        var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io');
+        if (isStatic) {
+            try {
+                var raw = localStorage.getItem('chapainawabganj_local_members');
+                if (raw) {
+                    var local = JSON.parse(raw);
+                    var datatable = $('.datatable').DataTable();
+                    local.forEach(function(m) {
+                        if (m.is_blood_donor && m.blood_group && m.blood_group !== 'Unknown') {
+                            var photo = m.profile_photo || 'Photo/fahim.png';
+                            datatable.row.add([
+                                '<div class="text-center"><img src="' + photo + '" class="rounded-circle border" style="width: 48px; height: 48px; object-fit: cover;" onerror="this.src=\'Photo/fahim.png\'" /></div>',
+                                '<span class="font-weight-bold text-dark">' + m.full_name + '</span><br><small class="text-muted">' + (m.profession || '') + '</small>',
+                                '<div class="text-center"><span class="badge badge-blood" style="font-size: 15px; padding: 6px 12px;"><i class="fas fa-tint mr-1"></i> ' + m.blood_group + '</span></div>',
+                                '<strong>' + m.department + '</strong><br><small class="badge badge-session">' + m.session + '</small>',
+                                '<div class="text-center"><span class="badge badge-upazila">' + m.upazila + '</span></div>',
+                                '<small><i class="fas fa-map-marker-alt text-danger mr-1"></i> ' + (m.hall || m.present_address) + '</small>',
+                                '<div class="text-center"><a href="tel:' + m.contact_number + '" class="btn btn-sm btn-success px-2 font-weight-bold"><i class="fas fa-phone-alt mr-1"></i> কল করুন</a></div>'
+                            ]).draw(false);
+                        }
+                    });
+                }
+            } catch(e) {}
+
+            var urlParams = new URLSearchParams(window.location.search);
+            var group = urlParams.get('group');
+            if (group && group !== 'All') {
+                $('.datatable').DataTable().search(group).draw();
+            }
+        }
+    });
+</script>
+
     <!-- Footer -->
     <footer class="mt-5">
         <div id="footer1">
@@ -507,7 +542,7 @@
                         <ul class="list-unstyled text-light" style="font-size: 14px; line-height: 2;">
                             <li><a href="blood_donation.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> জরুরি রক্তদাতা খুঁজুন</a></li>
                             <li><a href="student_support.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> নতুন ভর্তিচ্ছু শিক্ষার্থীদের সহায়তা</a></li>
-                            <li><a href="/student_support.aspx#mess" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> মেস ও আবাসন পরামর্শ</a></li>
+                            <li><a href="student_support.html#mess" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> মেস ও আবাসন পরামর্শ</a></li>
                             <li><a href="alumnilist.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> শিক্ষার্থী ও অ্যালামনাই ডিরেক্টরি</a></li>
                             <li><a href="registration.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> সদস্য হিসেবে নিবন্ধন করুন</a></li>
                         </ul>

@@ -162,4 +162,44 @@
     </div>
 </section>
 
+<script>
+    $(document).ready(function() {
+        var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io');
+        if (isStatic) {
+            try {
+                var raw = localStorage.getItem('chapainawabganj_local_members');
+                if (raw) {
+                    var local = JSON.parse(raw);
+                    var datatable = $('.datatable').DataTable();
+                    local.forEach(function(m) {
+                        // only show if active in directory
+                        if (m.status === 'Active') {
+                            var photo = m.profile_photo || 'Photo/fahim.png';
+                            datatable.row.add([
+                                '<div class="text-center"><img src="' + photo + '" class="rounded-circle border" style="width: 44px; height: 44px; object-fit: cover;" onerror="this.src=\'Photo/fahim.png\'" /></div>',
+                                '<strong>' + m.full_name + '</strong><br><small class="text-muted">' + (m.profession || '') + '</small>',
+                                '<span class="font-weight-bold text-primary">' + (m.student_id || m.roll_no) + '</span>',
+                                m.department,
+                                '<span class="badge badge-session">' + m.session + '</span>',
+                                '<span class="badge badge-upazila">' + m.upazila + '</span>',
+                                '<span class="badge badge-blood">' + (m.blood_group || 'N/A') + '</span>',
+                                '<button class="btn btn-outline-info btn-sm" onclick="alert(\'নাম: ' + m.full_name + '\\nমোবাইল: ' + m.contact_number + '\\nইমেইল: ' + m.email + '\\nঠিকানা: ' + m.present_address + '\')"><i class="fas fa-eye mr-1"></i> বিবরণ</button>'
+                            ]).draw(false);
+                        }
+                    });
+                }
+            } catch(e) {}
+
+            var urlParams = new URLSearchParams(window.location.search);
+            var upazila = urlParams.get('upazila');
+            var q = urlParams.get('q');
+            if (upazila && upazila !== 'All') {
+                $('.datatable').DataTable().search(upazila).draw();
+            } else if (q) {
+                $('.datatable').DataTable().search(q).draw();
+            }
+        }
+    });
+</script>
+
 <%- include('partials/footer') %>

@@ -3,13 +3,14 @@ const path = require('path');
 const ejs = require('ejs');
 const db = require('./data/db');
 
-const OUTPUT_DIR = path.join(__dirname, '.');
+const ROOT_DIR = path.join(__dirname, '.');
+const DOCS_DIR = path.join(__dirname, 'docs');
 const VIEWS_DIR = path.join(__dirname, 'views');
 const PUBLIC_DIR = path.join(__dirname, 'public');
 
 // Ensure output directories exist
-if (!fs.existsSync(OUTPUT_DIR)) {
-  fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+if (!fs.existsSync(DOCS_DIR)) {
+  fs.mkdirSync(DOCS_DIR, { recursive: true });
 }
 
 // Helper to copy directory recursively
@@ -30,13 +31,14 @@ function copyDirSync(src, dest) {
   }
 }
 
-// Copy public assets to docs/
-console.log('Copying public assets to root...');
-copyDirSync(PUBLIC_DIR, OUTPUT_DIR);
+// Copy public assets to both root and docs/
+console.log('Copying public assets to root and docs/...');
+copyDirSync(PUBLIC_DIR, ROOT_DIR);
+copyDirSync(PUBLIC_DIR, DOCS_DIR);
 
 // Create .nojekyll for GitHub Pages
-fs.writeFileSync(path.join(OUTPUT_DIR, '.nojekyll'), '');
-fs.writeFileSync(path.join(__dirname, '.nojekyll'), '');
+fs.writeFileSync(path.join(ROOT_DIR, '.nojekyll'), '');
+fs.writeFileSync(path.join(DOCS_DIR, '.nojekyll'), '');
 
 // Post-process HTML for GitHub Pages static compatibility
 function transformForGitHubPages(html) {
@@ -51,25 +53,33 @@ function transformForGitHubPages(html) {
     .replace(/(src|href)=["']\/CertPhoto\//g, '$1="CertPhoto/')
     .replace(/(src|href)=["']\/PaymentPhoto\//g, '$1="PaymentPhoto/')
     .replace(/(src|href)=["']\/DataTables\//g, '$1="DataTables/')
-    // Transform navigation links
-    .replace(/href=["']\/(home|home\.aspx)?["']/g, 'href="index.html"')
-    .replace(/href=["']\/about(\.aspx)?["']/g, 'href="about.html"')
-    .replace(/href=["']\/(alumnilist|students)(\.aspx)?["']/g, 'href="alumnilist.html"')
-    .replace(/href=["']\/(blood_donation|blood)(\.aspx)?["']/g, 'href="blood_donation.html"')
-    .replace(/href=["']\/(student_support|support)(\.aspx)?["']/g, 'href="student_support.html"')
-    .replace(/href=["']\/committee(\.aspx)?["']/g, 'href="committee.html"')
-    .replace(/href=["']\/notice(\.aspx)?["']/g, 'href="notice.html"')
-    .replace(/href=["']\/download(\.aspx)?["']/g, 'href="download.html"')
-    .replace(/href=["']\/contact(\.aspx)?["']/g, 'href="contact.html"')
-    .replace(/href=["']\/registration(\.aspx)?["']/g, 'href="registration.html"')
-    .replace(/href=["']\/registration_confirmation(\.aspx)?["']/g, 'href="registration_confirmation.html"')
-    .replace(/href=["']\/login(\.aspx)?["']/g, 'href="login.html"')
-    .replace(/href=["']\/adminlogin(\.aspx)?["']/g, 'href="adminlogin.html"')
-    .replace(/href=["']\/my_profile(\.aspx)?["']/g, 'href="my_profile.html"')
-    .replace(/href=["']\/membermanagement(\.aspx)?["']/g, 'href="membermanagement.html"')
-    .replace(/href=["']\/admin_update_member(\.aspx)?["']/g, 'href="admin_update_member.html"')
-    .replace(/href=["']\/admin_content(\.aspx)?["']/g, 'href="admin_content.html"')
-    .replace(/href=["']\/logout(\.aspx)?["']/g, 'href="index.html"');
+
+    // Specific anchors & queries
+    .replace(/(href|action)=["']\/student_support\.aspx#mess["']/g, '$1="student_support.html#mess"')
+    .replace(/(href|action)=["']\/student_support#mess["']/g, '$1="student_support.html#mess"')
+
+    // Route mappings with optional query strings/hashes
+    .replace(/(href|action)=["']\/(home|home\.aspx)?["']/g, '$1="index.html"')
+    .replace(/(href|action)=["']\/about(\.aspx)?([?#][^"']*)?["']/g, '$1="about.html$3"')
+    .replace(/(href|action)=["']\/(alumnilist|students)(\.aspx)?([?#][^"']*)?["']/g, '$1="alumnilist.html$4"')
+    .replace(/(href|action)=["']\/(blood_donation|blood)(\.aspx)?([?#][^"']*)?["']/g, '$1="blood_donation.html$4"')
+    .replace(/(href|action)=["']\/(student_support|support)(\.aspx)?([?#][^"']*)?["']/g, '$1="student_support.html$4"')
+    .replace(/(href|action)=["']\/committee(\.aspx)?([?#][^"']*)?["']/g, '$1="committee.html$3"')
+    .replace(/(href|action)=["']\/notice(\.aspx)?([?#][^"']*)?["']/g, '$1="notice.html$3"')
+    .replace(/(href|action)=["']\/download(\.aspx)?([?#][^"']*)?["']/g, '$1="download.html$3"')
+    .replace(/(href|action)=["']\/contact(\.aspx)?([?#][^"']*)?["']/g, '$1="contact.html$3"')
+    .replace(/(href|action)=["']\/registration(\.aspx)?([?#][^"']*)?["']/g, '$1="registration.html$3"')
+    .replace(/(href|action)=["']\/registration_confirmation(\.aspx)?([?#][^"']*)?["']/g, '$1="registration_confirmation.html$3"')
+    .replace(/(href|action)=["']\/login(\.aspx)?([?#][^"']*)?["']/g, '$1="login.html$3"')
+    .replace(/(href|action)=["']\/adminlogin(\.aspx)?([?#][^"']*)?["']/g, '$1="adminlogin.html$3"')
+    .replace(/(href|action)=["']\/my_profile(\.aspx)?([?#][^"']*)?["']/g, '$1="my_profile.html$3"')
+    .replace(/(href|action)=["']\/membermanagement(\.aspx)?([?#][^"']*)?["']/g, '$1="membermanagement.html$3"')
+    .replace(/(href|action)=["']\/admin_update_member(\.aspx)?([?#][^"']*)?["']/g, '$1="admin_update_member.html$3"')
+    .replace(/(href|action)=["']\/admin_content(\.aspx)?([?#][^"']*)?["']/g, '$1="admin_content.html$3"')
+    .replace(/(href|action)=["']\/logout(\.aspx)?["']/g, '$1="index.html"')
+
+    // Any remaining /page.aspx with optional queries/hashes
+    .replace(/(href|action)=["']\/([a-zA-Z0-9_-]+)\.aspx([?#][^"']*)?["']/g, '$1="$2.html$3"');
 }
 
 // Default data for views
@@ -269,14 +279,13 @@ for (const p of pages) {
       process.exit(1);
     }
     const transformed = transformForGitHubPages(str);
-    const outPath = path.join(OUTPUT_DIR, p.output);
-    fs.writeFileSync(outPath, transformed, 'utf8');
+    
+    // Write to root
+    fs.writeFileSync(path.join(ROOT_DIR, p.output), transformed, 'utf8');
+    // Write to docs/
+    fs.writeFileSync(path.join(DOCS_DIR, p.output), transformed, 'utf8');
 
-    // Also write index.html to root for fallback GitHub Pages serving
-    if (p.output === 'index.html') {
-      fs.writeFileSync(path.join(__dirname, 'index.html'), transformed, 'utf8');
-    }
-    console.log(`✓ Generated ${p.output}`);
+    console.log(`✓ Generated ${p.output} (in root and docs/)`);
   });
 }
 
@@ -299,8 +308,8 @@ const notFoundHtml = `<!DOCTYPE html>
     </div>
 </body>
 </html>`;
-fs.writeFileSync(path.join(OUTPUT_DIR, '404.html'), notFoundHtml, 'utf8');
-fs.writeFileSync(path.join(__dirname, '404.html'), notFoundHtml, 'utf8');
-console.log('✓ Generated 404.html');
+fs.writeFileSync(path.join(ROOT_DIR, '404.html'), notFoundHtml, 'utf8');
+fs.writeFileSync(path.join(DOCS_DIR, '404.html'), notFoundHtml, 'utf8');
+console.log('✓ Generated 404.html (in root and docs/)');
 
 console.log('\nProduction build successfully completed for GitHub Pages!');

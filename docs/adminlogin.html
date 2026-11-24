@@ -152,7 +152,7 @@
 
                     <div class="card-body p-4 p-md-5">
 
-                        <form action="/adminlogin.aspx" method="POST">
+                        <form action="adminlogin.html" method="POST">
                             <div class="form-group mb-3">
                                 <label class="font-weight-bold text-dark">অ্যাডমিনিস্ট্রেটর ইউজারনেম</label>
                                 <div class="input-group">
@@ -192,6 +192,24 @@
     </div>
 </section>
 
+<script>
+$('form').on('submit', function(e) {
+    var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io');
+    if (isStatic) {
+        e.preventDefault();
+        var u = ($('input[name="username"]').val() || '').trim();
+        var p = ($('input[name="password"]').val() || '').trim();
+        if ((u.toLowerCase() === 'admin' || u.toLowerCase() === 'chapainawabganj') && 
+            (p === 'admin' || p === 'admin123' || p === 'EsB19832001' || p === 'Chapai@Admin2026')) {
+            sessionStorage.setItem('chapainawabganj_admin_logged_in', 'true');
+            window.location.href = 'membermanagement.html';
+        } else {
+            alert('ভুল অ্যাডমিনিস্ট্রেটর ক্রেডেনশিয়াল! ইউজারনেম: admin এবং সঠিক পাসওয়ার্ড প্রদান করুন।');
+        }
+    }
+});
+</script>
+
     <!-- Footer -->
     <footer class="mt-5">
         <div id="footer1">
@@ -219,7 +237,7 @@
                         <ul class="list-unstyled text-light" style="font-size: 14px; line-height: 2;">
                             <li><a href="blood_donation.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> জরুরি রক্তদাতা খুঁজুন</a></li>
                             <li><a href="student_support.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> নতুন ভর্তিচ্ছু শিক্ষার্থীদের সহায়তা</a></li>
-                            <li><a href="/student_support.aspx#mess" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> মেস ও আবাসন পরামর্শ</a></li>
+                            <li><a href="student_support.html#mess" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> মেস ও আবাসন পরামর্শ</a></li>
                             <li><a href="alumnilist.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> শিক্ষার্থী ও অ্যালামনাই ডিরেক্টরি</a></li>
                             <li><a href="registration.html" class="text-light text-decoration-none"><i class="fas fa-angle-right text-success mr-2"></i> সদস্য হিসেবে নিবন্ধন করুন</a></li>
                         </ul>

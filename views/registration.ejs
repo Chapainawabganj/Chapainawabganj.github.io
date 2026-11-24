@@ -273,6 +273,54 @@
             e.preventDefault();
             return false;
         }
+
+        var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io');
+        if (isStatic) {
+            e.preventDefault();
+            var sid = ($('input[name="student_id"]').val() || '').trim();
+            var photoSrc = $('#photoPreview').attr('src');
+            if (!photoSrc || photoSrc.indexOf('/Photo/fahim.png') !== -1) {
+                photoSrc = 'Photo/fahim.png';
+            }
+
+            var newStudent = {
+                id: 'std_' + Date.now(),
+                full_name: $('input[name="full_name"]').val(),
+                gender: $('select[name="gender"]').val() || 'Male',
+                email: $('input[name="email"]').val(),
+                contact_number: $('input[name="contact_number"]').val(),
+                blood_group: $('select[name="blood_group"]').val() || 'N/A',
+                department: $('select[name="department"]').val(),
+                session: $('select[name="session"]').val(),
+                student_id: sid,
+                roll_no: sid,
+                home_district: 'Chapainawabganj',
+                upazila: $('select[name="upazila"]').val(),
+                profession: $('select[name="profession"]').val(),
+                hall: $('input[name="hall"]').val(),
+                present_address: $('textarea[name="present_address"]').val(),
+                is_blood_donor: $('input[name="is_blood_donor"]').is(':checked'),
+                profile_photo: photoSrc,
+                status: 'Pending',
+                membership_id: 'CP-PUST-' + sid,
+                created_at: new Date().toISOString()
+            };
+
+            // Save current registration for immediate confirmation slip
+            localStorage.setItem('chapainawabganj_current_registration', JSON.stringify(newStudent));
+
+            // Append to local members list for Admin and Directory
+            var localList = [];
+            try {
+                var raw = localStorage.getItem('chapainawabganj_local_members');
+                if (raw) localList = JSON.parse(raw);
+            } catch(err) {}
+            localList.unshift(newStudent);
+            localStorage.setItem('chapainawabganj_local_members', JSON.stringify(localList));
+
+            // Redirect to confirmation page
+            window.location.href = 'registration_confirmation.html?id=' + newStudent.id;
+        }
     });
 </script>
 

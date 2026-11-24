@@ -41,15 +41,15 @@
                     <div class="card p-3 bg-light border mb-4">
                         <div class="row align-items-center mb-3 pb-3 border-bottom">
                             <div class="col-md-3 text-center mb-2 mb-md-0">
-                                <img src="/<%= student.profile_photo || 'Photo/fahim.png' %>" alt="<%= student.full_name %>" class="rounded-circle border border-success p-1 shadow-sm" style="width: 100px; height: 100px; object-fit: cover;" onerror="this.src='/Photo/fahim.png'" />
+                                <img id="confPhoto" src="/<%= student.profile_photo || 'Photo/fahim.png' %>" alt="<%= student.full_name %>" class="rounded-circle border border-success p-1 shadow-sm" style="width: 100px; height: 100px; object-fit: cover;" onerror="this.src='/Photo/fahim.png'" />
                             </div>
                             <div class="col-md-9">
-                                <h4 class="font-weight-bold text-dark mb-1"><%= student.full_name %></h4>
+                                <h4 class="font-weight-bold text-dark mb-1" id="confFullName"><%= student.full_name %></h4>
                                 <p class="text-muted mb-1">
-                                    <span class="badge badge-session mr-1"><%= student.session %> সেশন</span>
-                                    <span class="badge badge-upazila"><i class="fas fa-map-marker-alt mr-1"></i> <%= student.upazila %>, চাঁপাইনবাবগঞ্জ</span>
+                                    <span class="badge badge-session mr-1" id="confSession"><%= student.session %> সেশন</span>
+                                    <span class="badge badge-upazila" id="confUpazila"><i class="fas fa-map-marker-alt mr-1"></i> <%= student.upazila %>, চাঁপাইনবাবগঞ্জ</span>
                                 </p>
-                                <span class="badge badge-primary px-3 py-1 font-weight-bold">
+                                <span class="badge badge-primary px-3 py-1 font-weight-bold" id="confStudentId">
                                     স্টুডেন্ট আইডি: <%= student.student_id || student.roll_no %>
                                 </span>
                             </div>
@@ -58,31 +58,31 @@
                         <div class="row" style="font-size: 15px;">
                             <div class="col-md-6 mb-2">
                                 <strong><i class="fas fa-graduation-cap text-primary mr-2"></i> বিভাগ (Department):</strong>
-                                <span class="text-dark"><%= student.department %></span>
+                                <span class="text-dark" id="confDepartment"><%= student.department %></span>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <strong><i class="fas fa-tint text-danger mr-2"></i> রক্তের গ্রুপ (Blood Group):</strong>
-                                <span class="badge badge-blood"><%= student.blood_group || 'N/A' %></span>
+                                <span class="badge badge-blood" id="confBloodGroup"><%= student.blood_group || 'N/A' %></span>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <strong><i class="fas fa-phone-alt text-success mr-2"></i> মোবাইল নম্বর (Mobile):</strong>
-                                <span class="text-dark font-weight-bold"><%= student.contact_number %></span>
+                                <span class="text-dark font-weight-bold" id="confMobile"><%= student.contact_number %></span>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <strong><i class="fas fa-envelope text-info mr-2"></i> ইমেইল (Email):</strong>
-                                <span class="text-dark"><%= student.email %></span>
+                                <span class="text-dark" id="confEmail"><%= student.email %></span>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <strong><i class="fas fa-briefcase text-secondary mr-2"></i> বর্তমান পেশা (Profession):</strong>
-                                <span class="text-dark"><%= student.profession %></span>
+                                <span class="text-dark" id="confProfession"><%= student.profession %></span>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <strong><i class="fas fa-hotel text-warning mr-2"></i> হল / মেস (Residential):</strong>
-                                <span class="text-dark"><%= student.hall || 'N/A' %></span>
+                                <span class="text-dark" id="confHall"><%= student.hall || 'N/A' %></span>
                             </div>
                             <div class="col-12 mb-0">
                                 <strong><i class="fas fa-home text-muted mr-2"></i> বর্তমান ঠিকানা (Present Address):</strong>
-                                <span class="text-dark"><%= student.present_address %></span>
+                                <span class="text-dark" id="confAddress"><%= student.present_address %></span>
                             </div>
                         </div>
                     </div>
@@ -105,5 +105,33 @@
         </div>
     </div>
 </section>
+
+<script>
+$(document).ready(function() {
+    var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io');
+    if (isStatic) {
+        var raw = localStorage.getItem('chapainawabganj_current_registration');
+        if (raw) {
+            try {
+                var s = JSON.parse(raw);
+                if (s.full_name) $('#confFullName').text(s.full_name);
+                if (s.profile_photo) $('#confPhoto').attr('src', s.profile_photo);
+                if (s.session) $('#confSession').text(s.session + ' সেশন');
+                if (s.upazila) $('#confUpazila').html('<i class="fas fa-map-marker-alt mr-1"></i> ' + s.upazila + ', চাঁপাইনবাবগঞ্জ');
+                if (s.student_id) $('#confStudentId').text('স্টুডেন্ট আইডি: ' + s.student_id);
+                if (s.department) $('#confDepartment').text(s.department);
+                if (s.blood_group) $('#confBloodGroup').text(s.blood_group);
+                if (s.contact_number) $('#confMobile').text(s.contact_number);
+                if (s.email) $('#confEmail').text(s.email);
+                if (s.profession) $('#confProfession').text(s.profession);
+                if (s.hall) $('#confHall').text(s.hall);
+                if (s.present_address) $('#confAddress').text(s.present_address);
+            } catch(e) {
+                console.warn('Error reading confirmation from localStorage:', e);
+            }
+        }
+    }
+});
+</script>
 
 <%- include('partials/footer') %>

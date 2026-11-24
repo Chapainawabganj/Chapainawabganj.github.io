@@ -53,12 +53,25 @@
 
                 <!-- Students & Members Verification Table -->
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center border-bottom pb-2 mb-3">
-                    <h4 class="font-weight-bold text-dark m-0">
-                        <i class="fas fa-user-check text-success mr-2"></i> শিক্ষার্থী নিবন্ধন ও ভেরিফিকেশন তালিকা
-                    </h4>
-                    <span class="text-muted small">
-                        পেন্ডিং শিক্ষার্থীদের নামের পাশে <span class="badge badge-success"><i class="fas fa-check"></i></span> বাটনে ক্লিক করে তাৎক্ষণিক অনুমোদন দিন
-                    </span>
+                    <div>
+                        <h4 class="font-weight-bold text-dark m-0">
+                            <i class="fas fa-user-check text-success mr-2"></i> শিক্ষার্থী নিবন্ধন ও ভেরিফিকেশন তালিকা
+                        </h4>
+                        <span class="text-muted small">
+                            পেন্ডিং শিক্ষার্থীদের নামের পাশে <span class="badge badge-success"><i class="fas fa-check"></i></span> বাটনে ক্লিক করে তাৎক্ষণিক অনুমোদন দিন
+                        </span>
+                    </div>
+                    <div class="mt-2 mt-md-0 d-flex flex-wrap">
+                        <a href="/admin/export_csv" id="btnExportCSV" class="btn btn-success btn-sm font-weight-bold shadow-sm mr-2 mb-1">
+                            <i class="fas fa-file-excel mr-1"></i> এক্সেল / CSV ডাউনলোড
+                        </a>
+                        <a href="/admin/export_json" id="btnExportJSON" class="btn btn-navy btn-sm font-weight-bold shadow-sm mr-2 mb-1">
+                            <i class="fas fa-file-code mr-1"></i> JSON ব্যাকআপ ডাউনলোড
+                        </a>
+                        <button onclick="window.print()" class="btn btn-outline-secondary btn-sm font-weight-bold shadow-sm mb-1">
+                            <i class="fas fa-print mr-1"></i> প্রিন্ট তালিকা
+                        </button>
+                    </div>
                 </div>
 
                 <div class="table-responsive">
@@ -150,5 +163,174 @@
         </div>
     </div>
 </section>
+
+<script>
+    var serverMembers = <%- JSON.stringify(members) %>;
+
+    function getAllCurrentMembers() {
+        var local = [];
+        try {
+            var raw = localStorage.getItem('chapainawabganj_local_members');
+            if (raw) local = JSON.parse(raw);
+        } catch(e) {}
+        var map = {};
+        serverMembers.forEach(function(m) {
+            var key = m.student_id || m.roll_no || m.id;
+            map[key] = m;
+        });
+        local.forEach(function(m) {
+            var key = m.student_id || m.roll_no || m.id;
+            map[key] = m;
+        });
+        var list = [];
+        for (var k in map) {
+            if (map.hasOwnProperty(k)) list.push(map[k]);
+        }
+        return list;
+    }
+
+    function exportToCSV(members) {
+        var headers = [
+            "আইডি (ID)",
+            "মেম্বারশিপ কোড (Membership Code)",
+            "শিক্ষার্থীর পূর্ণ নাম (Full Name)",
+            "লিঙ্গ (Gender)",
+            "বিভাগ (Department)",
+            "সেশন (Academic Session)",
+            "স্টুডেন্ট আইডি / রোল (Student ID)",
+            "মোবাইল নম্বর (Contact Mobile)",
+            "ইমেইল ঠিকানা (Email)",
+            "নিজ উপজেলা (Home Upazila)",
+            "রক্তের গ্রুপ (Blood Group)",
+            "জরুরি রক্তদাতা (Blood Donor)",
+            "বর্তমান পেশা (Current Profession)",
+            "হল / মেস (Residential Hall/Mess)",
+            "বর্তমান পূর্ণ ঠিকানা (Present Address)",
+            "ভেরিফিকেশন স্ট্যাটাস (Verification Status)",
+            "নিবন্ধনের তারিখ (Registration Date)"
+        ];
+
+        var csv = "\uFEFF"; // UTF-8 BOM for Excel
+        csv += headers.map(function(h) { return '"' + h.replace(/"/g, '""') + '"'; }).join(",") + "\r\n";
+
+        members.forEach(function(m) {
+            var row = [
+                m.id || "",
+                m.membership_id || ("CP-PUST-" + (m.student_id || m.roll_no || "")),
+                m.full_name || "",
+                m.gender || "Male",
+                m.department || "",
+                m.session || "",
+                m.student_id || m.roll_no || "",
+                m.contact_number || "",
+                m.email || "",
+                m.upazila || "",
+                m.blood_group || "",
+                m.is_blood_donor ? "হ্যাঁ (Yes)" : "না (No)",
+                m.profession || "",
+                m.hall || "",
+                m.present_address || "",
+                m.status || "Pending",
+                m.created_at || ""
+            ];
+            csv += row.map(function(val) { return '"' + String(val).replace(/"/g, '""') + '"'; }).join(",") + "\r\n";
+        });
+
+        var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement("a");
+        var dateStr = new Date().toISOString().split("T")[0];
+        link.setAttribute("href", url);
+        link.setAttribute("download", "chapainawabganj_pust_students_" + dateStr + ".csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    function exportToJSON(members) {
+        var str = JSON.stringify(members, null, 2);
+        var blob = new Blob([str], { type: "application/json;charset=utf-8;" });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement("a");
+        var dateStr = new Date().toISOString().split("T")[0];
+        link.setAttribute("href", url);
+        link.setAttribute("download", "chapainawabganj_pust_members_backup_" + dateStr + ".json");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    $(document).ready(function() {
+        var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io');
+
+        $('#btnExportCSV').on('click', function(e) {
+            if (isStatic) {
+                e.preventDefault();
+                exportToCSV(getAllCurrentMembers());
+            }
+        });
+
+        $('#btnExportJSON').on('click', function(e) {
+            if (isStatic) {
+                e.preventDefault();
+                exportToJSON(getAllCurrentMembers());
+            }
+        });
+
+        if (isStatic) {
+            try {
+                var raw = localStorage.getItem('chapainawabganj_local_members');
+                if (raw) {
+                    var local = JSON.parse(raw);
+                    var datatable = $('.datatable').DataTable();
+                    local.forEach(function(m) {
+                        var exists = false;
+                        serverMembers.forEach(function(sm) {
+                            if (sm.id === m.id || sm.student_id === m.student_id) exists = true;
+                        });
+                        if (!exists) {
+                            var photo = m.profile_photo || 'Photo/fahim.png';
+                            var statusBadge = m.status === 'Active' 
+                                ? '<span class="badge badge-success px-2 py-1"><i class="fas fa-check-circle mr-1"></i> সক্রিয় (Active)</span>'
+                                : '<span class="badge badge-warning px-2 py-1"><i class="fas fa-clock mr-1"></i> ভেরিফিকেশন পেন্ডিং</span>';
+
+                            var toggleBtn = '<button class="btn btn-sm btn-success font-weight-bold btn-toggle-local" data-id="' + m.id + '" title="অনুমোদন করুন"><i class="fas fa-check"></i></button>';
+
+                            datatable.row.add([
+                                '<div class="text-center"><img src="' + photo + '" class="rounded-circle border" style="width: 44px; height: 44px; object-fit: cover;" onerror="this.src=\'Photo/fahim.png\'" /></div>',
+                                '<strong>' + m.full_name + '</strong><br><small class="text-muted"><i class="fas fa-phone mr-1 text-success"></i> ' + m.contact_number + '</small><br><small class="text-muted"><i class="fas fa-envelope mr-1 text-primary"></i> ' + m.email + '</small>',
+                                '<span class="font-weight-bold text-primary">' + (m.student_id || m.roll_no) + '</span>',
+                                '<strong>' + m.department + '</strong><br><span class="badge badge-session">' + m.session + ' সেশন</span>',
+                                '<span class="badge badge-upazila">' + m.upazila + '</span><br><small class="text-muted">' + m.profession + '</small>',
+                                '<span class="badge badge-blood">' + (m.blood_group || 'N/A') + '</span>',
+                                statusBadge,
+                                '<div class="btn-group btn-group-sm">' + toggleBtn + '</div>'
+                            ]).draw(false);
+                        }
+                    });
+                }
+            } catch(e) {
+                console.warn('Error loading local registrations:', e);
+            }
+
+            $(document).on('click', '.btn-toggle-local', function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                var raw = localStorage.getItem('chapainawabganj_local_members');
+                if (raw) {
+                    var list = JSON.parse(raw);
+                    list.forEach(function(item) {
+                        if (item.id === id) {
+                            item.status = item.status === 'Active' ? 'Pending' : 'Active';
+                        }
+                    });
+                    localStorage.setItem('chapainawabganj_local_members', JSON.stringify(list));
+                    alert('স্ট্যাটাস পরিবর্তন সফল হয়েছে!');
+                    location.reload();
+                }
+            });
+        }
+    });
+</script>
 
 <%- include('partials/footer') %>
