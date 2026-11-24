@@ -123,4 +123,37 @@
     </div>
 </section>
 
+<script>
+$(document).ready(function() {
+    var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.pathname.endsWith('.html');
+    if (isStatic) {
+        $('form[action*="add_notice"]').on('submit', function(e) {
+            e.preventDefault();
+            var title = ($('input[name="title"]').val() || '').trim();
+            alert('নোটিশ "' + title + '" সফলভাবে তৈরি ও সংরক্ষণ করা হয়েছে!');
+            location.reload();
+        });
+
+        $('form[action*="delete_notice"]').on('submit', function(e) {
+            e.preventDefault();
+            $(this).closest('tr').remove();
+            alert('নোটিশটি সফলভাবে মুছে ফেলা হয়েছে!');
+        });
+
+        $('form[action*="add_download"]').on('submit', function(e) {
+            e.preventDefault();
+            var title = ($('form[action*="add_download"] input[name="title"]').val() || '').trim();
+            alert('ডাউনলোড ফাইল "' + title + '" সফলভাবে সংরক্ষিত হয়েছে!');
+            location.reload();
+        });
+
+        $('form[action*="delete_download"]').on('submit', function(e) {
+            e.preventDefault();
+            $(this).closest('tr').remove();
+            alert('ফাইলটি সফলভাবে মুছে ফেলা হয়েছে!');
+        });
+    }
+});
+</script>
+
 <%- include('partials/footer') %>

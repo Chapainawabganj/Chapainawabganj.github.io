@@ -60,7 +60,7 @@
 
 <script>
 $('form').on('submit', function(e) {
-    var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io');
+    var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.pathname.endsWith('.html');
     if (isStatic) {
         e.preventDefault();
         var u = ($('input[name="username"]').val() || '').trim();
@@ -68,6 +68,7 @@ $('form').on('submit', function(e) {
         if ((u.toLowerCase() === 'admin' || u.toLowerCase() === 'chapainawabganj') && 
             (p === 'admin' || p === 'admin123' || p === 'EsB19832001' || p === 'Chapai@Admin2026')) {
             sessionStorage.setItem('chapainawabganj_admin_logged_in', 'true');
+            localStorage.setItem('chapainawabganj_admin_logged_in', 'true');
             window.location.href = 'membermanagement.html';
         } else {
             alert('ভুল অ্যাডমিনিস্ট্রেটর ক্রেডেনশিয়াল! ইউজারনেম: admin এবং সঠিক পাসওয়ার্ড প্রদান করুন।');

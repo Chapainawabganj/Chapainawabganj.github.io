@@ -27,113 +27,127 @@
                             </div>
                         </form>
 
-                        <% if (typeof member !== 'undefined' && member) { %>
-                            <!-- Student Edit Form -->
-                            <form action="/admin_update_member.aspx" method="POST">
-                                <input type="hidden" name="roll_no" value="<%= member.student_id || member.roll_no %>" />
+                        <% 
+                        var hasServerMember = (typeof member !== 'undefined' && member);
+                        var cur = hasServerMember ? member : {
+                            full_name: '',
+                            blood_group: 'A+',
+                            upazila: 'Chapainawabganj Sadar',
+                            email: '',
+                            contact_number: '',
+                            department: '',
+                            session: '2024-25',
+                            profession: 'Current Student',
+                            hall: '',
+                            present_address: '',
+                            is_blood_donor: false,
+                            status: 'Active',
+                            student_id: '',
+                            roll_no: ''
+                        };
+                        %>
 
-                                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center border-bottom pb-2 mb-3">
-                                    <h5 class="font-weight-bold text-primary m-0">
-                                        <i class="fas fa-user-graduate mr-2"></i> এডিট করা হচ্ছে: <%= member.full_name %> (আইডি: <%= member.student_id || member.roll_no %>)
-                                    </h5>
-                                    <div class="mt-2 mt-md-0">
-                                        <label class="font-weight-bold mr-2 mb-0">ভেরিফিকেশন স্ট্যাটাস:</label>
-                                        <select name="status" class="form-control d-inline-block w-auto font-weight-bold">
-                                            <option value="Active" <%= member.status === 'Active' ? 'selected' : '' %>>সক্রিয় (Active)</option>
-                                            <option value="Pending" <%= member.status === 'Pending' ? 'selected' : '' %>>পেন্ডিং ভেরিফিকেশন (Pending)</option>
-                                        </select>
-                                    </div>
-                                </div>
+                        <!-- Student Edit Form -->
+                        <form id="adminEditForm" action="/admin_update_member.aspx" method="POST" style="<%= hasServerMember ? '' : 'display:none;' %>">
+                            <input type="hidden" name="roll_no" value="<%= cur.student_id || cur.roll_no %>" />
 
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label class="font-weight-bold">পূর্ণ নাম (Full Name)</label>
-                                        <input name="full_name" type="text" class="form-control" value="<%= member.full_name %>" required />
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label class="font-weight-bold">রক্তের গ্রুপ</label>
-                                        <input name="blood_group" type="text" class="form-control" value="<%= member.blood_group %>" />
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label class="font-weight-bold">উপজেলা</label>
-                                        <select name="upazila" class="form-control">
-                                            <option value="Chapainawabganj Sadar" <%= member.upazila === 'Chapainawabganj Sadar' ? 'selected' : '' %>>চাঁপাইনবাবগঞ্জ সদর</option>
-                                            <option value="Shibganj" <%= member.upazila === 'Shibganj' ? 'selected' : '' %>>শিবগঞ্জ</option>
-                                            <option value="Gomostapur" <%= member.upazila === 'Gomostapur' ? 'selected' : '' %>>গোমস্তাপুর</option>
-                                            <option value="Nachole" <%= member.upazila === 'Nachole' ? 'selected' : '' %>>নাচোল</option>
-                                            <option value="Bholahat" <%= member.upazila === 'Bholahat' ? 'selected' : '' %>>ভোলাহাট</option>
-                                        </select>
-                                    </div>
+                            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center border-bottom pb-2 mb-3">
+                                <h5 class="font-weight-bold text-primary m-0" id="editingName">
+                                    <i class="fas fa-user-graduate mr-2"></i> এডিট করা হচ্ছে: <%= cur.full_name %> (আইডি: <%= cur.student_id || cur.roll_no %>)
+                                </h5>
+                                <div class="mt-2 mt-md-0">
+                                    <label class="font-weight-bold mr-2 mb-0">ভেরিফিকেশন স্ট্যাটাস:</label>
+                                    <select name="status" class="form-control d-inline-block w-auto font-weight-bold">
+                                        <option value="Active" <%= cur.status === 'Active' ? 'selected' : '' %>>সক্রিয় (Active)</option>
+                                        <option value="Pending" <%= cur.status === 'Pending' ? 'selected' : '' %>>পেন্ডিং ভেরিফিকেশন (Pending)</option>
+                                    </select>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label class="font-weight-bold">ইমেইল ঠিকানা</label>
-                                        <input name="email" type="email" class="form-control" value="<%= member.email %>" required />
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label class="font-weight-bold">মোবাইল নম্বর</label>
-                                        <input name="contact_number" type="text" class="form-control" value="<%= member.contact_number %>" required />
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label class="font-weight-bold">বিভাগ (Department)</label>
-                                        <input name="department" type="text" class="form-control" value="<%= member.department %>" required />
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label class="font-weight-bold">সেশন (Session)</label>
-                                        <input name="session" type="text" class="form-control" value="<%= member.session %>" required />
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label class="font-weight-bold">বর্তমান পেশা / অবস্থান</label>
-                                        <input name="profession" type="text" class="form-control" value="<%= member.profession %>" />
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label class="font-weight-bold">পাবনায় হল / মেস</label>
-                                        <input name="hall" type="text" class="form-control" value="<%= member.hall %>" />
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label class="font-weight-bold">বর্তমান পূর্ণ ঠিকানা</label>
-                                        <input name="present_address" type="text" class="form-control" value="<%= member.present_address %>" />
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <div class="form-check mt-2">
-                                            <input class="form-check-input" type="checkbox" name="is_blood_donor" id="adminDonorCheck" value="yes" <%= member.is_blood_donor ? 'checked' : '' %> />
-                                            <label class="form-check-label font-weight-bold" for="adminDonorCheck">
-                                                জরুরি রক্তদাতা নেটওয়ার্কে অন্তর্ভুক্ত
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label class="font-weight-bold text-danger">পাসওয়ার্ড রিসেট (ঐচ্ছিক)</label>
-                                        <input name="new_password" type="text" class="form-control" placeholder="নতুন পাসওয়ার্ড দিন (অপরিবর্তিত রাখতে খালি রাখুন)" />
-                                    </div>
-                                </div>
-
-                                <div class="text-center mt-4">
-                                    <button type="submit" class="btn btn-emerald btn-lg px-5 shadow font-weight-bold">
-                                        <i class="fas fa-save mr-2"></i> তথ্য সংরক্ষণ ও আপডেট করুন
-                                    </button>
-                                </div>
-                            </form>
-                        <% } else if (typeof searchedRoll !== 'undefined' && searchedRoll) { %>
-                            <div class="alert alert-warning text-center my-4">
-                                <i class="fas fa-exclamation-circle mr-2"></i> স্টুডেন্ট আইডি বা রোল: <strong><%= searchedRoll %></strong> এর কোনো শিক্ষার্থীর রেকর্ড পাওয়া যায়নি।
                             </div>
-                        <% } else { %>
-                            <div class="text-center text-muted my-5">
-                                <i class="fas fa-search fa-3x mb-3 text-secondary"></i>
-                                <h5>উপরে শিক্ষার্থীর স্টুডেন্ট আইডি বা রোল লিখে সার্চ করুন এবং তথ্য সংশোধন করুন।</h5>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">পূর্ণ নাম (Full Name)</label>
+                                    <input name="full_name" type="text" class="form-control" value="<%= cur.full_name %>" required />
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label class="font-weight-bold">রক্তের গ্রুপ</label>
+                                    <input name="blood_group" type="text" class="form-control" value="<%= cur.blood_group %>" />
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label class="font-weight-bold">উপজেলা</label>
+                                    <select name="upazila" class="form-control">
+                                        <option value="Chapainawabganj Sadar" <%= cur.upazila === 'Chapainawabganj Sadar' ? 'selected' : '' %>>চাঁপাইনবাবগঞ্জ সদর</option>
+                                        <option value="Shibganj" <%= cur.upazila === 'Shibganj' ? 'selected' : '' %>>শিবগঞ্জ</option>
+                                        <option value="Gomostapur" <%= cur.upazila === 'Gomostapur' ? 'selected' : '' %>>গোমস্তাপুর</option>
+                                        <option value="Nachole" <%= cur.upazila === 'Nachole' ? 'selected' : '' %>>নাচোল</option>
+                                        <option value="Bholahat" <%= cur.upazila === 'Bholahat' ? 'selected' : '' %>>ভোলাহাট</option>
+                                    </select>
+                                </div>
                             </div>
-                        <% } %>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">ইমেইল ঠিকানা</label>
+                                    <input name="email" type="email" class="form-control" value="<%= cur.email %>" required />
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">মোবাইল নম্বর</label>
+                                    <input name="contact_number" type="text" class="form-control" value="<%= cur.contact_number %>" required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">বিভাগ (Department)</label>
+                                    <input name="department" type="text" class="form-control" value="<%= cur.department %>" required />
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label class="font-weight-bold">সেশন (Session)</label>
+                                    <input name="session" type="text" class="form-control" value="<%= cur.session %>" required />
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label class="font-weight-bold">বর্তমান পেশা / অবস্থান</label>
+                                    <input name="profession" type="text" class="form-control" value="<%= cur.profession %>" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">পাবনায় হল / মেস</label>
+                                    <input name="hall" type="text" class="form-control" value="<%= cur.hall %>" />
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">বর্তমান পূর্ণ ঠিকানা</label>
+                                    <input name="present_address" type="text" class="form-control" value="<%= cur.present_address %>" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" name="is_blood_donor" id="adminDonorCheck" value="yes" <%= cur.is_blood_donor ? 'checked' : '' %> />
+                                        <label class="form-check-label font-weight-bold" for="adminDonorCheck">
+                                            জরুরি রক্তদাতা নেটওয়ার্কে অন্তর্ভুক্ত
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold text-danger">পাসওয়ার্ড রিসেট (ঐচ্ছিক)</label>
+                                    <input name="new_password" type="text" class="form-control" placeholder="নতুন পাসওয়ার্ড দিন (অপরিবর্তিত রাখতে খালি রাখুন)" />
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-emerald btn-lg px-5 shadow font-weight-bold">
+                                    <i class="fas fa-save mr-2"></i> তথ্য সংরক্ষণ ও আপডেট করুন
+                                </button>
+                            </div>
+                        </form>
+
+                        <div id="noMemberPrompt" class="text-center text-muted my-5" style="<%= hasServerMember ? 'display:none;' : '' %>">
+                            <i class="fas fa-search fa-3x mb-3 text-secondary"></i>
+                            <h5 id="promptMessage">উপরে শিক্ষার্থীর স্টুডেন্ট আইডি বা রোল লিখে সার্চ করুন এবং তথ্য সংশোধন করুন।</h5>
+                        </div>
 
                     </div>
                     <div class="card-footer bg-white border-0 pb-4 pl-4">
@@ -144,5 +158,137 @@
         </div>
     </div>
 </section>
+
+<script>
+$(document).ready(function() {
+    var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.pathname.endsWith('.html');
+    if (isStatic) {
+        var currentEditingStudent = null;
+
+        function loadStudentByRoll(roll) {
+            if (!roll) return;
+            var localRaw = localStorage.getItem('chapainawabganj_local_members');
+            var list = localRaw ? JSON.parse(localRaw) : [];
+            var found = null;
+            for (var i = 0; i < list.length; i++) {
+                if (String(list[i].student_id) === String(roll) || String(list[i].roll_no) === String(roll) || String(list[i].id) === String(roll)) {
+                    found = list[i];
+                    break;
+                }
+            }
+
+            if (found) {
+                currentEditingStudent = found;
+                try {
+                    var overridesRaw = localStorage.getItem('chapainawabganj_status_overrides');
+                    if (overridesRaw) {
+                        var ov = JSON.parse(overridesRaw);
+                        var sKey = String(found.id || found.student_id);
+                        if (ov[sKey]) found.status = ov[sKey];
+                    }
+                } catch(e) {}
+
+                $('#noMemberPrompt').hide();
+                $('#adminEditForm').show();
+
+                $('#editingName').html('<i class="fas fa-user-graduate mr-2"></i> এডিট করা হচ্ছে: ' + found.full_name + ' (আইডি: ' + (found.student_id || found.roll_no) + ')');
+                $('input[name="roll_no"]').val(found.student_id || found.roll_no);
+                $('select[name="status"]').val(found.status || 'Active');
+                $('input[name="full_name"]').val(found.full_name || '');
+                $('input[name="blood_group"]').val(found.blood_group || '');
+                $('select[name="upazila"]').val(found.upazila || 'Chapainawabganj Sadar');
+                $('input[name="email"]').val(found.email || '');
+                $('input[name="contact_number"]').val(found.contact_number || '');
+                $('input[name="department"]').val(found.department || '');
+                $('input[name="session"]').val(found.session || '');
+                $('input[name="profession"]').val(found.profession || '');
+                $('input[name="hall"]').val(found.hall || '');
+                $('input[name="present_address"]').val(found.present_address || '');
+                $('#adminDonorCheck').prop('checked', !!found.is_blood_donor);
+            } else {
+                $('#adminEditForm').hide();
+                $('#noMemberPrompt').show();
+                $('#promptMessage').html('<span class="text-danger"><i class="fas fa-exclamation-triangle mr-1"></i> স্টুডেন্ট আইডি: <strong>' + roll + '</strong> এর কোনো রেকর্ড পাওয়া যায়নি।</span>');
+            }
+        }
+
+        var urlParams = new URLSearchParams(window.location.search);
+        var roll = urlParams.get('roll');
+        if (roll) {
+            $('input[name="roll"]').val(roll);
+            loadStudentByRoll(roll);
+        }
+
+        // Top Search Form
+        $('form[action*="admin_update_member"][method="GET"]').on('submit', function(e) {
+            e.preventDefault();
+            var searched = ($('input[name="roll"]').val() || '').trim();
+            if (searched) {
+                loadStudentByRoll(searched);
+            }
+        });
+
+        // Edit Form Submit
+        $('#adminEditForm').on('submit', function(e) {
+            e.preventDefault();
+            var rollNo = $('input[name="roll_no"]').val();
+            var localRaw = localStorage.getItem('chapainawabganj_local_members');
+            var list = localRaw ? JSON.parse(localRaw) : [];
+            var updated = false;
+
+            for (var i = 0; i < list.length; i++) {
+                if (String(list[i].student_id) === String(rollNo) || String(list[i].roll_no) === String(rollNo) || (currentEditingStudent && String(list[i].id) === String(currentEditingStudent.id))) {
+                    list[i].full_name = $('input[name="full_name"]').val();
+                    list[i].status = $('select[name="status"]').val();
+                    list[i].blood_group = $('input[name="blood_group"]').val();
+                    list[i].upazila = $('select[name="upazila"]').val();
+                    list[i].email = $('input[name="email"]').val();
+                    list[i].contact_number = $('input[name="contact_number"]').val();
+                    list[i].department = $('input[name="department"]').val();
+                    list[i].session = $('input[name="session"]').val();
+                    list[i].profession = $('input[name="profession"]').val();
+                    list[i].hall = $('input[name="hall"]').val();
+                    list[i].present_address = $('input[name="present_address"]').val();
+                    list[i].is_blood_donor = $('#adminDonorCheck').is(':checked');
+                    updated = true;
+                    break;
+                }
+            }
+
+            if (!updated && currentEditingStudent) {
+                currentEditingStudent.full_name = $('input[name="full_name"]').val();
+                currentEditingStudent.status = $('select[name="status"]').val();
+                currentEditingStudent.blood_group = $('input[name="blood_group"]').val();
+                currentEditingStudent.upazila = $('select[name="upazila"]').val();
+                currentEditingStudent.email = $('input[name="email"]').val();
+                currentEditingStudent.contact_number = $('input[name="contact_number"]').val();
+                currentEditingStudent.department = $('input[name="department"]').val();
+                currentEditingStudent.session = $('input[name="session"]').val();
+                currentEditingStudent.profession = $('input[name="profession"]').val();
+                currentEditingStudent.hall = $('input[name="hall"]').val();
+                currentEditingStudent.present_address = $('input[name="present_address"]').val();
+                currentEditingStudent.is_blood_donor = $('#adminDonorCheck').is(':checked');
+                list.unshift(currentEditingStudent);
+            }
+
+            localStorage.setItem('chapainawabganj_local_members', JSON.stringify(list));
+
+            // Also record status override
+            try {
+                var overridesRaw = localStorage.getItem('chapainawabganj_status_overrides');
+                var ov = overridesRaw ? JSON.parse(overridesRaw) : {};
+                ov[String(rollNo)] = $('select[name="status"]').val();
+                if (currentEditingStudent && currentEditingStudent.id) {
+                    ov[String(currentEditingStudent.id)] = $('select[name="status"]').val();
+                }
+                localStorage.setItem('chapainawabganj_status_overrides', JSON.stringify(ov));
+            } catch(e) {}
+
+            alert('শিক্ষার্থীর তথ্য সফলভাবে সংরক্ষণ ও আপডেট করা হয়েছে!');
+            window.location.href = 'membermanagement.html';
+        });
+    }
+});
+</script>
 
 <%- include('partials/footer') %>

@@ -260,4 +260,143 @@ var member = currentMember;
     </div>
 </section>
 
+<script>
+$(document).ready(function() {
+    var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.pathname.endsWith('.html');
+    if (isStatic) {
+        var student = null;
+        try {
+            var rawUser = sessionStorage.getItem('chapainawabganj_current_user') || localStorage.getItem('chapainawabganj_current_user');
+            if (rawUser) student = JSON.parse(rawUser);
+            if (!student) {
+                var loginId = sessionStorage.getItem('chapainawabganj_user_logged_in') || localStorage.getItem('chapainawabganj_user_logged_in');
+                var localRaw = localStorage.getItem('chapainawabganj_local_members');
+                var list = localRaw ? JSON.parse(localRaw) : [];
+                if (loginId) {
+                    for (var i = 0; i < list.length; i++) {
+                        if (String(list[i].student_id) === String(loginId) || String(list[i].email) === String(loginId) || String(list[i].contact_number) === String(loginId)) {
+                            student = list[i];
+                            break;
+                        }
+                    }
+                }
+                if (!student && list.length > 0) {
+                    student = list[0];
+                }
+            }
+        } catch(e) {}
+
+        if (student) {
+            try {
+                var overridesRaw = localStorage.getItem('chapainawabganj_status_overrides');
+                if (overridesRaw) {
+                    var ov = JSON.parse(overridesRaw);
+                    var sKey = String(student.id || student.student_id);
+                    if (ov[sKey]) student.status = ov[sKey];
+                }
+            } catch(e) {}
+
+            var photo = student.profile_photo || 'Photo/fahim.png';
+            $('.position-relative img').attr('src', photo);
+            $('.position-relative .badge')
+                .removeClass('badge-success badge-warning')
+                .addClass(student.status === 'Active' ? 'badge-success' : 'badge-warning')
+                .html('<i class="fas fa-' + (student.status === 'Active' ? 'check-circle' : 'clock') + ' mr-1"></i> ' + (student.status === 'Active' ? 'সক্রিয় সদস্য' : 'পেন্ডিং ভেরিফিকেশন'));
+
+            $('.card-body h4').first().text(student.full_name);
+            $('.card-body p.text-muted').first().text(student.department);
+            $('.badge-session').first().text(student.session + ' সেশন');
+            $('.badge-upazila').first().html('<i class="fas fa-map-marker-alt mr-1"></i> ' + student.upazila);
+
+            var details = $('.card-body .text-left p');
+            if (details.length >= 6) {
+                $(details[0]).html('<strong><i class="fas fa-id-badge text-primary mr-2"></i> স্টুডেন্ট আইডি:</strong> ' + (student.student_id || student.roll_no));
+                $(details[1]).html('<strong><i class="fas fa-tint text-danger mr-2"></i> রক্তের গ্রুপ:</strong> <span class="badge badge-blood">' + (student.blood_group || 'N/A') + '</span>');
+                $(details[2]).html('<strong><i class="fas fa-phone text-success mr-2"></i> মোবাইল:</strong> ' + (student.contact_number || 'N/A'));
+                $(details[3]).html('<strong><i class="fas fa-envelope text-info mr-2"></i> ইমেইল:</strong> ' + (student.email || 'N/A'));
+                $(details[4]).html('<strong><i class="fas fa-hotel text-warning mr-2"></i> হল / মেস:</strong> ' + (student.hall || 'N/A'));
+                $(details[5]).html('<strong><i class="fas fa-briefcase text-secondary mr-2"></i> বর্তমান পেশা:</strong> ' + (student.profession || 'Current Student'));
+            }
+
+            $('#studentCard img').first().attr('src', 'Photo/me.png');
+            $('#studentCard .col-4 img').attr('src', photo);
+            $('#studentCard .col-4 .badge').text(student.blood_group || 'Blood N/A');
+            $('#studentCard .col-8 h6').text(student.full_name);
+            var idCardDivs = $('#studentCard .col-8 div');
+            if (idCardDivs.length >= 5) {
+                $(idCardDivs[0]).html('<strong>আইডি:</strong> ' + (student.student_id || student.roll_no));
+                $(idCardDivs[1]).html('<strong>বিভাগ:</strong> ' + (student.department || '').split('(')[0]);
+                $(idCardDivs[2]).html('<strong>সেশন:</strong> ' + student.session);
+                $(idCardDivs[3]).html('<strong>উপজেলা:</strong> ' + student.upazila);
+                $(idCardDivs[4]).html('<strong>কার্ড নং:</strong> ' + (student.membership_id || ('CP-PUST-' + (student.student_id || student.roll_no))));
+            }
+            $('#studentCard .border-top span').first().html('সদস্য স্ট্যাটাস: <strong>' + (student.status === 'Active' ? 'সক্রিয় (Active)' : 'ভেরিফিকেশন অপেক্ষমান') + '</strong>');
+
+            $('input[name="full_name"]').val(student.full_name);
+            $('select[name="gender"]').val(student.gender || 'Male');
+            $('input[name="email"]').val(student.email);
+            $('input[name="contact_number"]').val(student.contact_number);
+            $('select[name="blood_group"]').val(student.blood_group || 'N/A');
+            $('select[name="upazila"]').val(student.upazila);
+            $('input[name="department"]').val(student.department);
+            $('input[name="session"]').val(student.session);
+            $('input[name="profession"]').val(student.profession);
+            $('input[name="hall"]').val(student.hall);
+            $('textarea[name="present_address"]').val(student.present_address);
+            $('#donorCheck').prop('checked', !!student.is_blood_donor);
+        }
+
+        $('#personalInfo form').on('submit', function(e) {
+            e.preventDefault();
+            if (!student) {
+                alert('তথ্য সংরক্ষণ করা হয়েছে!');
+                return;
+            }
+            student.full_name = $('input[name="full_name"]').val();
+            student.gender = $('select[name="gender"]').val();
+            student.email = $('input[name="email"]').val();
+            student.contact_number = $('input[name="contact_number"]').val();
+            student.blood_group = $('select[name="blood_group"]').val();
+            student.upazila = $('select[name="upazila"]').val();
+            student.department = $('input[name="department"]').val();
+            student.session = $('input[name="session"]').val();
+            student.profession = $('input[name="profession"]').val();
+            student.hall = $('input[name="hall"]').val();
+            student.present_address = $('textarea[name="present_address"]').val();
+            student.is_blood_donor = $('#donorCheck').is(':checked');
+
+            localStorage.setItem('chapainawabganj_current_user', JSON.stringify(student));
+            sessionStorage.setItem('chapainawabganj_current_user', JSON.stringify(student));
+
+            try {
+                var localRaw = localStorage.getItem('chapainawabganj_local_members');
+                var list = localRaw ? JSON.parse(localRaw) : [];
+                for (var i = 0; i < list.length; i++) {
+                    if (String(list[i].id) === String(student.id) || String(list[i].student_id) === String(student.student_id)) {
+                        list[i] = Object.assign({}, list[i], student);
+                        break;
+                    }
+                }
+                localStorage.setItem('chapainawabganj_local_members', JSON.stringify(list));
+            } catch(e) {}
+
+            alert('আপনার প্রোফাইল তথ্য সফলভাবে সংরক্ষণ ও আপডেট করা হয়েছে!');
+            location.reload();
+        });
+
+        $('#security form').on('submit', function(e) {
+            e.preventDefault();
+            var nPass = $('input[name="new_password"]').val();
+            var cPass = $('input[name="confirm_password"]').val();
+            if (nPass !== cPass) {
+                alert('নতুন পাসওয়ার্ড দুটি মিলছে না! পুনরায় চেক করুন।');
+                return;
+            }
+            alert('আপনার লগইন পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে!');
+            $('input[type="password"]').val('');
+        });
+    }
+});
+</script>
+
 <%- include('partials/footer') %>

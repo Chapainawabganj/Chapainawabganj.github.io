@@ -61,7 +61,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto align-items-lg-center">
+                <ul class="navbar-nav mr-auto align-items-lg-center" id="mainNavList">
                     <li class="nav-item ">
                         <a class="nav-link" href="index.html"><i class="fas fa-home"></i> হোম</a>
                     </li>
@@ -90,24 +90,161 @@
                 </ul>
 
                 <!-- Action Button & User Area -->
-                <ul class="navbar-nav ml-auto align-items-lg-center">
+                <ul class="navbar-nav ml-auto align-items-lg-center" id="userNavArea">
                     <li class="nav-item mr-lg-3 my-2 my-lg-0">
                         <a class="nav-link btn-apply font-weight-bold" href="registration.html">
                             <i class="fas fa-user-plus mr-1"></i> সদস্য নিবন্ধন
                         </a>
                     </li>
 
+                    <li class="nav-item" id="userAreaContainer">
                     
-                        <li class="nav-item">
-                            <a class="btn btn-outline-primary btn-sm px-3 font-weight-bold" href="login.html">
-                                <i class="fas fa-sign-in-alt mr-1"></i> লগইন
-                            </a>
-                        </li>
+                        <a class="btn btn-outline-primary btn-sm px-3 font-weight-bold shadow-sm" href="login.html" id="navLoginBtn">
+                            <i class="fas fa-sign-in-alt mr-1"></i> লগইন
+                        </a>
                     
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
+
+    <script>
+    (function() {
+        function syncAuthNavbar() {
+            var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.pathname.endsWith('.html');
+            var isAdmin = (sessionStorage.getItem('chapainawabganj_admin_logged_in') === 'true' || localStorage.getItem('chapainawabganj_admin_logged_in') === 'true');
+            var studentUser = null;
+            try {
+                var raw = sessionStorage.getItem('chapainawabganj_current_user') || localStorage.getItem('chapainawabganj_current_user');
+                if (raw) studentUser = JSON.parse(raw);
+                if (!studentUser) {
+                    var loginId = sessionStorage.getItem('chapainawabganj_user_logged_in') || localStorage.getItem('chapainawabganj_user_logged_in');
+                    if (loginId) {
+                        var localRaw = localStorage.getItem('chapainawabganj_local_members');
+                        var list = localRaw ? JSON.parse(localRaw) : [];
+                        for (var i = 0; i < list.length; i++) {
+                            if (String(list[i].student_id) === String(loginId) || String(list[i].email) === String(loginId) || String(list[i].contact_number) === String(loginId)) {
+                                studentUser = list[i];
+                                break;
+                            }
+                        }
+                        if (!studentUser) {
+                            studentUser = { full_name: 'শিক্ষার্থী', student_id: loginId, status: 'Active' };
+                        }
+                    }
+                }
+            } catch(e) {}
+
+            var mainNavList = document.getElementById('mainNavList');
+            var userAreaContainer = document.getElementById('userAreaContainer');
+
+            if (isAdmin) {
+                // Ensure Admin Dropdown is present in main navigation menu
+                if (!document.getElementById('adminNavDropdown') && mainNavList) {
+                    var adminLi = document.createElement('li');
+                    adminLi.className = 'nav-item dropdown ml-lg-2';
+                    adminLi.id = 'adminNavDropdown';
+                    var linkPrefix = isStatic ? '' : '/';
+                    var ext = isStatic ? '.html' : '.aspx';
+                    adminLi.innerHTML = 
+                        '<a class="nav-link dropdown-toggle text-danger font-weight-bold" href="#" id="adminMenuDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                            '<i class="fas fa-shield-alt mr-1"></i> অ্যাডমিন প্যানেল' +
+                        '</a>' +
+                        '<div class="dropdown-menu shadow border-0" aria-labelledby="adminMenuDropdown">' +
+                            '<a class="dropdown-item" href="' + linkPrefix + 'membermanagement' + ext + '"><i class="fas fa-user-check text-success mr-2"></i> শিক্ষার্থী ভেরিফিকেশন ও তালিকা</a>' +
+                            '<a class="dropdown-item" href="' + linkPrefix + 'admin_update_member' + ext + '"><i class="fas fa-user-edit text-primary mr-2"></i> তথ্য সংশোধন ও আপডেট</a>' +
+                            '<a class="dropdown-item" href="' + linkPrefix + 'admin_content' + ext + '"><i class="fas fa-bullhorn text-info mr-2"></i> নোটিশ ও ফাইল আপলোড</a>' +
+                            '<div class="dropdown-divider"></div>' +
+                            '<a class="dropdown-item text-danger btn-logout-action" href="#" style="cursor:pointer;"><i class="fas fa-sign-out-alt mr-2"></i> অ্যাডমিন লগআউট</a>' +
+                        '</div>';
+                    mainNavList.appendChild(adminLi);
+                }
+
+                // Ensure Admin Badge & Logout Button are in user area
+                if (userAreaContainer) {
+                    var linkPrefix = isStatic ? '' : '/';
+                    var ext = isStatic ? '.html' : '.aspx';
+                    userAreaContainer.innerHTML = 
+                        '<div class="d-flex align-items-center">' +
+                            '<a href="' + linkPrefix + 'membermanagement' + ext + '" class="badge badge-danger p-2 mr-2 text-white text-decoration-none shadow-sm"><i class="fas fa-user-shield mr-1"></i> অ্যাডমিনিস্ট্রেটর</a>' +
+                            '<button type="button" class="btn btn-outline-danger btn-sm font-weight-bold btn-logout-action shadow-sm"><i class="fas fa-sign-out-alt mr-1"></i> লগআউট</button>' +
+                        '</div>';
+                }
+            } else if (studentUser) {
+                var adminDrop = document.getElementById('adminNavDropdown');
+                if (adminDrop) adminDrop.remove();
+
+                if (userAreaContainer) {
+                    var firstName = (studentUser.full_name || 'শিক্ষার্থী').split(' ')[0];
+                    var statusClass = studentUser.status === 'Active' ? 'success' : 'warning';
+                    var statusText = studentUser.status === 'Active' ? 'সক্রিয়' : 'পেন্ডিং';
+                    var photo = studentUser.profile_photo || 'Photo/fahim.png';
+                    var linkPrefix = isStatic ? '' : '/';
+                    var ext = isStatic ? '.html' : '.aspx';
+
+                    userAreaContainer.innerHTML = 
+                        '<div class="d-flex align-items-center">' +
+                            '<img src="' + photo + '" class="rounded-circle mr-2 border border-success" alt="Profile" height="38" width="38" style="object-fit:cover;" onerror="this.onerror=null; this.src=\'Photo/fahim.png\';" />' +
+                            '<div class="dropdown">' +
+                                '<a class="nav-link dropdown-toggle font-weight-bold text-dark px-1" href="#" id="userDropdown" role="button" data-toggle="dropdown">' +
+                                    firstName +
+                                    '<span class="badge badge-' + statusClass + ' ml-1">' + statusText + '</span>' +
+                                '</a>' +
+                                '<div class="dropdown-menu dropdown-menu-right shadow border-0">' +
+                                    '<a class="dropdown-item" href="' + linkPrefix + 'my_profile' + ext + '"><i class="fas fa-id-card text-primary mr-2"></i> প্রোফাইল ও ডিজিটাল আইডি</a>' +
+                                    '<div class="dropdown-divider"></div>' +
+                                    '<a class="dropdown-item text-danger btn-logout-action" href="#" style="cursor:pointer;"><i class="fas fa-sign-out-alt mr-2"></i> লগআউট</a>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>';
+                }
+            } else {
+                var adminDrop = document.getElementById('adminNavDropdown');
+                var path = window.location.pathname.toLowerCase();
+                var isAdminPage = path.includes('membermanagement') || path.includes('admin_update_member') || path.includes('admin_content');
+
+                if (isStatic && !isAdminPage && adminDrop) {
+                    adminDrop.remove();
+                }
+
+                if (isStatic && isAdminPage && !isAdmin) {
+                    alert('অ্যাডমিন প্যানেলে প্রবেশ করতে প্রথমে সঠিক ইউজারনেম ও পাসওয়ার্ড দিয়ে লগইন করুন।');
+                    window.location.href = 'adminlogin.html';
+                }
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', syncAuthNavbar);
+        } else {
+            syncAuthNavbar();
+        }
+
+        // Global Logout Handler
+        document.addEventListener('click', function(e) {
+            var target = e.target.closest('.btn-logout-action');
+            if (!target && e.target.tagName === 'A') {
+                var href = e.target.getAttribute('href') || '';
+                if (href === '/logout' || href.endsWith('logout') || href.endsWith('logout.html')) {
+                    target = e.target;
+                }
+            }
+            if (target) {
+                e.preventDefault();
+                sessionStorage.removeItem('chapainawabganj_admin_logged_in');
+                localStorage.removeItem('chapainawabganj_admin_logged_in');
+                sessionStorage.removeItem('chapainawabganj_current_user');
+                localStorage.removeItem('chapainawabganj_current_user');
+                sessionStorage.removeItem('chapainawabganj_user_logged_in');
+                localStorage.removeItem('chapainawabganj_user_logged_in');
+                alert('সফলভাবে লগআউট সম্পন্ন হয়েছে।');
+                var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.pathname.endsWith('.html');
+                window.location.href = isStatic ? 'index.html' : '/';
+            }
+        });
+    })();
+    </script>
 
     <!-- Global Flash Alerts -->
     <div class="container mt-3">
@@ -180,11 +317,28 @@
 
 <script>
 $('form').on('submit', function(e) {
-    var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io');
+    var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.pathname.endsWith('.html');
     if (isStatic) {
         e.preventDefault();
         var id = ($('input[name="email"]').val() || '').trim();
+        
+        var localRaw = localStorage.getItem('chapainawabganj_local_members');
+        var list = localRaw ? JSON.parse(localRaw) : [];
+        var found = null;
+        for (var i = 0; i < list.length; i++) {
+            var m = list[i];
+            if (String(m.student_id) === id || String(m.roll_no) === id || String(m.email).toLowerCase() === id.toLowerCase() || String(m.contact_number) === id) {
+                found = m;
+                break;
+            }
+        }
+        
         sessionStorage.setItem('chapainawabganj_user_logged_in', id);
+        localStorage.setItem('chapainawabganj_user_logged_in', id);
+        if (found) {
+            sessionStorage.setItem('chapainawabganj_current_user', JSON.stringify(found));
+            localStorage.setItem('chapainawabganj_current_user', JSON.stringify(found));
+        }
         window.location.href = 'my_profile.html';
     }
 });

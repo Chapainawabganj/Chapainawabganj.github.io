@@ -64,11 +64,28 @@
 
 <script>
 $('form').on('submit', function(e) {
-    var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io');
+    var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.pathname.endsWith('.html');
     if (isStatic) {
         e.preventDefault();
         var id = ($('input[name="email"]').val() || '').trim();
+        
+        var localRaw = localStorage.getItem('chapainawabganj_local_members');
+        var list = localRaw ? JSON.parse(localRaw) : [];
+        var found = null;
+        for (var i = 0; i < list.length; i++) {
+            var m = list[i];
+            if (String(m.student_id) === id || String(m.roll_no) === id || String(m.email).toLowerCase() === id.toLowerCase() || String(m.contact_number) === id) {
+                found = m;
+                break;
+            }
+        }
+        
         sessionStorage.setItem('chapainawabganj_user_logged_in', id);
+        localStorage.setItem('chapainawabganj_user_logged_in', id);
+        if (found) {
+            sessionStorage.setItem('chapainawabganj_current_user', JSON.stringify(found));
+            localStorage.setItem('chapainawabganj_current_user', JSON.stringify(found));
+        }
         window.location.href = 'my_profile.html';
     }
 });

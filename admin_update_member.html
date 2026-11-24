@@ -61,7 +61,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto align-items-lg-center">
+                <ul class="navbar-nav mr-auto align-items-lg-center" id="mainNavList">
                     <li class="nav-item ">
                         <a class="nav-link" href="index.html"><i class="fas fa-home"></i> হোম</a>
                     </li>
@@ -87,39 +87,178 @@
                     </li>
 
                     
-                    <li class="nav-item dropdown ml-lg-2">
+                    <li class="nav-item dropdown ml-lg-2" id="adminNavDropdown">
                         <a class="nav-link dropdown-toggle text-danger font-weight-bold" href="#" id="adminMenuDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-shield-alt"></i> অ্যাডমিন প্যানেল
+                            <i class="fas fa-shield-alt mr-1"></i> অ্যাডমিন প্যানেল
                         </a>
                         <div class="dropdown-menu shadow border-0" aria-labelledby="adminMenuDropdown">
                             <a class="dropdown-item" href="membermanagement.html"><i class="fas fa-user-check text-success mr-2"></i> শিক্ষার্থী ভেরিফিকেশন ও তালিকা</a>
                             <a class="dropdown-item" href="admin_update_member.html"><i class="fas fa-user-edit text-primary mr-2"></i> তথ্য সংশোধন ও আপডেট</a>
                             <a class="dropdown-item" href="admin_content.html"><i class="fas fa-bullhorn text-info mr-2"></i> নোটিশ ও ফাইল আপলোড</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="index.html"><i class="fas fa-sign-out-alt mr-2"></i> অ্যাডমিন লগআউট</a>
+                            <a class="dropdown-item text-danger btn-logout-action" href="index.html"><i class="fas fa-sign-out-alt mr-2"></i> অ্যাডমিন লগআউট</a>
                         </div>
                     </li>
                     
                 </ul>
 
                 <!-- Action Button & User Area -->
-                <ul class="navbar-nav ml-auto align-items-lg-center">
+                <ul class="navbar-nav ml-auto align-items-lg-center" id="userNavArea">
                     <li class="nav-item mr-lg-3 my-2 my-lg-0">
                         <a class="nav-link btn-apply font-weight-bold" href="registration.html">
                             <i class="fas fa-user-plus mr-1"></i> সদস্য নিবন্ধন
                         </a>
                     </li>
 
+                    <li class="nav-item" id="userAreaContainer">
                     
-                        <li class="nav-item d-flex align-items-center">
-                            <span class="badge badge-danger p-2 mr-2"><i class="fas fa-user-shield"></i> অ্যাডমিনিস্ট্রেটর</span>
-                            <a class="btn btn-outline-danger btn-sm" href="index.html">লগআউট</a>
-                        </li>
+                        <div class="d-flex align-items-center">
+                            <a href="membermanagement.html" class="badge badge-danger p-2 mr-2 text-white text-decoration-none shadow-sm"><i class="fas fa-user-shield mr-1"></i> অ্যাডমিনিস্ট্রেটর</a>
+                            <a class="btn btn-outline-danger btn-sm font-weight-bold btn-logout-action shadow-sm" href="index.html"><i class="fas fa-sign-out-alt mr-1"></i> লগআউট</a>
+                        </div>
                     
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
+
+    <script>
+    (function() {
+        function syncAuthNavbar() {
+            var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.pathname.endsWith('.html');
+            var isAdmin = (sessionStorage.getItem('chapainawabganj_admin_logged_in') === 'true' || localStorage.getItem('chapainawabganj_admin_logged_in') === 'true');
+            var studentUser = null;
+            try {
+                var raw = sessionStorage.getItem('chapainawabganj_current_user') || localStorage.getItem('chapainawabganj_current_user');
+                if (raw) studentUser = JSON.parse(raw);
+                if (!studentUser) {
+                    var loginId = sessionStorage.getItem('chapainawabganj_user_logged_in') || localStorage.getItem('chapainawabganj_user_logged_in');
+                    if (loginId) {
+                        var localRaw = localStorage.getItem('chapainawabganj_local_members');
+                        var list = localRaw ? JSON.parse(localRaw) : [];
+                        for (var i = 0; i < list.length; i++) {
+                            if (String(list[i].student_id) === String(loginId) || String(list[i].email) === String(loginId) || String(list[i].contact_number) === String(loginId)) {
+                                studentUser = list[i];
+                                break;
+                            }
+                        }
+                        if (!studentUser) {
+                            studentUser = { full_name: 'শিক্ষার্থী', student_id: loginId, status: 'Active' };
+                        }
+                    }
+                }
+            } catch(e) {}
+
+            var mainNavList = document.getElementById('mainNavList');
+            var userAreaContainer = document.getElementById('userAreaContainer');
+
+            if (isAdmin) {
+                // Ensure Admin Dropdown is present in main navigation menu
+                if (!document.getElementById('adminNavDropdown') && mainNavList) {
+                    var adminLi = document.createElement('li');
+                    adminLi.className = 'nav-item dropdown ml-lg-2';
+                    adminLi.id = 'adminNavDropdown';
+                    var linkPrefix = isStatic ? '' : '/';
+                    var ext = isStatic ? '.html' : '.aspx';
+                    adminLi.innerHTML = 
+                        '<a class="nav-link dropdown-toggle text-danger font-weight-bold" href="#" id="adminMenuDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                            '<i class="fas fa-shield-alt mr-1"></i> অ্যাডমিন প্যানেল' +
+                        '</a>' +
+                        '<div class="dropdown-menu shadow border-0" aria-labelledby="adminMenuDropdown">' +
+                            '<a class="dropdown-item" href="' + linkPrefix + 'membermanagement' + ext + '"><i class="fas fa-user-check text-success mr-2"></i> শিক্ষার্থী ভেরিফিকেশন ও তালিকা</a>' +
+                            '<a class="dropdown-item" href="' + linkPrefix + 'admin_update_member' + ext + '"><i class="fas fa-user-edit text-primary mr-2"></i> তথ্য সংশোধন ও আপডেট</a>' +
+                            '<a class="dropdown-item" href="' + linkPrefix + 'admin_content' + ext + '"><i class="fas fa-bullhorn text-info mr-2"></i> নোটিশ ও ফাইল আপলোড</a>' +
+                            '<div class="dropdown-divider"></div>' +
+                            '<a class="dropdown-item text-danger btn-logout-action" href="#" style="cursor:pointer;"><i class="fas fa-sign-out-alt mr-2"></i> অ্যাডমিন লগআউট</a>' +
+                        '</div>';
+                    mainNavList.appendChild(adminLi);
+                }
+
+                // Ensure Admin Badge & Logout Button are in user area
+                if (userAreaContainer) {
+                    var linkPrefix = isStatic ? '' : '/';
+                    var ext = isStatic ? '.html' : '.aspx';
+                    userAreaContainer.innerHTML = 
+                        '<div class="d-flex align-items-center">' +
+                            '<a href="' + linkPrefix + 'membermanagement' + ext + '" class="badge badge-danger p-2 mr-2 text-white text-decoration-none shadow-sm"><i class="fas fa-user-shield mr-1"></i> অ্যাডমিনিস্ট্রেটর</a>' +
+                            '<button type="button" class="btn btn-outline-danger btn-sm font-weight-bold btn-logout-action shadow-sm"><i class="fas fa-sign-out-alt mr-1"></i> লগআউট</button>' +
+                        '</div>';
+                }
+            } else if (studentUser) {
+                var adminDrop = document.getElementById('adminNavDropdown');
+                if (adminDrop) adminDrop.remove();
+
+                if (userAreaContainer) {
+                    var firstName = (studentUser.full_name || 'শিক্ষার্থী').split(' ')[0];
+                    var statusClass = studentUser.status === 'Active' ? 'success' : 'warning';
+                    var statusText = studentUser.status === 'Active' ? 'সক্রিয়' : 'পেন্ডিং';
+                    var photo = studentUser.profile_photo || 'Photo/fahim.png';
+                    var linkPrefix = isStatic ? '' : '/';
+                    var ext = isStatic ? '.html' : '.aspx';
+
+                    userAreaContainer.innerHTML = 
+                        '<div class="d-flex align-items-center">' +
+                            '<img src="' + photo + '" class="rounded-circle mr-2 border border-success" alt="Profile" height="38" width="38" style="object-fit:cover;" onerror="this.onerror=null; this.src=\'Photo/fahim.png\';" />' +
+                            '<div class="dropdown">' +
+                                '<a class="nav-link dropdown-toggle font-weight-bold text-dark px-1" href="#" id="userDropdown" role="button" data-toggle="dropdown">' +
+                                    firstName +
+                                    '<span class="badge badge-' + statusClass + ' ml-1">' + statusText + '</span>' +
+                                '</a>' +
+                                '<div class="dropdown-menu dropdown-menu-right shadow border-0">' +
+                                    '<a class="dropdown-item" href="' + linkPrefix + 'my_profile' + ext + '"><i class="fas fa-id-card text-primary mr-2"></i> প্রোফাইল ও ডিজিটাল আইডি</a>' +
+                                    '<div class="dropdown-divider"></div>' +
+                                    '<a class="dropdown-item text-danger btn-logout-action" href="#" style="cursor:pointer;"><i class="fas fa-sign-out-alt mr-2"></i> লগআউট</a>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>';
+                }
+            } else {
+                var adminDrop = document.getElementById('adminNavDropdown');
+                var path = window.location.pathname.toLowerCase();
+                var isAdminPage = path.includes('membermanagement') || path.includes('admin_update_member') || path.includes('admin_content');
+
+                if (isStatic && !isAdminPage && adminDrop) {
+                    adminDrop.remove();
+                }
+
+                if (isStatic && isAdminPage && !isAdmin) {
+                    alert('অ্যাডমিন প্যানেলে প্রবেশ করতে প্রথমে সঠিক ইউজারনেম ও পাসওয়ার্ড দিয়ে লগইন করুন।');
+                    window.location.href = 'adminlogin.html';
+                }
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', syncAuthNavbar);
+        } else {
+            syncAuthNavbar();
+        }
+
+        // Global Logout Handler
+        document.addEventListener('click', function(e) {
+            var target = e.target.closest('.btn-logout-action');
+            if (!target && e.target.tagName === 'A') {
+                var href = e.target.getAttribute('href') || '';
+                if (href === '/logout' || href.endsWith('logout') || href.endsWith('logout.html')) {
+                    target = e.target;
+                }
+            }
+            if (target) {
+                e.preventDefault();
+                sessionStorage.removeItem('chapainawabganj_admin_logged_in');
+                localStorage.removeItem('chapainawabganj_admin_logged_in');
+                sessionStorage.removeItem('chapainawabganj_current_user');
+                localStorage.removeItem('chapainawabganj_current_user');
+                sessionStorage.removeItem('chapainawabganj_user_logged_in');
+                localStorage.removeItem('chapainawabganj_user_logged_in');
+                alert('সফলভাবে লগআউট সম্পন্ন হয়েছে।');
+                var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.pathname.endsWith('.html');
+                window.location.href = isStatic ? 'index.html' : '/';
+            }
+        });
+    })();
+    </script>
 
     <!-- Global Flash Alerts -->
     <div class="container mt-3">
@@ -156,11 +295,108 @@
                         </form>
 
                         
-                            <div class="text-center text-muted my-5">
-                                <i class="fas fa-search fa-3x mb-3 text-secondary"></i>
-                                <h5>উপরে শিক্ষার্থীর স্টুডেন্ট আইডি বা রোল লিখে সার্চ করুন এবং তথ্য সংশোধন করুন।</h5>
+
+                        <!-- Student Edit Form -->
+                        <form id="adminEditForm" action="admin_update_member.html" method="POST" style="display:none;">
+                            <input type="hidden" name="roll_no" value="" />
+
+                            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center border-bottom pb-2 mb-3">
+                                <h5 class="font-weight-bold text-primary m-0" id="editingName">
+                                    <i class="fas fa-user-graduate mr-2"></i> এডিট করা হচ্ছে:  (আইডি: )
+                                </h5>
+                                <div class="mt-2 mt-md-0">
+                                    <label class="font-weight-bold mr-2 mb-0">ভেরিফিকেশন স্ট্যাটাস:</label>
+                                    <select name="status" class="form-control d-inline-block w-auto font-weight-bold">
+                                        <option value="Active" selected>সক্রিয় (Active)</option>
+                                        <option value="Pending" >পেন্ডিং ভেরিফিকেশন (Pending)</option>
+                                    </select>
+                                </div>
                             </div>
-                        
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">পূর্ণ নাম (Full Name)</label>
+                                    <input name="full_name" type="text" class="form-control" value="" required />
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label class="font-weight-bold">রক্তের গ্রুপ</label>
+                                    <input name="blood_group" type="text" class="form-control" value="A+" />
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label class="font-weight-bold">উপজেলা</label>
+                                    <select name="upazila" class="form-control">
+                                        <option value="Chapainawabganj Sadar" selected>চাঁপাইনবাবগঞ্জ সদর</option>
+                                        <option value="Shibganj" >শিবগঞ্জ</option>
+                                        <option value="Gomostapur" >গোমস্তাপুর</option>
+                                        <option value="Nachole" >নাচোল</option>
+                                        <option value="Bholahat" >ভোলাহাট</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">ইমেইল ঠিকানা</label>
+                                    <input name="email" type="email" class="form-control" value="" required />
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">মোবাইল নম্বর</label>
+                                    <input name="contact_number" type="text" class="form-control" value="" required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">বিভাগ (Department)</label>
+                                    <input name="department" type="text" class="form-control" value="" required />
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label class="font-weight-bold">সেশন (Session)</label>
+                                    <input name="session" type="text" class="form-control" value="2024-25" required />
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label class="font-weight-bold">বর্তমান পেশা / অবস্থান</label>
+                                    <input name="profession" type="text" class="form-control" value="Current Student" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">পাবনায় হল / মেস</label>
+                                    <input name="hall" type="text" class="form-control" value="" />
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">বর্তমান পূর্ণ ঠিকানা</label>
+                                    <input name="present_address" type="text" class="form-control" value="" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" name="is_blood_donor" id="adminDonorCheck" value="yes"  />
+                                        <label class="form-check-label font-weight-bold" for="adminDonorCheck">
+                                            জরুরি রক্তদাতা নেটওয়ার্কে অন্তর্ভুক্ত
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold text-danger">পাসওয়ার্ড রিসেট (ঐচ্ছিক)</label>
+                                    <input name="new_password" type="text" class="form-control" placeholder="নতুন পাসওয়ার্ড দিন (অপরিবর্তিত রাখতে খালি রাখুন)" />
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-emerald btn-lg px-5 shadow font-weight-bold">
+                                    <i class="fas fa-save mr-2"></i> তথ্য সংরক্ষণ ও আপডেট করুন
+                                </button>
+                            </div>
+                        </form>
+
+                        <div id="noMemberPrompt" class="text-center text-muted my-5" style="">
+                            <i class="fas fa-search fa-3x mb-3 text-secondary"></i>
+                            <h5 id="promptMessage">উপরে শিক্ষার্থীর স্টুডেন্ট আইডি বা রোল লিখে সার্চ করুন এবং তথ্য সংশোধন করুন।</h5>
+                        </div>
 
                     </div>
                     <div class="card-footer bg-white border-0 pb-4 pl-4">
@@ -171,6 +407,138 @@
         </div>
     </div>
 </section>
+
+<script>
+$(document).ready(function() {
+    var isStatic = window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.pathname.endsWith('.html');
+    if (isStatic) {
+        var currentEditingStudent = null;
+
+        function loadStudentByRoll(roll) {
+            if (!roll) return;
+            var localRaw = localStorage.getItem('chapainawabganj_local_members');
+            var list = localRaw ? JSON.parse(localRaw) : [];
+            var found = null;
+            for (var i = 0; i < list.length; i++) {
+                if (String(list[i].student_id) === String(roll) || String(list[i].roll_no) === String(roll) || String(list[i].id) === String(roll)) {
+                    found = list[i];
+                    break;
+                }
+            }
+
+            if (found) {
+                currentEditingStudent = found;
+                try {
+                    var overridesRaw = localStorage.getItem('chapainawabganj_status_overrides');
+                    if (overridesRaw) {
+                        var ov = JSON.parse(overridesRaw);
+                        var sKey = String(found.id || found.student_id);
+                        if (ov[sKey]) found.status = ov[sKey];
+                    }
+                } catch(e) {}
+
+                $('#noMemberPrompt').hide();
+                $('#adminEditForm').show();
+
+                $('#editingName').html('<i class="fas fa-user-graduate mr-2"></i> এডিট করা হচ্ছে: ' + found.full_name + ' (আইডি: ' + (found.student_id || found.roll_no) + ')');
+                $('input[name="roll_no"]').val(found.student_id || found.roll_no);
+                $('select[name="status"]').val(found.status || 'Active');
+                $('input[name="full_name"]').val(found.full_name || '');
+                $('input[name="blood_group"]').val(found.blood_group || '');
+                $('select[name="upazila"]').val(found.upazila || 'Chapainawabganj Sadar');
+                $('input[name="email"]').val(found.email || '');
+                $('input[name="contact_number"]').val(found.contact_number || '');
+                $('input[name="department"]').val(found.department || '');
+                $('input[name="session"]').val(found.session || '');
+                $('input[name="profession"]').val(found.profession || '');
+                $('input[name="hall"]').val(found.hall || '');
+                $('input[name="present_address"]').val(found.present_address || '');
+                $('#adminDonorCheck').prop('checked', !!found.is_blood_donor);
+            } else {
+                $('#adminEditForm').hide();
+                $('#noMemberPrompt').show();
+                $('#promptMessage').html('<span class="text-danger"><i class="fas fa-exclamation-triangle mr-1"></i> স্টুডেন্ট আইডি: <strong>' + roll + '</strong> এর কোনো রেকর্ড পাওয়া যায়নি।</span>');
+            }
+        }
+
+        var urlParams = new URLSearchParams(window.location.search);
+        var roll = urlParams.get('roll');
+        if (roll) {
+            $('input[name="roll"]').val(roll);
+            loadStudentByRoll(roll);
+        }
+
+        // Top Search Form
+        $('form[action*="admin_update_member"][method="GET"]').on('submit', function(e) {
+            e.preventDefault();
+            var searched = ($('input[name="roll"]').val() || '').trim();
+            if (searched) {
+                loadStudentByRoll(searched);
+            }
+        });
+
+        // Edit Form Submit
+        $('#adminEditForm').on('submit', function(e) {
+            e.preventDefault();
+            var rollNo = $('input[name="roll_no"]').val();
+            var localRaw = localStorage.getItem('chapainawabganj_local_members');
+            var list = localRaw ? JSON.parse(localRaw) : [];
+            var updated = false;
+
+            for (var i = 0; i < list.length; i++) {
+                if (String(list[i].student_id) === String(rollNo) || String(list[i].roll_no) === String(rollNo) || (currentEditingStudent && String(list[i].id) === String(currentEditingStudent.id))) {
+                    list[i].full_name = $('input[name="full_name"]').val();
+                    list[i].status = $('select[name="status"]').val();
+                    list[i].blood_group = $('input[name="blood_group"]').val();
+                    list[i].upazila = $('select[name="upazila"]').val();
+                    list[i].email = $('input[name="email"]').val();
+                    list[i].contact_number = $('input[name="contact_number"]').val();
+                    list[i].department = $('input[name="department"]').val();
+                    list[i].session = $('input[name="session"]').val();
+                    list[i].profession = $('input[name="profession"]').val();
+                    list[i].hall = $('input[name="hall"]').val();
+                    list[i].present_address = $('input[name="present_address"]').val();
+                    list[i].is_blood_donor = $('#adminDonorCheck').is(':checked');
+                    updated = true;
+                    break;
+                }
+            }
+
+            if (!updated && currentEditingStudent) {
+                currentEditingStudent.full_name = $('input[name="full_name"]').val();
+                currentEditingStudent.status = $('select[name="status"]').val();
+                currentEditingStudent.blood_group = $('input[name="blood_group"]').val();
+                currentEditingStudent.upazila = $('select[name="upazila"]').val();
+                currentEditingStudent.email = $('input[name="email"]').val();
+                currentEditingStudent.contact_number = $('input[name="contact_number"]').val();
+                currentEditingStudent.department = $('input[name="department"]').val();
+                currentEditingStudent.session = $('input[name="session"]').val();
+                currentEditingStudent.profession = $('input[name="profession"]').val();
+                currentEditingStudent.hall = $('input[name="hall"]').val();
+                currentEditingStudent.present_address = $('input[name="present_address"]').val();
+                currentEditingStudent.is_blood_donor = $('#adminDonorCheck').is(':checked');
+                list.unshift(currentEditingStudent);
+            }
+
+            localStorage.setItem('chapainawabganj_local_members', JSON.stringify(list));
+
+            // Also record status override
+            try {
+                var overridesRaw = localStorage.getItem('chapainawabganj_status_overrides');
+                var ov = overridesRaw ? JSON.parse(overridesRaw) : {};
+                ov[String(rollNo)] = $('select[name="status"]').val();
+                if (currentEditingStudent && currentEditingStudent.id) {
+                    ov[String(currentEditingStudent.id)] = $('select[name="status"]').val();
+                }
+                localStorage.setItem('chapainawabganj_status_overrides', JSON.stringify(ov));
+            } catch(e) {}
+
+            alert('শিক্ষার্থীর তথ্য সফলভাবে সংরক্ষণ ও আপডেট করা হয়েছে!');
+            window.location.href = 'membermanagement.html';
+        });
+    }
+});
+</script>
 
     <!-- Footer -->
     <footer class="mt-5">
